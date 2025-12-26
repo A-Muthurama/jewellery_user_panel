@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* User-Specified Jewellery Marketplace Palette */
+
+  /* Primary Brand Colors */
+  --color-plum: #4C0F2E;
+  /* Plum Purple - Primary Brand */
+  --color-plum-light: #6B1540;
+  /* Lighter Plum */
+  --color-plum-dark: #3A0B22;
+  /* Darker Plum */
+
+  --color-stone: #EBE2DB;
+  /* Stone Quarry - Neutral Base */
+  --color-ellen: #E0C385;
+  /* Ellen - Gold/Beige Accent */
+  --color-roast: #20161E;
+  /* Italian Roast - Dark Text */
+  --color-suede: #809286;
+  /* Plush Suede - Muted Green */
+
+  /* Gold Accents for Jewellery */
+  --color-gold-primary: #D4AF37;
+  /* Classic Gold */
+  --color-gold-light: #E0C385;
+  /* Ellen as Light Gold */
+  --color-gold-dark: #B8941F;
+  /* Deep Gold */
+
+  /* Background Colors */
+  --bg-primary: #FAF8F5;
+  /* Soft Warm White */
+  --bg-secondary: #EBE2DB;
+  /* Stone Quarry */
+  --bg-tertiary: #F5F0EA;
+  /* Light Stone */
+  --bg-accent: #FFF8F0;
+  /* Very Light Warm */
+
+  /* Text Colors */
+  --text-primary: #20161E;
+  /* Italian Roast - Main Text */
+  --text-secondary: #4C0F2E;
+  /* Plum Purple - Headings */
+  --text-muted: #6B5D52;
+  /* Muted Brown */
+  --text-light: #809286;
+  /* Plush Suede */
+
+  /* Border & Shadow */
+  --border-color: #D4C4B0;
+  /* Warm Border */
+  --border-accent: #E0C385;
+  /* Ellen Border */
+  --card-shadow: 0 4px 20px rgba(76, 15, 46, 0.08);
+  --card-shadow-hover: 0 8px 30px rgba(76, 15, 46, 0.12);
+
+  /* Hero Variables */
+  --hero-bg-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=2000');
+  --hero-overlay: linear-gradient(to bottom, rgba(250, 248, 245, 0.9), rgba(235, 226, 219, 0.75));
+  --hero-text-color: #20161E;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+
+  /* Transitions */
+  --transition-smooth: all 0.3s ease;
+  --transition-fast: all 0.2s ease;
+
+  /* Utility Colors */
+  --color-white: #FFFFFF;
+  --color-success: #4A7C59;
+  --color-error: #C1666B;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-plum);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  font-family: var(--font-body);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-ellen);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-plum);
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-plum), var(--color-plum-light));
+  color: #FFFFFF;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition-smooth);
+  box-shadow: 0 2px 8px rgba(76, 15, 46, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(76, 15, 46, 0.3);
+  background: linear-gradient(135deg, var(--color-plum-dark), var(--color-plum));
+}
+
+.btn-outline {
+  background: transparent;
+  border: 2px solid var(--color-plum);
+  color: var(--color-plum);
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+}
+
+.btn-outline:hover {
+  background: var(--color-plum);
+  color: #FFFFFF;
+  border-color: var(--color-plum);
+  box-shadow: 0 4px 12px rgba(76, 15, 46, 0.2);
+}
+
+/* Common Card Styles using semantic vars */
+.card-base {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  box-shadow: var(--card-shadow);
+}

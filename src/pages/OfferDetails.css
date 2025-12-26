@@ -1,0 +1,544 @@
+/* ===============================
+   Offer Details – Global
+================================ */
+
+.offer-details-page {
+    padding-bottom: env(safe-area-inset-bottom);
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Content Width Control */
+.details-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* ===============================
+   Product Title
+================================ */
+.product-title {
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-left: 5px solid var(--color-gold-primary);
+    border-radius: 0 12px 12px 0;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+/* ===============================
+   Media Section (Image + Video)
+================================ */
+.media-section {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.details-hero {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--card-shadow);
+    height: 100%;
+}
+
+.details-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.details-badge {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.25rem;
+    background: rgba(15, 15, 15, 0.85);
+    color: var(--color-gold-primary);
+    padding: 0.45rem 1.1rem;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    backdrop-filter: blur(6px);
+}
+
+.video-container {
+    background: var(--bg-tertiary);
+    /* Fallback */
+    border-radius: 14px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    min-height: 300px;
+    /* Minimum height for video area */
+    position: relative;
+}
+
+.product-video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+}
+
+.video-placeholder {
+    color: var(--text-secondary);
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* ===============================
+   Main Layout
+================================ */
+
+.details-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 3rem;
+}
+
+/* ===============================
+   Shop Info Header
+================================ */
+
+.shop-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.shop-name {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    word-break: break-word;
+}
+
+.shop-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+}
+
+.btn-like {
+    background: none;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 0.75rem 1rem;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+
+.btn-like:hover {
+    background: var(--bg-tertiary);
+    border-color: var(--color-gold-primary);
+}
+
+.btn-like.liked {
+    color: #e91e63;
+    border-color: #e91e63;
+    background: rgba(233, 30, 99, 0.1);
+}
+
+.like-count {
+    font-size: 1rem;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* ===============================
+   Discount Banner
+================================ */
+
+.discount-banner {
+    background: linear-gradient(135deg,
+            rgba(212, 175, 55, 0.12),
+            rgba(212, 175, 55, 0.05));
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    padding: 2rem;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.big-discount {
+    font-family: var(--font-heading);
+    font-size: 3.4rem;
+    font-weight: 700;
+    color: var(--color-gold-primary);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.discount-type {
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* ===============================
+   Offer Period
+================================ */
+.offer-period {
+    background: var(--bg-tertiary);
+    padding: 1.25rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1rem;
+}
+
+.offer-period strong {
+    color: var(--text-primary);
+}
+
+/* ===============================
+   Description
+================================ */
+
+.description-box h3 {
+    margin-bottom: 0.75rem;
+    color: var(--color-gold-primary);
+}
+
+.description-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-secondary);
+}
+
+/* ===============================
+   Buy Online Section
+================================ */
+.buy-online-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px dashed var(--border-color);
+}
+
+.btn-buy-online {
+    width: 100%;
+    background: var(--color-gold-primary);
+    /* Gold button */
+    color: #000;
+    /* Distinct text */
+    font-weight: 700;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    /* Pill shape */
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-buy-online:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* ===============================
+   Sidebar Card
+================================ */
+
+.details-sidebar .card-base {
+    padding: 1.5rem;
+    border-radius: 14px;
+    position: sticky;
+    top: 96px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.validity-block {
+    text-align: center;
+    padding-bottom: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.validity-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+    display: block;
+}
+
+.validity-date {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* ===============================
+   Buttons (Sidebar)
+================================ */
+
+.action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-full {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-share {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-share:hover {
+    background: var(--border-color);
+}
+
+/* ===============================
+   Modal
+================================ */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+    padding: 1rem;
+}
+
+.modal-content {
+    background: var(--bg-secondary);
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 100%;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.modal-content h3 {
+    color: var(--color-gold-primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+.policy-text {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--bg-tertiary);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-tertiary);
+}
+
+/* ===============================
+   Tablet (≤1024px)
+================================ */
+
+@media (max-width: 1024px) {
+    .details-content {
+        grid-template-columns: 1.4fr 1fr;
+        gap: 2rem;
+    }
+
+    .media-section {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .big-discount {
+        font-size: 3rem;
+    }
+
+    .details-sidebar .card-base {
+        position: static;
+    }
+}
+
+/* ===============================
+   Mobile (≤768px)
+================================ */
+
+@media (max-width: 768px) {
+    .details-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .media-section {
+        grid-template-columns: 1fr;
+        /* Stack Image and Video */
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .video-container {
+        min-height: 250px;
+    }
+
+    .details-wrapper {
+        padding-bottom: 8rem;
+    }
+
+    .product-title {
+        font-size: 1.3rem;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .shop-header {
+        flex-direction: row;
+        /* Keep Like button on same row */
+        gap: 1rem;
+    }
+
+    .shop-name {
+        font-size: 1.6rem;
+    }
+
+    .big-discount {
+        font-size: 2.4rem;
+    }
+
+    .mobile-validity {
+        display: flex;
+    }
+
+    /* Sticky Bottom Action Bar */
+    .details-sidebar .card-base {
+        position: fixed;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        display: flex;
+        flex-direction: row;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        border-radius: 16px 16px 0 0;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border-color);
+        box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.12);
+        padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    }
+
+    .details-sidebar .validity-block {
+        display: none !important;
+    }
+
+    .action-buttons {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .btn-full {
+        flex: 1;
+        font-size: 0.9rem;
+    }
+}
+
+/* ===============================
+   Small Mobile (≤360px)
+================================ */
+
+@media (max-width: 360px) {
+    .big-discount {
+        font-size: 1.9rem;
+    }
+
+    .btn-full {
+        font-size: 0.85rem;
+        padding: 0.65rem;
+    }
+}
