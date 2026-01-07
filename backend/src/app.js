@@ -15,7 +15,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// start poller with interval configurable via METAL_POLL_MS env var (default 30s)
+// Start metal poller
 startPoller(process.env.METAL_POLL_MS ? Number(process.env.METAL_POLL_MS) : 30 * 1000);
 
 // ---------------- API ROUTES ----------------
@@ -26,7 +26,7 @@ app.use("/api/metal-prices", metalPriceRoutes);
 const frontendPath = path.join(__dirname, "../frontend/dist");
 app.use(express.static(frontendPath));
 
-// Catch-all route to serve React for all non-API requests (SPA routing)
+// Catch-all: send React frontend for all non-API routes
 app.get("*", (req, res) => {
   res.sendFile(path.join(frontendPath, "index.html"));
 });
