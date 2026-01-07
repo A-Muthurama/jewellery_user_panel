@@ -1,0 +1,8 @@
+{
+  "name": "jewellery_user_panel",
+  "private": true,
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "node backend/server.js"
+  }
+}
