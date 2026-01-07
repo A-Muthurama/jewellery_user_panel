@@ -9,7 +9,7 @@ import Offers from "./pages/Offers";
 import OfferDetails from "./pages/OfferDetails";
 import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
-import Regulation from "./pages/regulation";
+import Regulation from "./pages/Regulation";
 import TrendingNews from "./pages/TrendingNews";
 import LiveRatesBar from "./components/LiveRatesBar";
 
