@@ -1,0 +1,187 @@
+/* Home Page Styles */
+.section {
+    padding: 4rem 1rem;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+    color: var(--color-plum);
+    /* Updated to match theme */
+    align-items: center;
+    font-family: var(--font-body);
+    /* Switched to Sans-Serif (Outfit) as requested */
+    font-weight: 800;
+    /* Maximized bold */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.text-center {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.view-all-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-gold-primary);
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+}
+
+.view-all-link:hover {
+    opacity: 0.8;
+}
+
+.offers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.props-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    text-align: center;
+    margin-top: 3rem;
+    align-items: stretch;
+}
+
+.prop-item {
+    padding: 2.5rem 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.prop-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.15);
+    border-color: var(--color-gold-primary);
+}
+
+.prop-title {
+    margin-bottom: 1.25rem;
+    color: var(--color-plum);
+    /* Updated to Brand Identity */
+    font-size: 1.5rem;
+    /* Increased size back to old standard */
+    font-family: var(--font-heading);
+    /* Reverted font to Playfair Display */
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.prop-item p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    /* Updated to theme muted */
+    margin: 0;
+    font-weight: 400;
+    font-family: var(--font-body);
+}
+
+@media (max-width: 600px) {
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+/* Hero Styles */
+.hero {
+    position: relative;
+    height: 80vh;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: var(--hero-bg-image);
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    transition: background-image 0.5s ease;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(250, 248, 245, 0.6), rgba(235, 226, 219, 0.5));
+    transition: background 0.5s ease;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: var(--hero-text-color);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--hero-text-color);
+    margin-bottom: 2.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+    opacity: 0.9;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Fix for Button Visibility in Hero -  light backgrnd --*/
+.hero-actions .btn-outline {
+    border: 2px solid var(--color-plum);
+    color: var(--color-plum);
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(4px);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hero-actions .btn-outline:hover {
+    background-color: var(--color-plum);
+    color: var(--color-white);
+    border-color: var(--color-plum);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 15, 46, 0.3);
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero {
+        height: auto;
+        min-height: 500px;
+        padding: 4rem 1rem;
+    }
+}

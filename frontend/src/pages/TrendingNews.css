@@ -1,0 +1,209 @@
+/* TrendingNews.css */
+
+/* Define scope-specific variables for the premium theme */
+.news-page {
+  --tn-plum: #5D3A5D;
+  /* Plum Purple */
+  --tn-plum-light: #7A4E7A;
+  --tn-ellen: #F5E6E0;
+  /* Ellen (Soft Beige/Pink) */
+  --tn-roast: #2D231E;
+  /* Italian Roast (Deep Brown) */
+  --tn-roast-light: #4A3C31;
+  /* Lighter Roast */
+
+  max-width: 900px;
+  /* constrained width for vertical layout */
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+/* Header Styling */
+.news-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.news-header h1 {
+  font-size: 2.5rem;
+  color: var(--tn-plum);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.news-header p {
+  color: var(--tn-roast-light);
+  max-width: 650px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Tabs Styling */
+.news-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3.5rem;
+  flex-wrap: wrap;
+}
+
+.news-tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  border: 1px solid rgba(93, 58, 93, 0.2);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--tn-roast);
+  transition: all 0.3s ease;
+}
+
+.news-tab:hover {
+  background: rgba(93, 58, 93, 0.05);
+  transform: translateY(-1px);
+}
+
+.news-tab.active {
+  background: var(--tn-plum);
+  border-color: var(--tn-plum);
+  color: #fff;
+  /* White text on plum background */
+  box-shadow: 0 4px 15px rgba(93, 58, 93, 0.3);
+}
+
+/* Loading / Error States */
+.text-center {
+  text-align: center;
+  color: var(--tn-roast-light);
+  font-style: italic;
+  margin: 2rem 0;
+}
+
+.error-text {
+  color: #d32f2f;
+}
+
+/* News List Implementation (Vertical Stack) */
+.news-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Card Styling - Premium Look */
+.news-card {
+  background: var(--tn-ellen);
+  /* Ellen Background */
+  border: 1px solid rgba(93, 58, 93, 0.1);
+  border-left: 5px solid var(--tn-plum);
+  /* Plum Accent */
+  border-radius: 12px;
+  padding: 1.75rem 2rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.news-card::before {
+  content: '';
+  /* Subtle top sheen */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+}
+
+.news-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(45, 35, 30, 0.1);
+}
+
+/* Card Meta Section */
+.news-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--tn-roast-light);
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.news-source {
+  color: var(--tn-plum);
+  display: flex;
+  align-items: center;
+}
+
+.news-category {
+  background: var(--tn-plum);
+  color: #fff;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin-left: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.3px;
+}
+
+/* Typography */
+.news-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+  color: var(--tn-roast);
+  line-height: 1.35;
+  font-weight: 700;
+}
+
+.news-summary {
+  font-size: 1.05rem;
+  color: var(--tn-roast-light);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer / Link */
+.news-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.news-footer a {
+  color: var(--tn-plum);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: gap 0.2s ease;
+}
+
+.news-footer a:hover {
+  gap: 0.75rem;
+  text-decoration: underline;
+}
+
+/* Disclaimer */
+.news-disclaimer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(45, 35, 30, 0.1);
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--tn-roast-light);
+  opacity: 0.8;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}

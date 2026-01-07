@@ -1,0 +1,145 @@
+/* Regulation.css - Themed */
+.regulation-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Header */
+.regulation-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header-icon {
+  color: var(--color-plum);
+  /* Feature Brand Color */
+  margin-bottom: 0.5rem;
+}
+
+.regulation-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+  color: var(--color-plum);
+}
+
+.regulation-header p {
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+}
+
+/* Authority Cards */
+.authority-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.authority-card {
+  background: var(--bg-secondary);
+  /* Stone Quarry */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  /* Slightly sharper premium radius */
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  transition: all 0.3s ease;
+}
+
+.authority-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--card-shadow-hover);
+  border-color: var(--color-gold-primary);
+}
+
+.authority-card h3 {
+  color: var(--color-plum);
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+}
+
+.authority-card p {
+  color: var(--text-primary);
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+}
+
+.authority-card a {
+  font-weight: 600;
+  color: var(--color-plum);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.authority-card a:hover {
+  color: var(--color-gold-dark);
+  text-decoration: underline;
+}
+
+/* Highlights */
+.regulation-highlights h2 {
+  margin-bottom: 1.5rem;
+  color: var(--color-plum);
+  font-family: var(--font-heading);
+}
+
+.highlight-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-white);
+  border-left: 3px solid var(--color-gold-primary);
+}
+
+.highlight-item svg {
+  color: var(--color-gold-primary);
+  /* Gold Icon */
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+}
+
+.highlight-item h4 {
+  margin-bottom: 0.25rem;
+  color: var(--color-plum);
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+.highlight-item p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-family: var(--font-body);
+}
+
+/* Disclaimer */
+.regulation-disclaimer {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.regulation-disclaimer p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  font-style: italic;
+}
+
+.regulation-disclaimer span {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-weight: 500;
+}

@@ -1,0 +1,179 @@
+/* LiveRatesBar.css */
+.live-rates-bar {
+    /* Match the site's primary background exactly to look integrated */
+    background: var(--bg-primary);
+    /* Use Brand Colors */
+    color: var(--text-secondary);
+    /* Plum Text */
+    border-bottom: 2px solid var(--color-gold-primary);
+    /* Gold Border */
+    /* Top border to separate subtly from sticky header */
+    border-top: 1px solid var(--border-color);
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(76, 15, 46, 0.05);
+    /* Very subtle shadow using brand plum */
+    position: relative;
+    z-index: 10;
+}
+
+.rates-container {
+    max-width: 1300px;
+    margin: auto;
+    padding: 0.6rem 1rem;
+}
+
+.rate-ticker {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rate-item {
+    flex: 1;
+    text-align: center;
+    padding: 0.4rem 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+}
+
+.rate-item:hover {
+    background: rgba(76, 15, 46, 0.03);
+    /* Tiny plum tint on hover */
+}
+
+/* Vertical Separators */
+.rate-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 25%;
+    height: 50%;
+    width: 1px;
+    background-color: var(--border-color);
+    /* Stone/Warm border */
+}
+
+.metal-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--color-plum-light);
+    /* Lighter Plum for Label */
+    margin-bottom: 0.2rem;
+    display: block;
+    font-family: var(--font-body);
+}
+
+.price-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    align-items: center;
+}
+
+.price-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+}
+
+.weight-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    font-family: var(--font-body);
+    color: var(--text-muted);
+    /* Muted Brown */
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.price-value {
+    font-weight: 700;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+    color: var(--color-plum);
+    /* Main Plum implementation */
+    letter-spacing: -0.2px;
+}
+
+/* Trend Icons - Vibrant */
+.trend-icon {
+    filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.05));
+}
+
+.trend-icon.up {
+    color: var(--color-success);
+}
+
+.trend-icon.down {
+    color: var(--color-error);
+}
+
+.trend-icon.stable {
+    color: var(--text-muted);
+}
+
+/* Timestamp */
+.rates-updated {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-align: right;
+    padding: 0 1.5rem 0.4rem;
+    font-style: italic;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.live-indicator {
+    color: var(--color-success);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.live-indicator::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--color-success);
+    border-radius: 999px;
+    display: inline-block;
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.5);
+}
+
+/* Empty State */
+.live-rates-bar.empty {
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-plum);
+    background: var(--bg-primary);
+    font-style: italic;
+}
+
+/* Mobile Responsive */
+@media (max-width: 900px) {
+    .rate-ticker {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none;
+    }
+
+    .rate-ticker::-webkit-scrollbar {
+        display: none;
+    }
+
+    .rate-item {
+        min-width: 220px;
+        border-right: 1px solid var(--border-color);
+    }
+
+    .rate-item:not(:last-child)::after {
+        display: none;
+    }
+}
