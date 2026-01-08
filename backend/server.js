@@ -1,9 +1,5 @@
-import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
-
 import app from "./src/app.js";
-
-dotenv.config();
 
 /* ---------------- RATE LIMITER ---------------- */
 

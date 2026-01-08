@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: jewel-marketplace
+    env: node
+    plan: free
+    buildCommand: cd backend && npm install && cd ../frontend && npm install && npm run build
+    startCommand: node backend/server.js
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: CACHE_DURATION_HOURS
+        value: 24
+      - key: METAL_PRICE_API_KEY
+        sync: false
+      - key: NEWS_API_KEY
+        sync: false

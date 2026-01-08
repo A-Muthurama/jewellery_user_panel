@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import path from "path";
@@ -23,7 +26,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/metal-prices", metalPriceRoutes);
 
 // ---------------- SERVE FRONTEND ----------------
-const frontendPath = path.join(__dirname, "../frontend/dist");
+const frontendPath = path.join(__dirname, "../../frontend/dist");
 app.use(express.static(frontendPath));
 
 // Catch-all: send React frontend for all non-API routes
