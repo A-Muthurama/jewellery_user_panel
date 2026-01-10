@@ -10,8 +10,6 @@ const Regulation = () => {
         <ShieldCheck size={36} className="header-icon" />
         <h1>Jewellery Regulations & Standards</h1>
         <p>
-          We reference official Indian authorities to ensure transparency,
-          authenticity, and trust in jewellery offers displayed on our platform.
         </p>
       </div>
 
@@ -108,7 +106,7 @@ const Regulation = () => {
           official rules, notifications, and legal compliance, please refer to
           the respective authority websites.
         </p>
-        <span>Last updated: August 2026</span>
+        <span>Last updated: January 2026</span>
       </div>
     </div>
   );

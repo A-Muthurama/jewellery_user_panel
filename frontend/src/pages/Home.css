@@ -48,8 +48,9 @@
 }
 
 .props-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2.5rem;
     text-align: center;
     margin-top: 3rem;
@@ -57,18 +58,26 @@
 }
 
 .prop-item {
+    flex: 0 1 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 2.5rem 2rem;
-    border-radius: 12px;
-    transition: all 0.3s ease;
-    background: var(--bg-secondary);
+    border-radius: 16px;
+    transition: all 0.4s ease;
+    background: linear-gradient(145deg, #ffffff, var(--bg-secondary));
     border: 1px solid var(--border-color);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    min-height: 240px;
+    /* Enforce substantial height for square-ish shape */
 }
 
 .prop-item:hover {
     transform: translateY(-8px);
-    box-shadow: 0 8px 24px rgba(212, 175, 55, 0.15);
+    box-shadow: 0 12px 30px rgba(76, 15, 46, 0.1);
     border-color: var(--color-gold-primary);
+    background: linear-gradient(145deg, #fffaf0, #f1d0ef);
 }
 
 .prop-title {

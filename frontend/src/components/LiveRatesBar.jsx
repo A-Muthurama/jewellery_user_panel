@@ -62,6 +62,10 @@ const LiveRatesBar = () => {
         return <Minus size={14} className="trend-icon stable" />;
     };
 
+    const formatPrice = (price) => {
+        return price ? price.toLocaleString('en-IN') : '0';
+    };
+
     if (loading) return null; // still loading
     if (!rates) return <div className="live-rates-bar empty">Rates currently unavailable</div>; // fallback UI when fetch failed or rate-limited
 
@@ -76,13 +80,14 @@ const LiveRatesBar = () => {
                         <div className="price-row">
                             <div className="price-group">
                                 <span className="weight-label">1g</span>
-                                <span className="price-value">₹{rates.gold.price22k}</span>
+                                <span className="price-value">₹{formatPrice(rates.gold.price22k)}</span>
                                 {renderTrendIcon(rates.gold.trend)}
                             </div>
+                            <span className="price-separator">—</span>
                             <div className="price-group">
                                 <span className="weight-label">8g</span>
                                 <span className="price-value">
-                                    ₹{(rates.gold.price22k * 8).toLocaleString()}
+                                    ₹{formatPrice(rates.gold.price22k * 8)}
                                 </span>
                             </div>
                         </div>
@@ -94,7 +99,14 @@ const LiveRatesBar = () => {
                         <div className="price-row">
                             <div className="price-group">
                                 <span className="weight-label">1g</span>
-                                <span className="price-value">₹{rates.gold.price24k}</span>
+                                <span className="price-value">₹{formatPrice(rates.gold.price24k)}</span>
+                            </div>
+                            <span className="price-separator">—</span>
+                            <div className="price-group">
+                                <span className="weight-label">8g</span>
+                                <span className="price-value">
+                                    ₹{formatPrice(rates.gold.price24k * 8)}
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -105,13 +117,14 @@ const LiveRatesBar = () => {
                         <div className="price-row">
                             <div className="price-group">
                                 <span className="weight-label">1g</span>
-                                <span className="price-value">₹{rates.silver.price}</span>
+                                <span className="price-value">₹{formatPrice(rates.silver.price)}</span>
                                 {renderTrendIcon(rates.silver.trend)}
                             </div>
+                            <span className="price-separator">—</span>
                             <div className="price-group">
                                 <span className="weight-label">1kg</span>
                                 <span className="price-value">
-                                    ₹{(rates.silver.price * 1000).toLocaleString()}
+                                    ₹{formatPrice(rates.silver.price * 1000)}
                                 </span>
                             </div>
                         </div>
@@ -123,7 +136,7 @@ const LiveRatesBar = () => {
                         <div className="price-row">
                             <div className="price-group">
                                 <span className="weight-label">1g</span>
-                                <span className="price-value">₹{rates.platinum.price}</span>
+                                <span className="price-value">₹{formatPrice(rates.platinum.price)}</span>
                                 {renderTrendIcon(rates.platinum.trend)}
                             </div>
                         </div>

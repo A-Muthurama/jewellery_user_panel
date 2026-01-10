@@ -48,7 +48,7 @@ const Home = () => {
         <h2 className="section-title">Why Project J?</h2>
         <div className="props-grid">
           <div className="prop-item card-base">
-            <h3 className="prop-title">Verified Vendors</h3>
+            <h3 className="prop-title">Verified Stores</h3>
             <p>Shop with confidence from authenticated jewellery stores.</p>
           </div>
           <div className="prop-item card-base">

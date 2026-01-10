@@ -11,6 +11,7 @@ import Privacy from "./pages/Privacy";
 import Terms from "./pages/Terms";
 import Regulation from "./pages/Regulation";
 import TrendingNews from "./pages/TrendingNews";
+import About from "./pages/About";
 import LiveRatesBar from "./components/LiveRatesBar";
 
 const App = () => {
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/regulation" element={<Regulation />} />
           <Route path="/trendingnews" element={<TrendingNews />} />
+          <Route path="/about" element={<About />} />
         </Routes>
         <Newsletter />
         <Footer />

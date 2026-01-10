@@ -34,7 +34,7 @@ const Footer = () => {
                         <ul className="footer-links">
                             <li>
                                 <MapPin size={18} />
-                                <span>123 Gold Street, Jewellery District, NY</span>
+                                <span>India</span>
                             </li>
                             <li>
                                 <Phone size={18} />
