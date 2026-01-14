@@ -63,13 +63,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2.5rem 2rem;
+    padding: 1.5rem 2rem;
     border-radius: 16px;
     transition: all 0.4s ease;
     background: linear-gradient(145deg, #ffffff, var(--bg-secondary));
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    min-height: 240px;
+    min-height: 180px;
     /* Enforce substantial height for square-ish shape */
 }
 

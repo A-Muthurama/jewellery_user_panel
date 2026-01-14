@@ -21,7 +21,7 @@ const Home = () => {
           </p>
           <div className="hero-actions">
             <Link to="/offers" className="btn-primary">Explore Offers</Link>
-            <button className="btn-outline">Learn More</button>
+            <Link to="/about" className="btn-outline">Learn More</Link>
           </div>
 
 

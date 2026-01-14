@@ -12,8 +12,12 @@ const Footer = () => {
                     <div className="footer-col">
                         <h3>Project J</h3>
                         <p className="brand-desc">
-                            Experience the finest craftsmanship with our premium jewellery collection.
-                            Designed for elegance, crafted for you.
+                            We’re building the world’s gold
+                            Online marketplace connecting jewellery shops
+                            from India to every corner of the globe.
+                            From local artisans to global brands,
+                            we make gold online shopping simple, secure, and seamless.
+                            One network. Infinite shine.
                         </p>
                     </div>
 
@@ -64,7 +68,7 @@ const Footer = () => {
                     <p>&copy; {new Date().getFullYear()} Project J. All rights reserved.</p>
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 };
 

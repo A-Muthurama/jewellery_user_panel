@@ -59,7 +59,7 @@ const LiveRatesBar = () => {
     const renderTrendIcon = (trend) => {
         if (trend === "up") return <TrendingUp size={14} className="trend-icon up" />;
         if (trend === "down") return <TrendingDown size={14} className="trend-icon down" />;
-        return <Minus size={14} className="trend-icon stable" />;
+        return null;
     };
 
     const formatPrice = (price) => {
