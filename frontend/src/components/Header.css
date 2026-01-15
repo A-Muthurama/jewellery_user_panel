@@ -162,6 +162,30 @@
     border-color: var(--color-plum);
 }
 
+/* Ensure button shows in mobile nav */
+.mobile-nav-content .btn-vendor {
+    display: block !important;
+    width: 100%;
+    padding: 1rem 1.4rem;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+    background: linear-gradient(135deg, var(--color-plum), var(--color-plum-light));
+    color: #FFFFFF;
+    border-radius: 30px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(76, 15, 46, 0.25);
+    transition: all 0.3s ease;
+}
+
+.mobile-nav-content .btn-vendor:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(76, 15, 46, 0.3);
+}
+
 @media (max-width: 768px) {
     .nav-desktop {
         display: none;
@@ -171,7 +195,7 @@
         display: block;
     }
 
-    .btn-vendor {
+    .header-actions .btn-vendor {
         display: none;
     }
 
