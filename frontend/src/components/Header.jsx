@@ -41,9 +41,9 @@ const Header = () => {
           {/* Theme toggle removed - Forced Light Premium Theme */}
 
           <button className="btn-vendor" onClick={() =>
-    window.open("https://vendor-panel-ashen.vercel.app/vendor/login", "_blank")
-  }
->
+            window.open("https://vendor-panel-ashen.vercel.app/vendor/login", "_blank")
+          }
+          >
             Join as Partner
           </button>
 
@@ -65,8 +65,10 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
-          <button className="btn-primary" onClick={() => alert("Vendor Panel Coming Soon!")}>
-            Join as Vendor
+          <button className="btn-vendor" onClick={() =>
+            window.open("https://vendor-panel-ashen.vercel.app/vendor/login", "_blank")
+          }>
+            Join as Partner
           </button>
         </div>
       </div>
