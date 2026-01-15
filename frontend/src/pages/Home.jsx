@@ -7,7 +7,7 @@ import { ArrowRight } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
-  const featuredOffers = OFFERS.filter(offer => offer.isFeatured).slice(0, 3);
+  const featuredOffers = OFFERS.filter(offer => offer.isFeatured).slice(0, 6);
 
   return (
     <div className="home-page">
@@ -21,7 +21,7 @@ const Home = () => {
           </p>
           <div className="hero-actions">
             <Link to="/offers" className="btn-primary">Explore Offers</Link>
-            <Link to="/about" className="btn-outline">Learn More</Link>
+            <button className="btn-outline">Learn More</button>
           </div>
 
 
@@ -43,7 +43,7 @@ const Home = () => {
           ))}
         </div>
       </main>
-    
+
       <section className="container section value-props">
         <h2 className="section-title">Why Project J?</h2>
         <div className="props-grid">
