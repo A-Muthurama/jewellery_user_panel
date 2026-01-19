@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchOfferById } from '../services/offerservice';
-import { MapPin, Share2, Calendar, Navigation, ArrowLeft, ThumbsUp } from 'lucide-react';
+import { fetchOfferById, likeOffer } from '../services/offerservice';
+import { MapPin, Share2, Calendar, Navigation, ArrowLeft, ThumbsUp, Clock } from 'lucide-react';
 import './OfferDetails.css';
 
 const OfferDetails = () => {
@@ -23,8 +23,10 @@ const OfferDetails = () => {
           setError('Offer not found');
         } else {
           setOffer(data);
-          // Initialize like count from offer data or random for demo
-          setLikeCount(data.likeCount || Math.floor(Math.random() * 500) + 50);
+          setLikeCount(data.likeCount || 0);
+          if (localStorage.getItem(`liked_${id}`)) {
+            setLiked(true);
+          }
         }
       } catch (err) {
         setError('Error fetching offer details');
@@ -36,23 +38,38 @@ const OfferDetails = () => {
     loadOffer();
   }, [id]);
 
-  /* ---------------- HELPERS ---------------- */
-
   const formatDate = (dateString) => {
-    if (!dateString) return '';
-    const [year, month, day] = dateString.split('-');
-    return `${day}/${month}/${year}`;
+    if (!dateString) return '---';
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return '---';
+      return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+    } catch (e) { return '---'; }
   };
 
-  /* ---------------- ACTIONS ---------------- */
+  const handleLike = async () => {
+    const action = liked ? 'unlike' : 'like';
+    const originalLiked = liked;
+    const originalCount = likeCount;
+    const newLiked = !liked;
+    const newCount = newLiked ? likeCount + 1 : Math.max(0, likeCount - 1);
 
-  const handleLike = () => {
-    if (!liked) {
-      setLikeCount(prev => prev + 1);
-      setLiked(true);
-    } else {
-      setLikeCount(prev => prev - 1);
-      setLiked(false);
+    setLiked(newLiked);
+    setLikeCount(newCount);
+
+    try {
+      const result = await likeOffer(id, action);
+      if (result && result.likeCount !== undefined) {
+        setLikeCount(result.likeCount);
+        if (newLiked) localStorage.setItem(`liked_${id}`, 'true');
+        else localStorage.removeItem(`liked_${id}`);
+      } else {
+        setLiked(originalLiked);
+        setLikeCount(originalCount);
+      }
+    } catch (err) {
+      setLiked(originalLiked);
+      setLikeCount(originalCount);
     }
   };
 
@@ -60,13 +77,11 @@ const OfferDetails = () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${offer.discountValue} at ${offer.shopName}`,
+          title: `${offer.title} at ${offer.shopName}`,
           text: offer.description,
           url: window.location.href,
         });
-      } catch (err) {
-        console.log('Share cancelled');
-      }
+      } catch (err) { console.log('Share cancelled'); }
     } else {
       navigator.clipboard.writeText(window.location.href);
       alert('Link copied to clipboard!');
@@ -75,16 +90,11 @@ const OfferDetails = () => {
 
   const handleDirections = () => {
     const query = `${offer.shopName}, ${offer.location.city}`;
-    window.open(
-      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`,
-      '_blank'
-    );
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
   };
 
   const handleBuyClick = () => {
-    if (offer.buyLink) {
-      setShowPolicyModal(true);
-    }
+    if (offer.buyLink) setShowPolicyModal(true);
   };
 
   const handleAcceptPolicy = () => {
@@ -92,139 +102,128 @@ const OfferDetails = () => {
     window.open(offer.buyLink, '_blank');
   };
 
-  /* ---------------- UI ---------------- */
-
-  if (loading) {
-    return (
-      <div className="container section text-center">
-        <h3>Loading offer details...</h3>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container section text-center">
-        <h2>{error}</h2>
-        <Link to="/offers" className="btn-primary">
-          Back to Offers
-        </Link>
-      </div>
-    );
-  }
+  if (loading) return <div className="page-loading"><div className="spinner-gold"></div></div>;
+  if (error || !offer) return <div className="error-state">{error || 'Offer not found'}</div>;
 
   return (
     <div className="offer-details-page">
-      <div className="container section details-wrapper">
+      <div className="container details-wrapper">
 
-        <Link to="/offers" className="view-all-link">
-          <ArrowLeft size={18} /> Back to Offers
-        </Link>
-
-        {/* PRODUCT TITLE */}
-        {offer.productTitle && (
-          <h1 className="product-title">{offer.productTitle}</h1>
-        )}
-
-        {/* MEDIA SECTION (Image + Video) */}
-        <div className="media-section">
-          <div className="details-hero">
-            <img src={offer.image} alt={offer.shopName} className="details-image" />
-            <span className="details-badge">{offer.category}</span>
-          </div>
-
-          {offer.videoUrl && (
-            <div className="video-container">
-              <video controls className="product-video">
-                <source src={offer.videoUrl} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-            </div>
-          )}
+        {/* ROW 1: TOP NAVIGATION & TITLE BAR */}
+        <div className="top-nav-bar">
+          <Link to="/offers" className="back-link">
+            <ArrowLeft size={18} /> Back to Offers
+          </Link>
         </div>
 
-        <div className="details-content">
-          {/* LEFT */}
-          <div className="main-info">
+        <div className="title-banner-full">
+          <h1 className="page-main-title">{offer.title || offer.shopName}</h1>
+        </div>
 
-            <div className="shop-header">
-              <div>
-                <h2 className="shop-name">{offer.shopName}</h2>
-                <div className="shop-link">
-                  <MapPin size={18} />
-                  {offer.location.area && <span>{offer.location.area}, </span>}
-                  {offer.location.city}, {offer.location.state}
-                </div>
+        {/* ROW 2: MEDIA GRID (Image Left | Video Right) */}
+        <div className="media-grid-row">
+          <div className="media-card-frame">
+            <img src={offer.image} alt={offer.shopName} className="main-offer-image" />
+            {offer.category && <span className="cat-badge">{offer.category}</span>}
+          </div>
+
+          <div className={`video-card-frame ${offer.videoUrl ? '' : 'empty-frame'}`}>
+            {offer.videoUrl ? (
+              <video controls className="main-offer-video">
+                <source src={offer.videoUrl} type="video/mp4" />
+                Your browser does not support video.
+              </video>
+            ) : (
+              <div className="empty-video-placeholder"></div>
+            )}
+          </div>
+        </div>
+
+        {/* ROW 3: CONTENT GRID (Shop Info Left | Sidebar Card Right) */}
+        <div className="content-grid-row">
+
+          {/* LEFT CONTENT COLUMN */}
+          <div className="content-left-col">
+            <div className="shop-header-block">
+              <h2 className="shop-name-large">{offer.shopName}</h2>
+              <div className="shop-location-row">
+                <MapPin size={16} />
+                <span>{offer.location.address && `${offer.location.address}, `}{offer.location.city}, {offer.location.state}</span>
               </div>
-              <button
-                className={`btn-like ${liked ? 'liked' : ''}`}
-                onClick={handleLike}
-                title="Like this offer"
-              >
-                <ThumbsUp size={24} fill={liked ? "currentColor" : "none"} />
-                <span className="like-count">{likeCount}</span>
+            </div>
+
+            {/* Like Button Row */}
+            <div className="action-row-buttons">
+              <button className={`like-pill-btn ${liked ? 'active' : ''}`} onClick={handleLike}>
+                <ThumbsUp size={18} fill={liked ? "currentColor" : "none"} />
+                <span>{likeCount} Likes</span>
               </button>
             </div>
 
-            <div className="discount-banner">
-              <div className="big-discount">{offer.discountValue}</div>
-              <div className="discount-type">{offer.discountType}</div>
-            </div>
-
-            <div className="description-box">
-              <h3>About This Offer</h3>
-              <p className="description-text">{offer.description}</p>
-            </div>
-
-            {/* BUY ONLINE BUTTON */}
-            {offer.buyLink && (
-              <div className="buy-online-section">
-                <button className="btn-buy-online" onClick={handleBuyClick}>
-                  Buy Online / Connect to Store Website
-                </button>
+            {/* Discount Box */}
+            <div className="discount-hero-box">
+              <div className="discount-text-wrapper">
+                <span className="discount-big-text">
+                  {offer.discountLabel || (offer.discountValueNumeric && offer.discountValueNumeric > 0
+                    ? `${offer.discountValueNumeric}% OFF`
+                    : 'SPECIAL OFFER')}
+                </span>
+                <span className="discount-sub-text">{offer.discountType || 'FLAT DISCOUNT'}</span>
               </div>
-            )}
+            </div>
+
+            {/* Description */}
+            <div className="about-section">
+              <h3 className="section-label">About This Offer</h3>
+              <p className="about-text">{offer.description}</p>
+            </div>
           </div>
 
-          {/* RIGHT */}
-          <aside className="details-sidebar">
-            <div className="card-base">
-              <div className="validity-block">
-                <span className="validity-label">
-                  <Calendar size={14} /> Offer Period
-                </span>
-                <div className="validity-date">
-                  {formatDate(offer.validFrom || offer.validUntil)} to {formatDate(offer.validUntil)}
-                </div>
+          {/* RIGHT SIDEBAR COLUMN */}
+          <div className="content-right-col">
+            <div className="validity-card-premium">
+              <div className="validity-header">
+                <Calendar size={18} /> Offer Period
+              </div>
+              <div className="validity-dates">
+                {formatDate(offer.validFrom)} to {formatDate(offer.validUntil)}
               </div>
 
-              <div className="action-buttons">
-                <button className="btn-primary btn-full" onClick={handleDirections}>
-                  <Navigation size={18} /> Get Directions
-                </button>
+              <div className="sidebar-divider"></div>
 
-                <button className="btn-share btn-full" onClick={handleShare}>
-                  <Share2 size={18} /> Share
-                </button>
-              </div>
+              <button className="sidebar-action-btn direction-btn" onClick={handleDirections}>
+                <Navigation size={16} /> GET DIRECTIONS
+              </button>
+
+              <button className="sidebar-action-btn share-btn" onClick={handleShare}>
+                <Share2 size={16} /> Share
+              </button>
             </div>
-          </aside>
+          </div>
+
         </div>
+
+        {/* ROW 4: BOTTOM CTA */}
+        <div className="bottom-cta-row">
+          <button className="gold-cta-button" onClick={handleBuyClick}>
+            BUY ONLINE / CONNECT TO STORE WEBSITE
+          </button>
+        </div>
+
       </div>
 
       {/* POLICY MODAL */}
       {showPolicyModal && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-box">
             <h3>Connect to Store Website</h3>
             <p>You are being redirected to the seller's official website.</p>
-            <p className="policy-text">
-              By clicking "Proceed", you agree to our terms and acknowledge that
-              transactions on the third-party site are subject to their policies.
+            <p className="policy-disclaimer">
+              By clicking "Proceed", you agree to our terms and acknowledge that transactions on the third-party site are subject to their policies.
             </p>
             <div className="modal-actions">
-              <button className="btn-secondary" onClick={() => setShowPolicyModal(false)}>Cancel</button>
-              <button className="btn-primary" onClick={handleAcceptPolicy}>Proceed</button>
+              <button className="cancel-btn" onClick={() => setShowPolicyModal(false)}>Cancel</button>
+              <button className="proceed-btn" onClick={handleAcceptPolicy}>Proceed</button>
             </div>
           </div>
         </div>

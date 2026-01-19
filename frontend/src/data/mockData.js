@@ -389,7 +389,8 @@ export const CATEGORIES = [
   "Savings Schemes",
   "Corporate Offers",
   "Gift Articles",
-  "Digital Gold"
+  "Digital Gold",
+  "Gold Exchange"
 ];
 
 // Expanded to include ALL Indian States/UTs and major cities

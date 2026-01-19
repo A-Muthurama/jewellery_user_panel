@@ -8,92 +8,106 @@ import './Offers.css';
 
 const Offers = () => {
   const [offers, setOffers] = useState([]);
-  const [filteredOffers, setFilteredOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [currentFilters, setCurrentFilters] = useState({});
 
+  // Fetch offers whenever filters change
   useEffect(() => {
-    const loadOffers = async () => {
+    const loadOffers = async (isBackground = false) => {
       try {
-        const data = await fetchOffers();
+        if (!isBackground) setLoading(true);
+        const data = await fetchOffers(currentFilters);
         setOffers(data);
-        setFilteredOffers(data);
+        setError(false);
       } catch (err) {
+        console.error("Failed to load offers", err);
         setError(true);
       } finally {
-        setLoading(false);
+        if (!isBackground) setLoading(false);
       }
     };
 
     loadOffers();
-  }, []);
+
+    // Optional: Keep polling but only if no interactive filters are set 
+    // to avoid interrupting user search experience
+    const interval = setInterval(() => {
+      if (Object.keys(currentFilters).length === 0) {
+        loadOffers(true); // Pass true to suppress loading spinner
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [currentFilters]);
 
   const handleFilterChange = (filters) => {
-    let result = [...offers];
-
-    if (filters.search) {
-      const s = filters.search.toLowerCase();
-      result = result.filter(o =>
-        o.shopName.toLowerCase().includes(s) ||
-        o.description.toLowerCase().includes(s)
-      );
-    }
-
-    if (filters.category && filters.category !== 'All') {
-      result = result.filter(o => o.category === filters.category);
-    }
-
-    // New Location Logic:
-    // filters.state contains the state name
-    // filters.city contains the city name
-    // filters.pincode contains the typed/selected pincode
-
-    if (filters.state) {
-      result = result.filter(o => o.location.state === filters.state);
-    }
-    if (filters.city) {
-      result = result.filter(o => o.location.city === filters.city);
-    }
-    if (filters.pincode) {
-      // Basic string match for pincode
-      result = result.filter(o => o.location.pincode.startsWith(filters.pincode));
-    }
-
-    if (filters.sort === 'discount_high') {
-      result.sort((a, b) => b.discountValueNumeric - a.discountValueNumeric);
-    } else if (filters.sort === 'discount_low') {
-      result.sort((a, b) => a.discountValueNumeric - b.discountValueNumeric);
-    } else {
-      result.sort((a, b) => b.id - a.id);
-    }
-
-    setFilteredOffers(result);
+    setCurrentFilters(filters);
   };
 
-  if (loading) return <p className="text-center">Loading offers...</p>;
-  if (error) return <p className="text-center">Error fetching offers</p>;
+  if (loading && offers.length === 0) {
+    return (
+      <div className="offers-page">
+        <div className="offers-header-hero">
+          <div className="container">
+            <h1 className="page-title">Explore Jewellery Offers</h1>
+          </div>
+        </div>
+        <div className="container section">
+          <FilterBar categories={CATEGORIES} onFilterChange={() => { }} />
+          <div className="offers-grid">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+              <div key={n} className="skeleton-card">
+                <div className="skeleton-img"></div>
+                <div className="skeleton-text sk-w-60"></div>
+                <div className="skeleton-text sk-w-40"></div>
+                <div className="skeleton-text sk-h-40"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="offers-error container">
+        <Frown size={48} />
+        <p>We're having trouble reaching our servers. Please try again later.</p>
+        <button onClick={() => setCurrentFilters({ ...currentFilters })}>Retry</button>
+      </div>
+    );
+  }
 
   return (
-    <div className="offers-page container section">
-      <h1 className="page-title">Explore Jewellery Offers</h1>
-
-      <FilterBar
-        categories={CATEGORIES}
-        onFilterChange={handleFilterChange}
-      />
-
-      {filteredOffers.length ? (
-        <div className="offers-grid">
-          {filteredOffers.map(o => (
-            <OfferCard key={o.id} offer={o} />
-          ))}
+    <div className="offers-page">
+      <div className="offers-header-hero">
+        <div className="container">
+          <h1 className="page-title">Explore Jewellery Offers</h1>
         </div>
-      ) : (
-        <div className="no-results">
-          <Frown size={48} />
-          <p>No offers found</p>
-        </div>
-      )}
+      </div>
+
+      <div className="container section">
+
+        <FilterBar
+          categories={CATEGORIES}
+          onFilterChange={handleFilterChange}
+        />
+
+        {offers.length ? (
+          <div className="offers-grid">
+            {offers.map(o => (
+              <OfferCard key={o.id} offer={o} />
+            ))}
+          </div>
+        ) : (
+          <div className="no-results">
+            <Frown size={48} />
+            <p>No approved offers found matching your criteria.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

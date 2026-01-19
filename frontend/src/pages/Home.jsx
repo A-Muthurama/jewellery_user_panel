@@ -1,13 +1,38 @@
-import React from 'react';
-import OfferCard from '../components/OfferCard';
-
-import { OFFERS } from '../data/mockData';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Frown } from 'lucide-react';
+import OfferCard from '../components/OfferCard';
+import { fetchOffers } from '../services/offerservice';
 import './Home.css';
 
 const Home = () => {
-  const featuredOffers = OFFERS.filter(offer => offer.isFeatured).slice(0, 6);
+  const [featuredOffers, setFeaturedOffers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadFeatured = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchOffers({ sort: 'newest' });
+        // Filter for featured offers locally or just take first top ones
+        // Since database might not have isFeatured set, we take the newest 3 as "featured"
+        // or filter if the data has the property
+        const featured = data.filter(o => o.isFeatured).slice(0, 6);
+
+        // Fallback: if no isFeatured set in DB, just show latest 3
+        if (featured.length === 0) {
+          setFeaturedOffers(data.slice(0, 3));
+        } else {
+          setFeaturedOffers(featured);
+        }
+      } catch (err) {
+        console.error("Failed to load featured offers", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadFeatured();
+  }, []);
 
   return (
     <div className="home-page">
@@ -38,9 +63,18 @@ const Home = () => {
         </div>
 
         <div className="offers-grid">
-          {featuredOffers.map(offer => (
-            <OfferCard key={offer.id} offer={offer} />
-          ))}
+          {loading ? (
+            <p>Loading featured offers...</p>
+          ) : featuredOffers.length > 0 ? (
+            featuredOffers.map(offer => (
+              <OfferCard key={offer.id} offer={offer} />
+            ))
+          ) : (
+            <div className="no-results" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '2rem' }}>
+              <Frown size={48} />
+              <p>No featured offers available right now.</p>
+            </div>
+          )}
         </div>
       </main>
 

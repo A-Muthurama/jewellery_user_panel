@@ -1,29 +1,52 @@
 /* Offers Page Styles */
 .offers-page {
-    padding-top: 2rem;
-    padding-bottom: 4rem;
-    min-height: 80vh;
+    padding-top: 0;
+    padding-bottom: 5rem;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #fdfaf4 0%, #ffffff 40%, #ffffff 100%);
 }
 
-.page-header {
-    text-align: center;
-    margin-bottom: 3rem;
+.offers-page .container {
+    max-width: 1300px;
+    padding: 0 4rem;
+}
+
+@media (max-width: 768px) {
+    .offers-page .container {
+        padding: 0 1.5rem;
+    }
 }
 
 .page-title {
-    font-size: 2.5rem;
+    font-size: 3.2rem;
+    margin-bottom: 0.2rem;
+    color: var(--color-plum, #4C0F2E);
+    text-align: center;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.offers-header-hero {
+    background: linear-gradient(to bottom, #fdfaf4 0%, #f8f5f0 100%);
+    padding: 2.5rem 0 1.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.15);
     margin-bottom: 0.5rem;
-    color: var(--color-gold-primary);
 }
 
 .page-subtitle {
-    color: var(--text-secondary);
+    color: #777;
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .offers-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 2rem;
+    margin-top: 1rem;
 }
 
 .no-results {
@@ -31,14 +54,22 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4rem;
+    padding: 6rem 2rem;
     text-align: center;
-    gap: 1rem;
-    color: var(--text-secondary);
+    gap: 1.5rem;
+    color: #888;
+    background: #fff;
+    border-radius: 20px;
+    margin-top: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 @media (max-width: 768px) {
     .page-title {
-        font-size: 2rem;
+        font-size: 2.2rem;
+    }
+
+    .offers-grid {
+        gap: 1.5rem;
     }
 }

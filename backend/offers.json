@@ -1,0 +1,77 @@
+[
+  {
+    "id": 1,
+    "shopName": "Tanishq Jewellery",
+    "location": {
+      "state": "Maharashtra",
+      "city": "Mumbai",
+      "area": "Andheri, Navi Mumbai",
+      "pincode": "400050",
+      "lat": 19.0596,
+      "lng": 72.8295
+    },
+    "category": "Gold",
+    "discountType": "Percentage",
+    "discountValue": "20% OFF",
+    "discountValueNumeric": 20,
+    "price": 50000,
+    "productTitle": "Mini Half Tennis Bracelet With 2 CTW Marquise Cut Lab-Grown Diamonds In 14K Yellow Gold",
+    "description": "Flat 20% off on Gold Making Charges. Limited time offer on wedding collections.",
+    "validFrom": "2025-12-01",
+    "validUntil": "2026-03-31",
+    "videoUrl": "https://www.w3schools.com/html/mov_bbb.mp4",
+    "buyLink": "https://www.tanishq.co.in",
+    "image": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1000",
+    "isFeatured": true
+  },
+  {
+    "id": 2,
+    "shopName": "Kalyan Jewellers",
+    "location": {
+      "state": "Karnataka",
+      "city": "Bangalore",
+      "area": "Jayanagar",
+      "pincode": "560001",
+      "lat": 12.9716,
+      "lng": 77.5946
+    },
+    "category": "Diamond",
+    "discountType": "Flat Amount",
+    "discountValue": "₹5000 OFF",
+    "discountValueNumeric": 5000,
+    "price": 75000,
+    "productTitle": "Diamond Necklace Set in 18K Rose Gold",
+    "description": "Get flat ₹5000 off on diamond necklace sets above ₹50k.",
+    "validFrom": "2025-12-01",
+    "validUntil": "2026-02-25",
+    "videoUrl": "https://pixabay.com/videos/diamonds-jewels-rain-falling-3125/",
+    "buyLink": "https://www.kalyanjewellers.net",
+    "image": "https://images.unsplash.com/photo-1600119612651-0db31b3a7baa?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amV3ZWxzfGVufDB8fDB8fHww",
+    "isFeatured": true
+  },
+  {
+    "id": 3,
+    "shopName": "Malabar Gold & Diamonds",
+    "location": {
+      "state": "Delhi",
+      "city": "New Delhi",
+      "area": "Karol Bagh",
+      "pincode": "110001",
+      "lat": 28.6139,
+      "lng": 77.2090
+    },
+    "category": "Collections",
+    "discountType": "Percentage",
+    "discountValue": "25% OFF",
+    "discountValueNumeric": 25,
+    "price": 120000,
+    "productTitle": "Royal Gemstone Bridal Set",
+    "description": "Special discount on Gemstone collections. Explore the royal vibes.",
+    "validFrom": "2025-12-10",
+    "validUntil": "2026-04-10",
+    "videoUrl": "",
+    "buyLink": "https://www.malabargoldanddiamonds.com",
+    "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&q=80&w=1000",
+    "isFeatured": false
+  }
+]
