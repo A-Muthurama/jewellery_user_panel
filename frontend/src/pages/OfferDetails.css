@@ -409,23 +409,26 @@
 
 /* Responsive */
 @media (max-width: 900px) {
-    .details-wrapper {
-        padding: 15px 15px;
+    .desktop-only {
+        display: none !important;
     }
 
-    .top-nav-bar {
-        margin-bottom: 10px;
+    .mobile-only {
+        display: block !important;
     }
 
-    .title-banner-full {
-        padding: 15px 20px;
-        margin-bottom: 20px;
+    .mobile-title-main {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.8rem;
+        color: var(--c-text-dark);
+        margin-bottom: 5px;
+        text-align: center;
     }
 
     .media-grid-row {
         grid-template-columns: 1fr;
-        gap: 15px;
-        margin-bottom: 15px;
+        gap: 0;
+        margin-bottom: 5px;
     }
 
     .media-card-frame,
@@ -433,16 +436,22 @@
         aspect-ratio: 16/9;
         height: auto;
         min-height: auto;
+        margin-bottom: 10px;
+    }
+
+    .video-card-frame:last-child {
+        margin-bottom: 0;
     }
 
     .content-grid-row {
         grid-template-columns: 1fr;
         gap: 15px;
         margin-bottom: 20px;
+        margin-top: 0;
     }
 
     .shop-header-block {
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
 
     .shop-name-large {
@@ -458,21 +467,17 @@
         text-align: center;
         margin-bottom: 20px;
     }
-
-    .discount-hero-box {
-        padding: 20px;
-        margin-bottom: 25px;
-    }
-
-    .discount-big-text {
-        font-size: 2.2rem;
-    }
-
-    .page-main-title {
-        font-size: 1.4rem;
-        text-align: center;
-    }
 }
+
+/* Visibility Utilities */
+.mobile-only {
+    display: none;
+}
+
+.desktop-only {
+    display: block;
+}
+
 
 /* Modal */
 .modal-overlay {

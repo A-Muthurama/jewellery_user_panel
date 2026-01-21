@@ -116,7 +116,7 @@ const OfferDetails = () => {
           </Link>
         </div>
 
-        <div className="title-banner-full">
+        <div className="title-banner-full desktop-only">
           <h1 className="page-main-title">{offer.title || offer.shopName}</h1>
         </div>
 
@@ -143,6 +143,7 @@ const OfferDetails = () => {
           {/* LEFT CONTENT COLUMN */}
           <div className="content-left-col">
             <div className="shop-header-block">
+              <h1 className="mobile-title-main mobile-only">{offer.title || offer.shopName}</h1>
               <h2 className="shop-name-large">{offer.shopName}</h2>
               <div className="shop-location-row">
                 <MapPin size={16} />
