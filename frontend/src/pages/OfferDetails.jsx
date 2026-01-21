@@ -127,16 +127,14 @@ const OfferDetails = () => {
             {offer.category && <span className="cat-badge">{offer.category}</span>}
           </div>
 
-          <div className={`video-card-frame ${offer.videoUrl ? '' : 'empty-frame'}`}>
-            {offer.videoUrl ? (
+          {offer.videoUrl && (
+            <div className="video-card-frame">
               <video controls className="main-offer-video">
                 <source src={offer.videoUrl} type="video/mp4" />
                 Your browser does not support video.
               </video>
-            ) : (
-              <div className="empty-video-placeholder"></div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
 
         {/* ROW 3: CONTENT GRID (Shop Info Left | Sidebar Card Right) */}

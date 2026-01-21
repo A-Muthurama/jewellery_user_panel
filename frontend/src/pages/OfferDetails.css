@@ -96,7 +96,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
 }
 
 .media-card-frame,
@@ -409,20 +409,68 @@
 
 /* Responsive */
 @media (max-width: 900px) {
+    .details-wrapper {
+        padding: 15px 15px;
+    }
+
+    .top-nav-bar {
+        margin-bottom: 10px;
+    }
+
+    .title-banner-full {
+        padding: 15px 20px;
+        margin-bottom: 20px;
+    }
+
     .media-grid-row {
         grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 15px;
+    }
+
+    .media-card-frame,
+    .video-card-frame {
+        aspect-ratio: 16/9;
+        height: auto;
+        min-height: auto;
     }
 
     .content-grid-row {
         grid-template-columns: 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
     }
 
-    .page-main-title {
-        font-size: 1.4rem;
+    .shop-header-block {
+        margin-bottom: 10px;
     }
 
     .shop-name-large {
         font-size: 1.6rem;
+        text-align: center;
+    }
+
+    .shop-location-row {
+        justify-content: center;
+    }
+
+    .action-row-buttons {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .discount-hero-box {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .discount-big-text {
+        font-size: 2.2rem;
+    }
+
+    .page-main-title {
+        font-size: 1.4rem;
+        text-align: center;
     }
 }
 
