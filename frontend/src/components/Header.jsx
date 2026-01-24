@@ -66,7 +66,7 @@ const Header = () => {
             </Link>
           ))}
           <button className="btn-vendor" onClick={() =>
-            window.open("https://vendor-panel-ashen.vercel.app/vendor/login", "_blank")
+            window.open("https://vendor.jewellersparadise.com", "_blank")
           }>
             Join as Partner
           </button>
