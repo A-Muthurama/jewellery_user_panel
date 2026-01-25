@@ -13,8 +13,9 @@ const Header = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Offers", path: "/offers" },
-    { name: "Regulation", path: "/regulation" },
-    { name: "Trending news", path: "/trendingnews" },
+    //hide mode
+    // { name: "Regulation", path: "/regulation" },
+    // { name: "Trending news", path: "/trendingnews" },
   ];
 
   return (
@@ -73,7 +74,7 @@ const Header = () => {
         </div>
       </div>
 
-      <LiveRatesBar />
+      {/* <LiveRatesBar /> */}
     </header>
   );
 };

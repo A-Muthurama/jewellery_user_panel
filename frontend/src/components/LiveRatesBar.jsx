@@ -74,73 +74,77 @@ const LiveRatesBar = () => {
             <div className="rates-container">
                 <div className="rate-ticker">
 
-                    {/* Gold 22K */}
-                    <div className="rate-item">
-                        <span className="metal-label">Gold 22K</span>
-                        <div className="price-row">
-                            <div className="price-group">
-                                <span className="weight-label">1g</span>
-                                <span className="price-value">₹{formatPrice(rates.gold.price22k)}</span>
-                                {renderTrendIcon(rates.gold.trend)}
+                    {false && (
+                        <>
+                            {/* Gold 22K */}
+                            <div className="rate-item">
+                                <span className="metal-label">Gold 22K</span>
+                                <div className="price-row">
+                                    <div className="price-group">
+                                        <span className="weight-label">1g</span>
+                                        <span className="price-value">₹{formatPrice(rates.gold.price22k)}</span>
+                                        {renderTrendIcon(rates.gold.trend)}
+                                    </div>
+                                    <span className="price-separator">—</span>
+                                    <div className="price-group">
+                                        <span className="weight-label">8g</span>
+                                        <span className="price-value">
+                                            ₹{formatPrice(rates.gold.price22k * 8)}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <span className="price-separator">—</span>
-                            <div className="price-group">
-                                <span className="weight-label">8g</span>
-                                <span className="price-value">
-                                    ₹{formatPrice(rates.gold.price22k * 8)}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Gold 24K */}
-                    <div className="rate-item">
-                        <span className="metal-label">Gold 24K</span>
-                        <div className="price-row">
-                            <div className="price-group">
-                                <span className="weight-label">1g</span>
-                                <span className="price-value">₹{formatPrice(rates.gold.price24k)}</span>
+                            {/* Gold 24K */}
+                            <div className="rate-item">
+                                <span className="metal-label">Gold 24K</span>
+                                <div className="price-row">
+                                    <div className="price-group">
+                                        <span className="weight-label">1g</span>
+                                        <span className="price-value">₹{formatPrice(rates.gold.price24k)}</span>
+                                    </div>
+                                    <span className="price-separator">—</span>
+                                    <div className="price-group">
+                                        <span className="weight-label">8g</span>
+                                        <span className="price-value">
+                                            ₹{formatPrice(rates.gold.price24k * 8)}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <span className="price-separator">—</span>
-                            <div className="price-group">
-                                <span className="weight-label">8g</span>
-                                <span className="price-value">
-                                    ₹{formatPrice(rates.gold.price24k * 8)}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Silver */}
-                    <div className="rate-item">
-                        <span className="metal-label">Silver</span>
-                        <div className="price-row">
-                            <div className="price-group">
-                                <span className="weight-label">1g</span>
-                                <span className="price-value">₹{formatPrice(rates.silver.price)}</span>
-                                {renderTrendIcon(rates.silver.trend)}
+                            {/* Silver */}
+                            <div className="rate-item">
+                                <span className="metal-label">Silver</span>
+                                <div className="price-row">
+                                    <div className="price-group">
+                                        <span className="weight-label">1g</span>
+                                        <span className="price-value">₹{formatPrice(rates.silver.price)}</span>
+                                        {renderTrendIcon(rates.silver.trend)}
+                                    </div>
+                                    <span className="price-separator">—</span>
+                                    <div className="price-group">
+                                        <span className="weight-label">1kg</span>
+                                        <span className="price-value">
+                                            ₹{formatPrice(rates.silver.price * 1000)}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                            <span className="price-separator">—</span>
-                            <div className="price-group">
-                                <span className="weight-label">1kg</span>
-                                <span className="price-value">
-                                    ₹{formatPrice(rates.silver.price * 1000)}
-                                </span>
-                            </div>
-                        </div>
-                    </div>
 
-                    {/* Platinum */}
-                    <div className="rate-item">
-                        <span className="metal-label">Platinum</span>
-                        <div className="price-row">
-                            <div className="price-group">
-                                <span className="weight-label">1g</span>
-                                <span className="price-value">₹{formatPrice(rates.platinum.price)}</span>
-                                {renderTrendIcon(rates.platinum.trend)}
+                            {/* Platinum */}
+                            <div className="rate-item">
+                                <span className="metal-label">Platinum</span>
+                                <div className="price-row">
+                                    <div className="price-group">
+                                        <span className="weight-label">1g</span>
+                                        <span className="price-value">₹{formatPrice(rates.platinum.price)}</span>
+                                        {renderTrendIcon(rates.platinum.trend)}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        </>
+                    )}
 
                 </div>
             </div>
