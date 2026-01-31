@@ -215,10 +215,16 @@ const OfferDetails = () => {
       {showPolicyModal && (
         <div className="modal-overlay">
           <div className="modal-box">
-            <h3>Connect to Store Website</h3>
-            <p>You are being redirected to the seller's official website.</p>
+            <h3>Buyer Agreement</h3>
+            <ul className="buyer-agreement-list">
+              <li>We only list offers; final terms are decided by the store.</li>
+              <li>We do not verify purity</li>
+              <li>All responsibility is with the jewellery store</li>
+              <li>Platform does not handle payments, refunds, or warranties</li>
+              <li>Refunds, Returns & After-Sales are all governed by store policy</li>
+            </ul>
             <p className="policy-disclaimer">
-              By clicking "Proceed", you agree to our terms and acknowledge that transactions on the third-party site are subject to their policies.
+              By clicking "Proceed", you agree to the above terms and acknowledge that transactions on the store website are subject to their specific policies.
             </p>
             <div className="modal-actions">
               <button className="cancel-btn" onClick={() => setShowPolicyModal(false)}>Cancel</button>

@@ -531,3 +531,30 @@
     background: var(--c-plum-med);
     color: #fff;
 }
+
+/* Buyer Agreement List Styles */
+.buyer-agreement-list {
+    text-align: left;
+    margin: 20px 0;
+    padding: 0 10px 0 20px;
+    list-style-type: none;
+}
+
+.buyer-agreement-list li {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 12px;
+    position: relative;
+    line-height: 1.4;
+}
+
+.buyer-agreement-list li::before {
+    content: "•";
+    color: var(--c-gold);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+    font-size: 1.2rem;
+    vertical-align: middle;
+}
