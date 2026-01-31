@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://jewellery-user-panel-1.onrender.com/api/:path*"
+      "destination": "https://api.jewellersparadise.com/api/:path*"
     },
     {
       "source": "/(.*)",
