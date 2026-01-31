@@ -18,7 +18,7 @@ const Terms = () => {
                         Last updated: January 2026
                     </p>
                     <p>
-                        Welcome to Project J (“Platform”, “we”, “our”, or “us”). These Terms & Conditions (“Terms”) govern your access to and use of our online platform, which enables jewellery stores to register and publish gold jewellery offers and discounts, and allows users to view and explore such offers.
+                        Welcome to JEWELLERS PARADISE (“Platform”, “we”, “our”, or “us”). These Terms & Conditions (“Terms”) govern your access to and use of our online platform, which enables jewellery stores to register and publish gold jewellery offers and discounts, and allows users to view and explore such offers.
                     </p>
                     <p>
                         By accessing or using the Platform, you agree to be bound by these Terms. If you do not agree, please do not use the Platform.
@@ -27,7 +27,7 @@ const Terms = () => {
                     <hr className="divider" />
 
                     <h3>1. Nature of the Platform</h3>
-                    <p>Project J is an online listing and discovery platform only. We:</p>
+                    <p>JEWELLERS PARADISE is an online listing and discovery platform only. We:</p>
                     <ul>
                         <li>Do not sell gold or jewellery</li>
                         <li>Do not set prices or discounts</li>
@@ -143,7 +143,7 @@ const Terms = () => {
 
                     <h3>12. Indemnification</h3>
                     <p>
-                        You agree to indemnify and hold harmless Project J, its owners, and affiliates from any claims, damages, losses, or expenses arising out of:
+                        You agree to indemnify and hold harmless JEWELLERS PARADISE, its owners, and affiliates from any claims, damages, losses, or expenses arising out of:
                     </p>
                     <ul>
                         <li>Your use of the Platform</li>
@@ -180,7 +180,7 @@ const Terms = () => {
                     </p>
                     <div className="contact-info">
                         <div className="contact-item">
-                            <strong>EMAIL:</strong> <a href="mailto:contact@projectj.com">contact@projectj.com</a>
+                            <strong>EMAIL:</strong> <a href="mailto:contact@jewellersparadise.com">contact@jewellersparadise.com</a>
                         </div>
                         <div className="contact-item">
                             <strong>LOCATION:</strong> India

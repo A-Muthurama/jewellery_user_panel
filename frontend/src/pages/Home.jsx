@@ -79,7 +79,7 @@ const Home = () => {
       </main>
 
       <section className="container section value-props">
-        <h2 className="section-title">Why Project J?</h2>
+        <h2 className="section-title">Why JEWELLERS PARADISE?</h2>
         <div className="props-grid">
           <div className="prop-item card-base">
             <h3 className="prop-title">Verified Stores</h3>

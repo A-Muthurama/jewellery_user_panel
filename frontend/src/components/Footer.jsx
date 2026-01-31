@@ -10,7 +10,12 @@ const Footer = () => {
                 <div className="footer-content">
                     {/* Column 1: Brand Info */}
                     <div className="footer-col">
-                        <h3>Project J</h3>
+                        <div className="pj-brand">
+                            <div className="pj-logo-wrapper">
+                                <img src="/icon.png" alt="Jewellers Paradise" className="pj-logo-icon" />
+                            </div>
+                            <span className="pj-brand-name">JEWELLERS PARADISE</span>
+                        </div>
                         <p className="brand-desc">
                             We’re building the world’s gold
                             Online marketplace connecting jewellery shops
@@ -46,7 +51,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Mail size={18} />
-                                <span>contact@projectj.com</span>
+                                <span>contact@jewellersparadise.com</span>
                             </li>
                         </ul>
 
@@ -65,7 +70,7 @@ const Footer = () => {
                 </div>
 
                 <div className="footer-bottom">
-                    <p>&copy; {new Date().getFullYear()} Project J. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} JEWELLERS PARADISE. All rights reserved.</p>
                 </div>
             </div>
         </footer >

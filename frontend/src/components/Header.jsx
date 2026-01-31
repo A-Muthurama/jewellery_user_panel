@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Gem } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import LiveRatesBar from "./LiveRatesBar";
 import "./Header.css";
 
@@ -21,9 +21,11 @@ const Header = () => {
   return (
     <header className="header">
       <div className="container header-content">
-        <Link to="/" className="logo">
-          <Gem color="var(--color-gold-primary)" size={32} />
-          Project J
+        <Link to="/" className="pj-brand">
+          <div className="pj-logo-wrapper">
+            <img src="/icon.png" alt="Jewellers Paradise" className="pj-logo-icon" />
+          </div>
+          <span className="pj-brand-name">JEWELLERS PARADISE</span>
         </Link>
 
         <nav className="nav-desktop">

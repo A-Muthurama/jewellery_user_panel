@@ -15,7 +15,7 @@ const About = () => {
 
                 <div className="legal-content">
                     <p className="intro-text">
-                        Project J is a curated platform dedicated exclusively to gold jewellery offers from trusted jewellers across India. We bring together verified stores and compelling deals in one refined destination, helping customers discover value without compromising on authenticity or elegance.
+                        JEWELLERS PARADISE is a curated platform dedicated exclusively to gold jewellery offers from trusted jewellers across India. We bring together verified stores and compelling deals in one refined destination, helping customers discover value without compromising on authenticity or elegance.
                     </p>
 
                     <p>

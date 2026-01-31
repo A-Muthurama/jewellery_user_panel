@@ -18,7 +18,7 @@ const Privacy = () => {
                         Last updated: January 2026
                     </p>
                     <p>
-                        Welcome to Project J (“we”, “our”, or “us”). We operate an online platform dedicated exclusively to gold jewellery offers and discounts, where registered jewellery stores can list their deals and users can discover them. Your privacy is important to us, and this Privacy Statement explains how we collect, use, disclose, and protect your information in accordance with applicable laws in India, including the Information Technology Act, 2000 and related rules.
+                        Welcome to JEWELLERS PARADISE (“we”, “our”, or “us”). We operate an online platform dedicated exclusively to gold jewellery offers and discounts, where registered jewellery stores can list their deals and users can discover them. Your privacy is important to us, and this Privacy Statement explains how we collect, use, disclose, and protect your information in accordance with applicable laws in India, including the Information Technology Act, 2000 and related rules.
                     </p>
 
                     <hr className="divider" />
@@ -142,7 +142,7 @@ const Privacy = () => {
                     </p>
                     <div className="contact-info">
                         <div className="contact-item">
-                            <strong>EMAIL:</strong> <a href="mailto:contact@projectj.com">contact@projectj.com</a>
+                            <strong>EMAIL:</strong> <a href="mailto:contact@jewellersparadise.com">contact@jewellersparadise.com</a>
                         </div>
                         <div className="contact-item">
                             <strong>LOCATION:</strong> India

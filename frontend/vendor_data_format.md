@@ -1,6 +1,6 @@
 # Vendor Information & Offer Data Format Specification
 
-This document defines the data requirements for vendors on the Project J platform. Vendors must provide both their shop profile information and individual offer details in the specified JSON format.
+This document defines the data requirements for vendors on the JEWELLERS PARADISE platform. Vendors must provide both their shop profile information and individual offer details in the specified JSON format.
 
 ## 1. Vendor Shop Profile (KYC & Profile)
 This data is required once during onboarding to set up the vendor's professional presence.
