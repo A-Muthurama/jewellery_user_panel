@@ -498,6 +498,22 @@
     width: 90%;
     max-width: 500px;
     text-align: center;
+    position: relative;
+    /* For the sponsored badge */
+}
+
+.sponsored-badge-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--c-gold);
+    color: #000;
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .policy-disclaimer {

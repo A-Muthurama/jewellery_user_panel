@@ -215,6 +215,7 @@ const OfferDetails = () => {
       {showPolicyModal && (
         <div className="modal-overlay">
           <div className="modal-box">
+            <span className="sponsored-badge-modal">Promoted / Sponsored</span>
             <h3>Buyer Agreement</h3>
             <ul className="buyer-agreement-list">
               <li>We only list offers; final terms are decided by the store.</li>
