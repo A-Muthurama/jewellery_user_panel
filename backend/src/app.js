@@ -36,13 +36,36 @@ app.use("/api/news", newsRoutes);
 app.use("/api/metal-prices", metalPriceRoutes);
 app.use("/api/public", offersRoutes); // Fulfills GET /api/public/offers requirement
 
-// ---------------- SERVE FRONTEND ----------------
+// Root route for API status
+app.get("/", (req, res) => {
+  res.json({
+    status: "success",
+    message: "Jewellers Paradise API is running",
+    endpoints: {
+      news: "/api/news",
+      metalPrices: "/api/metal-prices",
+      offers: "/api/public/offers"
+    }
+  });
+});
+
+// ---------------- SERVE FRONTEND (Optional) ----------------
 const frontendPath = path.join(__dirname, "../../frontend/dist");
+// Check if frontend exists before serving to avoid 404s on API-only deployments
 app.use(express.static(frontendPath));
 
-// Catch-all: send React frontend for all non-API routes
+// Catch-all: send React frontend for all non-API routes if index.html exists
 app.get("*", (req, res) => {
-  res.sendFile(path.join(frontendPath, "index.html"));
+  // Use res.sendFile with an error fallback
+  const indexPath = path.join(frontendPath, "index.html");
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      res.status(404).json({
+        status: "error",
+        message: "Route not found or frontend not deployed on this server"
+      });
+    }
+  });
 });
 
 export default app;
