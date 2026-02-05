@@ -169,7 +169,7 @@ const Terms = () => {
 
                     <h3>15. Governing Law and Jurisdiction</h3>
                     <p>
-                        These Terms shall be governed by and construed in accordance with the laws of India. Courts located in India shall have exclusive jurisdiction.
+                        These Terms shall be governed by and construed in accordance with the laws of India. Courts located in Chennai shall have exclusive jurisdiction.
                     </p>
 
                     <hr className="divider" />
