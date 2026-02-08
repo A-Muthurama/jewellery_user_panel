@@ -223,6 +223,7 @@ const OfferDetails = () => {
               <li>All responsibility is with the jewellery store</li>
               <li>Platform does not handle payments, refunds, or warranties</li>
               <li>Refunds, Returns & After-Sales are all governed by store policy</li>
+              <li>Platform is not responsible for disputes arising from this offer.</li>
             </ul>
             <p className="policy-disclaimer">
               By clicking "Proceed", you agree to the above terms and acknowledge that transactions on the store website are subject to their specific policies.

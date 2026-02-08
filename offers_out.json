@@ -1,0 +1,23 @@
+[
+  {
+    "id": 3,
+    "status": "PENDING",
+    "end_date": "2026-02-27T18:30:00.000Z",
+    "shop_name": "Kalyan jewellers",
+    "is_featured": true
+  },
+  {
+    "id": 2,
+    "status": "APPROVED",
+    "end_date": "2026-02-06T18:30:00.000Z",
+    "shop_name": "Malabar Gold",
+    "is_featured": true
+  },
+  {
+    "id": 1,
+    "status": "APPROVED",
+    "end_date": "2026-02-06T18:30:00.000Z",
+    "shop_name": "Malabar Gold",
+    "is_featured": true
+  }
+]
