@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -54,18 +54,6 @@ const Footer = () => {
                                 <span>contact@jewellersparadise.com</span>
                             </li>
                         </ul>
-
-                        <div className="social-links">
-                            <a href="#" className="social-icon" aria-label="Facebook">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="social-icon" aria-label="Instagram">
-                                <Instagram size={20} />
-                            </a>
-                            <a href="#" className="social-icon" aria-label="Twitter">
-                                <Twitter size={20} />
-                            </a>
-                        </div>
                     </div>
                 </div>
 
