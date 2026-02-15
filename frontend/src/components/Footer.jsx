@@ -47,11 +47,11 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Phone size={18} />
-                                <span>+1 234 567 8900</span>
+                                <span>+91 98400 26884</span>
                             </li>
                             <li>
                                 <Mail size={18} />
-                                <span>contact@jewellersparadise.com</span>
+                                <span>jewellersparadisej@gmail.com</span>
                             </li>
                         </ul>
                     </div>

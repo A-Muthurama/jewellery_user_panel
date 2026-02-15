@@ -11,12 +11,6 @@
     padding: 0 4rem;
 }
 
-@media (max-width: 768px) {
-    .offers-page .container {
-        padding: 0 1.5rem;
-    }
-}
-
 .page-title {
     font-size: 3.2rem;
     margin-bottom: 0.2rem;
@@ -65,11 +59,43 @@
 }
 
 @media (max-width: 768px) {
+    .offers-page .container {
+        padding: 0 1.5rem;
+    }
+
     .page-title {
         font-size: 2.2rem;
     }
 
     .offers-grid {
         gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .offers-page .container {
+        padding: 0 1rem;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .page-subtitle {
+        font-size: 0.95rem;
+        padding: 0 1rem;
+    }
+
+    .offers-header-hero {
+        padding: 2rem 0 1rem 0;
+    }
+
+    .offers-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+    }
+
+    .no-results {
+        padding: 4rem 1.5rem;
     }
 }

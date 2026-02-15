@@ -143,3 +143,52 @@
   color: var(--text-light);
   font-weight: 500;
 }
+
+@media (max-width: 768px) {
+  .regulation-header h1 {
+    font-size: 2rem;
+  }
+
+  .authority-grid {
+    gap: 1.5rem;
+  }
+
+  .authority-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .regulation-header {
+    margin-bottom: 2rem;
+  }
+
+  .regulation-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .regulation-header p {
+    font-size: 1rem;
+  }
+
+  .authority-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .highlight-item {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.5rem;
+    text-align: center;
+    align-items: center;
+  }
+
+  .highlight-item svg {
+    margin-top: 0;
+  }
+
+  .highlight-item h4 {
+    font-size: 1.1rem;
+  }
+}

@@ -48,17 +48,15 @@
 }
 
 .props-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 2.5rem;
-    text-align: center;
-    margin-top: 3rem;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 3rem auto 0;
 }
 
 .prop-item {
-    flex: 0 1 400px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -69,7 +67,7 @@
     background: linear-gradient(145deg, #ffffff, var(--bg-secondary));
     border: 1px solid var(--border-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-    min-height: 180px;
+    min-height: 150px;
     /* Enforce substantial height for square-ish shape */
 }
 
@@ -84,7 +82,7 @@
     margin-bottom: 1.25rem;
     color: var(--color-plum);
     /* Updated to Brand Identity */
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     /* Increased size back to old standard */
     font-family: var(--font-heading);
     /* Reverted font to Playfair Display */
@@ -93,7 +91,7 @@
 }
 
 .prop-item p {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     line-height: 1.7;
     color: var(--text-muted);
     /* Updated to theme muted */
@@ -192,5 +190,71 @@
         height: auto;
         min-height: 500px;
         padding: 4rem 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 6rem 1.5rem 4rem;
+        /* More space on top */
+    }
+
+    .hero-title {
+        font-size: 2rem;
+        /* Bold, stacked title */
+        margin-bottom: 1rem;
+        line-height: 1.1;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        padding: 0;
+        line-height: 1.4;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+        width: 100%;
+        max-width: 250px;
+        /* Keep buttons compact */
+        margin: 0 auto;
+    }
+
+    .hero-actions .btn-primary,
+    .hero-actions .btn-outline {
+        width: 100%;
+        text-align: center;
+        padding: 0.7rem;
+        font-size: 0.9rem;
+    }
+
+    .props-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 380px;
+        margin: 2.5rem auto 0;
+    }
+
+    .prop-item {
+        padding: 1.5rem;
+        min-height: 140px;
+    }
+
+    .prop-title {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .prop-item p {
+        font-size: 0.85rem;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 350px) {
+    .hero-title {
+        font-size: 1.6rem;
     }
 }

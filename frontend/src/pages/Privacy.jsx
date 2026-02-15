@@ -142,10 +142,13 @@ const Privacy = () => {
                     </p>
                     <div className="contact-info">
                         <div className="contact-item">
-                            <strong>EMAIL:</strong> <a href="mailto:contact@jewellersparadise.com">contact@jewellersparadise.com</a>
+                            <strong>EMAIL:</strong> <a href="mailto:jewellersparadisej@gmail.com">jewellersparadisej@gmail.com</a>
                         </div>
                         <div className="contact-item">
-                            <strong>LOCATION:</strong> India
+                            <strong>PHONE:</strong> <a href="tel:+919840026884">+91 98400 26884</a>
+                        </div>
+                        <div className="contact-item">
+                            <strong>LOCATION:</strong> Chennai,Tamil Nadu,India
                         </div>
                     </div>
                 </div>

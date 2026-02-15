@@ -199,7 +199,18 @@
         justify-content: center;
     }
 
+    .pj-brand {
+        justify-content: center;
+    }
 
+    .pj-brand-name {
+        font-size: 28px;
+        text-align: center;
+    }
+
+    .pj-logo-wrapper {
+        height: 40px;
+    }
 
     .brand-desc {
         margin: 0 auto;
