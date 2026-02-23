@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Frown } from 'lucide-react';
+import { ArrowRight, Frown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OfferCard from '../components/OfferCard';
 import { fetchOffers } from '../services/offerservice';
 import './Home.css';
@@ -8,6 +8,71 @@ import './Home.css';
 const Home = () => {
   const [featuredOffers, setFeaturedOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [posterStartIndex, setPosterStartIndex] = useState(0);
+  const [posterTransition, setPosterTransition] = useState(null);
+
+  const posters = [
+    '/poster_images/JewellersParadise-Poster1.png',
+    '/poster_images/JewellersParadise-Poster2.jpeg',
+    '/poster_images/JewellersParadise-Poster3.jpeg',
+    '/poster_images/JewellersParadise-Poster4.png',
+    '/poster_images/JewellersParadise-Poster5.png',
+  ];
+
+  const visiblePosterCount = 3;
+  const stepSize = 2;
+
+  const getPosterAt = (index) => {
+    const normalized = (index + posters.length) % posters.length;
+    return { src: posters[normalized], index: normalized };
+  };
+
+  const visiblePosters = Array.from({ length: visiblePosterCount }, (_, offset) =>
+    getPosterAt(posterStartIndex + offset)
+  );
+
+  const beginPosterTransition = (direction) => {
+    if (posterTransition || posters.length === 0) return;
+
+    if (direction === 'next') {
+      const items = [
+        ...visiblePosters,
+        ...Array.from({ length: stepSize }, (_, offset) =>
+          getPosterAt(posterStartIndex + visiblePosterCount + offset)
+        ),
+      ];
+      // Start at 0, then slide left by shift.
+      setPosterTransition({ direction, items, trackX: '0px' });
+      requestAnimationFrame(() => {
+        setPosterTransition({ direction, items, trackX: 'calc(-1 * var(--poster-shift))' });
+      });
+    } else {
+      const items = [
+        ...Array.from({ length: stepSize }, (_, offset) =>
+          getPosterAt(posterStartIndex - stepSize + offset)
+        ),
+        ...visiblePosters,
+      ];
+      // Start from shifted position so current posters are visible, then slide right to 0.
+      setPosterTransition({ direction, items, trackX: 'calc(-1 * var(--poster-shift))' });
+      requestAnimationFrame(() => {
+        setPosterTransition({ direction, items, trackX: '0px' });
+      });
+    }
+  };
+
+  const showPrevPosters = () => beginPosterTransition('prev');
+  const showNextPosters = () => beginPosterTransition('next');
+
+  const onPosterTransitionEnd = () => {
+    if (!posterTransition) return;
+    const direction = posterTransition.direction;
+    setPosterStartIndex((prev) => {
+      if (direction === 'next') return (prev + stepSize) % posters.length;
+      return (prev - stepSize + posters.length) % posters.length;
+    });
+    setPosterTransition(null);
+  };
 
   useEffect(() => {
     const loadFeatured = async () => {
@@ -39,6 +104,7 @@ const Home = () => {
       {/* Hero Section Merged Here - hero section*/}
       <section className="hero">
         <div className="hero-overlay"></div>
+        <div className="hero-badge">India's Jewellery Offers Hub</div>
         <div className="container hero-content">
           <h1 className="hero-title">Discover Exclusive Jewellery Offers</h1>
           <p className="hero-subtitle">
@@ -80,6 +146,49 @@ const Home = () => {
 
       <section className="container section value-props">
         <h2 className="section-title">Why JEWELLERS PARADISE?</h2>
+
+        <div className="posters-carousel" aria-label="Jewellers Paradise posters">
+          <div className="posters-window" role="group" aria-roledescription="carousel">
+            <div
+              className={posterTransition ? 'posters-track is-animating' : 'posters-track'}
+              style={{ ['--track-x']: posterTransition ? posterTransition.trackX : '0px', ['--step-size']: stepSize }}
+              onTransitionEnd={posterTransition ? onPosterTransitionEnd : undefined}
+            >
+              {(posterTransition ? posterTransition.items : visiblePosters).map((poster, i) => (
+                <div className="poster-frame" key={`${poster.src}-${poster.index}-${i}`}>
+                  <img
+                    className="poster-image"
+                    src={poster.src}
+                    alt={`Jewellers Paradise poster ${poster.index + 1}`}
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="carousel-edge left" aria-hidden="true"></div>
+            <div className="carousel-edge right" aria-hidden="true"></div>
+
+            <button
+              type="button"
+              className="carousel-arrow left"
+              onClick={showPrevPosters}
+              aria-label="Show previous posters"
+            >
+              <ChevronLeft size={26} />
+            </button>
+
+            <button
+              type="button"
+              className="carousel-arrow right"
+              onClick={showNextPosters}
+              aria-label="Show next posters"
+            >
+              <ChevronRight size={26} />
+            </button>
+          </div>
+        </div>
+
         <div className="props-grid">
           <div className="prop-item card-base">
             <h3 className="prop-title">Verified Stores</h3>
