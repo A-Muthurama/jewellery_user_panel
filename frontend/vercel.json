@@ -5,6 +5,10 @@
       "destination": "https://api.jewellersparadise.com/api/:path*"
     },
     {
+      "source": "/(robots.txt|sitemap.xml)",
+      "destination": "/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

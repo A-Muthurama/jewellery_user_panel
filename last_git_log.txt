@@ -1,0 +1,21 @@
+﻿git : remote: Permission to A-
+Muthurama/jewellery_user_panel
+.git denied to krishna-tech1.
+At line:1 char:1
++ git push origin main 2>&1 | 
+Out-File -FilePath 
+last_git_log.txt -Enco ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : 
+    NotSpecified: (remote: P  
+  ermiss... krishna-tech1.:   
+ String) [], RemoteExcepti    
+on
+    + FullyQualifiedErrorId : 
+    NativeCommandError
+ 
+fatal: unable to access 'https
+://github.com/A-Muthurama/jewe
+llery_user_panel.git/': The 
+requested URL returned error: 
+403
