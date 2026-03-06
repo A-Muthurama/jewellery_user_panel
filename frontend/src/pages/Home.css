@@ -23,6 +23,20 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
+.section-intro {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    text-align: left;
+    max-width: 800px;
+    margin: 0 0 3rem 0;
+    /* Align to the left instead of centering with auto */
+    line-height: 1.6;
+    font-family: var(--font-body);
+    font-style: normal;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
 .text-center {
     text-align: center;
     margin-bottom: 3rem;
@@ -188,34 +202,9 @@
     outline-offset: 3px;
 }
 
+/* Removed white corner shades to show full poster text */
 .carousel-edge {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 72px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-    pointer-events: none;
-}
-
-.carousel-edge.left {
-    left: 0;
-    background: rgba(250, 248, 245, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.0) 100%);
-    mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.0) 100%);
-}
-
-.carousel-edge.right {
-    right: 0;
-    background: rgba(250, 248, 245, 0.55);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    -webkit-mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.0) 100%);
-    mask-image: linear-gradient(to left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 35%, rgba(0, 0, 0, 0.0) 100%);
+    display: none;
 }
 
 
@@ -378,30 +367,29 @@
     }
 
     .posters-carousel {
-        --poster-gap: 10px;
+        --visible-count: 1.1;
+        /* Shows one full poster and a tiny peek of the next one */
+        --poster-gap: 12px;
     }
 
-    .carousel-edge {
-        width: 56px;
-    }
-
-    .carousel-arrow {
-        left: auto;
-        right: auto;
-        width: 44px;
-        height: 44px;
-    }
-
-    .carousel-arrow.left {
-        left: 8px;
-    }
-
-    .carousel-arrow.right {
-        right: 8px;
+    .poster-frame {
+        aspect-ratio: auto;
+        /* Allow poster to find its natural height */
+        height: 380px;
+        border-radius: 12px;
     }
 
     .poster-image {
+        object-fit: fill;
+        /* Ensure the whole poster is visible without cutting text */
         height: 100%;
+    }
+
+    .carousel-arrow {
+        width: 38px;
+        height: 38px;
+        background: rgba(212, 175, 55, 0.85);
+        /* Slightly transparent on mobile */
     }
 
     .prop-item {

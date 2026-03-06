@@ -146,6 +146,7 @@ const Home = () => {
 
       <section className="container section value-props">
         <h2 className="section-title">Why JEWELLERS PARADISE?</h2>
+        <p className="section-intro">Jewellers Paradise connects you with the finest collections across India, ensuring quality and value.</p>
 
         <div className="posters-carousel" aria-label="Jewellers Paradise posters">
           <div className="posters-window" role="group" aria-roledescription="carousel">

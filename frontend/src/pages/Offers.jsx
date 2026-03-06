@@ -12,6 +12,13 @@ const Offers = () => {
   const [error, setError] = useState(false);
   const [currentFilters, setCurrentFilters] = useState({});
 
+  // Update Page Title for SEO
+  useEffect(() => {
+    const city = currentFilters.city ? ` in ${currentFilters.city}` : ' Across India';
+    const category = currentFilters.category ? `${currentFilters.category} ` : '';
+    document.title = `${category}Jewellery Offers${city} | Jewellers Paradise`;
+  }, [currentFilters]);
+
   // Fetch offers whenever filters change
   useEffect(() => {
     const loadOffers = async (isBackground = false) => {
