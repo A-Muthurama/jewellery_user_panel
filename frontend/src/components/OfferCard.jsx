@@ -43,12 +43,7 @@ const OfferCard = ({ offer }) => {
   return (
     <div className="offer-card card-base" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
       <div className="card-image-wrapper">
-        <img
-          src={image}
-          alt={`${title} - ${shopName || 'Jewellers Paradise'}`}
-          className="offer-image"
-          loading="lazy"
-        />
+        <img src={image} alt={title || shopName} loading="lazy" className="offer-image" />
         <span className="category-badge">{category}</span>
         {discountLabel && <span className="discount-label-badge">{discountLabel}</span>}
       </div>

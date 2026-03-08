@@ -186,7 +186,7 @@ const Terms = () => {
                             <strong>PHONE:</strong> <a href="tel:+919840026884">+91 98400 26884</a>
                         </div>
                         <div className="contact-item">
-                            <strong>LOCATION:</strong> India
+                            <strong>LOCATION:</strong> Chennai, Tamil Nadu, India
                         </div>
                     </div>
                 </div>
