@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -52,6 +52,12 @@ const Footer = () => {
                             <li>
                                 <Mail size={18} />
                                 <span>jewellersparadisej@gmail.com</span>
+                            </li>
+                            <li>
+                                <Instagram size={20} />
+                                <a href="https://www.instagram.com/jewellersparadise/" target="_blank" rel="noopener noreferrer">
+                                    jewellersparadise
+                                </a>
                             </li>
                         </ul>
                     </div>
