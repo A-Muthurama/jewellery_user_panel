@@ -43,7 +43,7 @@ const Footer = () => {
                         <ul className="footer-links">
                             <li>
                                 <MapPin size={18} />
-                                <span>India</span>
+                                <span>Chennai, Tamil Nadu,  India</span>
                             </li>
                             <li>
                                 <Phone size={18} />
