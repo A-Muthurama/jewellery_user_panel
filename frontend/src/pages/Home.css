@@ -218,7 +218,7 @@
 .hero {
     position: relative;
     height: 80vh;
-    min-height: 500px;
+    min-height: 700px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -412,4 +412,94 @@
     .hero-title {
         font-size: 1.6rem;
     }
+}
+
+/* Advertisement Modal Styles */
+.ad-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(250, 248, 245, 0.85);
+    /* Theme light shade (var(--bg-primary) with opacity) */
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInAd 0.3s ease-out forwards;
+    padding: 1rem;
+}
+
+@keyframes fadeInAd {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.ad-modal {
+    position: relative;
+    max-width: 800px;
+    width: 95%;
+    background: transparent;
+    border-radius: 12px;
+    animation: zoomInAd 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes zoomInAd {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.ad-close-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 10000;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.ad-close-btn:hover {
+    transform: scale(1.1);
+    background-color: #f0f0f0;
+}
+
+.ad-close-btn:active {
+    transform: scale(0.95);
+}
+
+.ad-image-full {
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+    background: transparent;
 }

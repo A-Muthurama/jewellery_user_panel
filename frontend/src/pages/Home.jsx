@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Frown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Frown, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import OfferCard from '../components/OfferCard';
 import { fetchOffers } from '../services/offerservice';
 import './Home.css';
@@ -10,6 +10,48 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [posterStartIndex, setPosterStartIndex] = useState(0);
   const [posterTransition, setPosterTransition] = useState(null);
+  const [showAd, setShowAd] = useState(false);
+  const [adPoster, setAdPoster] = useState('');
+  const [adIndex, setAdIndex] = useState(0);
+  const [hasShownAd, setHasShownAd] = useState(false);
+  const scrollTriggerRef = useRef(null);
+
+  const adsList = ['/custom/Poster1.png', '/custom/Poster2.png'];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Trigger ad when value-props section is reached, only once
+        if (entries[0].isIntersecting && !hasShownAd) {
+          setAdPoster(adsList[0]);
+          setShowAd(true);
+          setHasShownAd(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (scrollTriggerRef.current) {
+      observer.observe(scrollTriggerRef.current);
+    }
+
+    return () => {
+      if (scrollTriggerRef.current) {
+        observer.unobserve(scrollTriggerRef.current);
+      }
+    };
+  }, [hasShownAd]);
+
+  const handleCloseAd = () => {
+    // Show one by one: switch to next poster if available
+    if (adIndex < adsList.length - 1) {
+      const nextIndex = adIndex + 1;
+      setAdIndex(nextIndex);
+      setAdPoster(adsList[nextIndex]);
+    } else {
+      setShowAd(false);
+    }
+  };
 
   const posters = [
     '/poster_images/JewellersParadise-Poster1.png',
@@ -101,6 +143,17 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      {showAd && (
+        <div className="ad-overlay" onClick={handleCloseAd}>
+          <div className="ad-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="ad-close-btn" onClick={handleCloseAd} aria-label="Close Advertisement">
+              <X size={20} />
+            </button>
+            <img src={adPoster} alt="Advertisement" className="ad-image-full" />
+          </div>
+        </div>
+      )}
+
       {/* Hero Section Merged Here - hero section*/}
       <section className="hero">
         <div className="hero-overlay"></div>
@@ -144,7 +197,7 @@ const Home = () => {
         </div>
       </main>
 
-      <section className="container section value-props">
+      <section className="container section value-props" ref={scrollTriggerRef}>
         <h2 className="section-title">Why JEWELLERS PARADISE?</h2>
         <p className="section-intro">Jewellers Paradise connects you with the finest collections across India, ensuring quality and value.</p>
 
