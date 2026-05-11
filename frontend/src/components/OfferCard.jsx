@@ -7,7 +7,7 @@ const OfferCard = ({ offer }) => {
   const navigate = useNavigate();
   const {
     id, title, shopName, location, category,
-    discountValue, discountValueNumeric, discountLabel, validFrom, validUntil, image, likeCount, discountType
+    discountValue, discountValueNumeric, discountLabel, validFrom, validUntil, image, likeCount, viewCount, discountType
   } = offer;
 
   const formatDate = (dateString) => {
@@ -62,7 +62,8 @@ const OfferCard = ({ offer }) => {
             <Tag size={14} />
             <span>{discountType || 'Offer'}</span>
           </div>
-          <div className="meta-item-v2" style={{ marginLeft: 'auto' }}>
+          <div className="meta-item-v2" style={{ marginLeft: 'auto', display: 'flex', gap: '8px' }}>
+            <span style={{ fontSize: '0.85rem' }}>👁️ {viewCount || 0}</span>
             <span style={{ fontSize: '0.85rem' }}>❤️ {likeCount || 0}</span>
           </div>
         </div>
@@ -71,7 +72,9 @@ const OfferCard = ({ offer }) => {
           <div className="location-info-v2">
             <div className="location-text-v2">
               <MapPin size={16} color="var(--color-gold-primary)" />
-              {location.city}
+              {location.country && location.country !== 'India' 
+                ? `${location.city ? location.city + ', ' : ''}${location.country}` 
+                : location.city}
             </div>
           </div>
           <button className="directions-btn-v2" onClick={handleGetDirections}>

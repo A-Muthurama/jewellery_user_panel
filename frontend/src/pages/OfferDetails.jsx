@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchOfferById, likeOffer } from '../services/offerservice';
-import { MapPin, Share2, Calendar, Navigation, ArrowLeft, ThumbsUp, Clock } from 'lucide-react';
+import { fetchOfferById, likeOffer, viewOffer } from '../services/offerservice';
+import { MapPin, Share2, Calendar, Navigation, ArrowLeft, ThumbsUp, Clock, Eye } from 'lucide-react';
 import './OfferDetails.css';
 
 const OfferDetails = () => {
@@ -12,6 +12,7 @@ const OfferDetails = () => {
   const [error, setError] = useState('');
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [viewCount, setViewCount] = useState(0);
   const [showPolicyModal, setShowPolicyModal] = useState(false);
 
   useEffect(() => {
@@ -24,8 +25,18 @@ const OfferDetails = () => {
         } else {
           setOffer(data);
           setLikeCount(data.likeCount || 0);
+          setViewCount(data.viewCount || 0);
           if (localStorage.getItem(`liked_${id}`)) {
             setLiked(true);
+          }
+          
+          if (!localStorage.getItem(`viewed_${id}`)) {
+            viewOffer(id).then(res => {
+              if (res && res.viewCount !== undefined) {
+                setViewCount(res.viewCount);
+                localStorage.setItem(`viewed_${id}`, 'true');
+              }
+            });
           }
         }
       } catch (err) {
@@ -151,12 +162,16 @@ const OfferDetails = () => {
               </div>
             </div>
 
-            {/* Like Button Row */}
+            {/* Like and View Button Row */}
             <div className="action-row-buttons">
               <button className={`like-pill-btn ${liked ? 'active' : ''}`} onClick={handleLike}>
                 <ThumbsUp size={18} fill={liked ? "currentColor" : "none"} />
                 <span>{likeCount} Likes</span>
               </button>
+              <div className="view-pill-btn">
+                <Eye size={18} />
+                <span>{viewCount} Views</span>
+              </div>
             </div>
 
             {/* Discount Box */}

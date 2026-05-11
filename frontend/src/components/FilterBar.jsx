@@ -1,11 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { State, City } from 'country-state-city';
-import { Search, Filter, ArrowUpDown, ChevronDown, ChevronUp } from 'lucide-react';
+import { Search, Filter, ChevronDown, ChevronUp } from 'lucide-react';
 import SearchableSelect from './SearchableSelect';
 import './FilterBar.css';
 
+// Top countries for quick access, rest alphabetical
+const COUNTRY_LIST = [
+  "India", "United States", "United Kingdom", "United Arab Emirates",
+  "Australia", "Canada", "Singapore", "Germany", "France", "Japan",
+  "Saudi Arabia", "Qatar", "Kuwait", "Bahrain", "Oman",
+  "South Africa", "Malaysia", "Sri Lanka", "Bangladesh", "Nepal",
+  "Afghanistan", "Albania", "Algeria", "Argentina", "Austria", "Azerbaijan",
+  "Belarus", "Belgium", "Bolivia", "Brazil", "Bulgaria",
+  "Cambodia", "Chile", "China", "Colombia", "Croatia", "Czech Republic",
+  "Denmark", "Egypt", "Estonia", "Ethiopia", "Finland",
+  "Ghana", "Greece", "Hungary", "Iceland", "Indonesia", "Iran", "Iraq",
+  "Ireland", "Israel", "Italy", "Jamaica", "Jordan", "Kazakhstan", "Kenya",
+  "Latvia", "Lebanon", "Libya", "Lithuania", "Luxembourg",
+  "Madagascar", "Mexico", "Moldova", "Mongolia", "Morocco", "Myanmar",
+  "Namibia", "Netherlands", "New Zealand", "Nigeria", "Norway",
+  "Pakistan", "Panama", "Peru", "Philippines", "Poland", "Portugal",
+  "Romania", "Russia", "Rwanda", "Senegal", "Serbia", "Slovakia",
+  "Slovenia", "Somalia", "South Korea", "Spain", "Sudan", "Sweden",
+  "Switzerland", "Syria", "Taiwan", "Tanzania", "Thailand", "Tunisia",
+  "Turkey", "Uganda", "Ukraine", "Uruguay", "Uzbekistan",
+  "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+];
+
 const FilterBar = ({ categories, onFilterChange }) => {
   const [filters, setFilters] = useState({
+    country: 'India',
     state: '',
     city: '',
     pincode: '',
@@ -15,28 +39,17 @@ const FilterBar = ({ categories, onFilterChange }) => {
     distance: 50
   });
 
-  const [states, setStates] = useState([]);
   const [cities, setCities] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Load all Indian states
+  // Load cities when state changes (India only)
   useEffect(() => {
-    const indianStates = State.getStatesOfCountry('IN')
-      .map(s => ({ label: s.name, value: s.name, isoCode: s.isoCode }));
-    setStates(indianStates);
-    setCities([]); // Reset cities initially
-  }, []);
-
-  // Load cities when state changes
-  useEffect(() => {
-    if (filters.state) {
-      // Find the state object to get isoCode (assuming filters.state stores the name)
+    if (filters.country === 'India' && filters.state) {
       const allStates = State.getStatesOfCountry('IN');
       const selectedState = allStates.find(s => s.name === filters.state);
-
       if (selectedState) {
         const stateCities = City.getCitiesOfState('IN', selectedState.isoCode)
-          .map(c => c.name) // Map to names directly
+          .map(c => c.name)
           .sort((a, b) => a.localeCompare(b));
         setCities(stateCities);
       } else {
@@ -45,17 +58,15 @@ const FilterBar = ({ categories, onFilterChange }) => {
     } else {
       setCities([]);
     }
-  }, [filters.state]);
-
-  // Pincode is now a text input, so no need for availablePincodes logic
-  useEffect(() => {
-    // Optional: clear pincode if city changes?
-    // For now, we leave it as user might want to search pincode without re-selecting
-  }, [filters.city]);
+  }, [filters.state, filters.country]);
 
   const handleChange = (name, value) => {
-    const updated = { ...filters, [name]: value };
+    let updated = { ...filters, [name]: value };
 
+    // When country changes, reset location sub-filters
+    if (name === 'country') {
+      updated = { ...updated, state: '', city: '', pincode: '' };
+    }
     if (name === 'state') {
       updated.city = '';
       updated.pincode = '';
@@ -67,6 +78,8 @@ const FilterBar = ({ categories, onFilterChange }) => {
     setFilters(updated);
     onFilterChange(updated);
   };
+
+  const isIndia = filters.country === 'India';
 
   return (
     <div className="filter-bar-container card-base">
@@ -101,31 +114,57 @@ const FilterBar = ({ categories, onFilterChange }) => {
           <div className="filter-section">
             <h4 className="filter-section-title">Location</h4>
 
-            <div className="grid-3">
+            {/* Country selector — always visible */}
+            <div style={{ marginBottom: '12px' }}>
               <SearchableSelect
-                options={State.getStatesOfCountry('IN').map(s => s.name)}
-                value={filters.state}
-                onChange={(val) => handleChange('state', val)}
-                placeholder="State"
-              />
-
-              <SearchableSelect
-                options={cities}
-                value={filters.city}
-                onChange={(val) => handleChange('city', val)}
-                placeholder="Select City"
-                disabled={!filters.state}
-              />
-
-              <input
-                type="text"
-                placeholder="Enter Pincode"
-                value={filters.pincode}
-                onChange={(e) => handleChange('pincode', e.target.value.replace(/\D/g, ''))}
-                className="filter-input"
-                disabled={!filters.city}
+                options={COUNTRY_LIST}
+                value={filters.country}
+                onChange={(val) => handleChange('country', val)}
+                placeholder="🌍 Country"
               />
             </div>
+
+            {/* India sub-filters: State → City → Pincode */}
+            {isIndia && (
+              <div className="grid-3">
+                <SearchableSelect
+                  options={State.getStatesOfCountry('IN').map(s => s.name)}
+                  value={filters.state}
+                  onChange={(val) => handleChange('state', val)}
+                  placeholder="State"
+                />
+
+                <SearchableSelect
+                  options={cities}
+                  value={filters.city}
+                  onChange={(val) => handleChange('city', val)}
+                  placeholder="Select City"
+                  disabled={!filters.state}
+                />
+
+                <input
+                  type="text"
+                  placeholder="Enter Pincode"
+                  value={filters.pincode}
+                  onChange={(e) => handleChange('pincode', e.target.value.replace(/\D/g, ''))}
+                  className="filter-input"
+                  disabled={!filters.city}
+                  maxLength={6}
+                />
+              </div>
+            )}
+
+            {/* Non-India: just show a note */}
+            {!isIndia && (
+              <p style={{
+                fontSize: '13px',
+                color: '#888',
+                margin: '4px 0 0',
+                fontStyle: 'italic'
+              }}>
+                Showing all offers from vendors in <strong>{filters.country}</strong>
+              </p>
+            )}
           </div>
 
           {/* Preferences */}
@@ -133,18 +172,20 @@ const FilterBar = ({ categories, onFilterChange }) => {
             <h4 className="filter-section-title">Preferences</h4>
 
             <div className="grid-2">
-              <div className="control-group">
-                <label>
-                  Distance: <b>{filters.distance} km</b>
-                </label>
-                <input
-                  type="range"
-                  min="1"
-                  max="100"
-                  value={filters.distance}
-                  onChange={(e) => handleChange('distance', Number(e.target.value))}
-                />
-              </div>
+              {isIndia && (
+                <div className="control-group">
+                  <label>
+                    Distance: <b>{filters.distance} km</b>
+                  </label>
+                  <input
+                    type="range"
+                    min="1"
+                    max="100"
+                    value={filters.distance}
+                    onChange={(e) => handleChange('distance', Number(e.target.value))}
+                  />
+                </div>
+              )}
 
               <div className="control-group">
                 <label>Sort By</label>

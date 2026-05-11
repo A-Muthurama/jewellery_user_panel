@@ -4,6 +4,7 @@ import {
   getAllOffers,
   getOfferById,
   toggleLike,
+  incrementView,
   createOffer,
   updateOffer,
   deleteOffer
@@ -16,6 +17,7 @@ const router = express.Router();
 router.get("/offers", getOffers);
 router.get("/offers/:id", getOfferById);
 router.put("/offers/:id/like", toggleLike);
+router.put("/offers/:id/view", incrementView);
 
 // Admin routes (All offers, status management)
 router.get("/admin/all", getAllOffers);

@@ -89,6 +89,7 @@ export const initializeDatabase = async () => {
         buy_link TEXT,
         status VARCHAR(20) DEFAULT 'pending',
         like_count INTEGER DEFAULT 0,
+        view_count INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
@@ -99,6 +100,7 @@ export const initializeDatabase = async () => {
         { name: 'discount_label', type: 'VARCHAR(100)' },
         { name: 'discount_value_numeric', type: 'NUMERIC' },
         { name: 'like_count', type: 'INTEGER DEFAULT 0' },
+        { name: 'view_count', type: 'INTEGER DEFAULT 0' },
         { name: 'poster_url', type: 'TEXT' }
       ]
     };

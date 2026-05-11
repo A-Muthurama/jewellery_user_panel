@@ -6,6 +6,7 @@ export const fetchOffers = async (filters = {}) => {
   try {
     const params = new URLSearchParams();
     if (filters.category) params.append('category', filters.category);
+    if (filters.country) params.append('country', filters.country);
     if (filters.state) params.append('state', filters.state);
     if (filters.city) params.append('city', filters.city);
     if (filters.pincode) params.append('pincode', filters.pincode);
@@ -53,6 +54,24 @@ export const likeOffer = async (id, action = 'like') => {
     return await response.json();
   } catch (error) {
     console.error("Error liking offer:", error);
+    return null;
+  }
+};
+
+export const viewOffer = async (id) => {
+  try {
+    const response = await fetch(`${PUBLIC_API_URL}/${id}/view`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error("Failed to increment view");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error viewing offer:", error);
     return null;
   }
 };

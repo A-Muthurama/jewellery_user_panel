@@ -15,21 +15,23 @@ const mapOfferRow = (row) => ({
     state: row.state || "Tamil Nadu",
     city: row.city || "Chennai",
     pincode: row.pincode || "",
-    address: row.address || ""
+    address: row.address || "",
+    country: row.country || "India"
   },
   validUntil: row.end_date,
   validFrom: row.start_date,
   createdAt: row.created_at || new Date(),
   videoUrl: row.video_url || '',
   buyLink: row.buy_link || '',
-  likeCount: parseInt(row.like_count || 0)
+  likeCount: parseInt(row.like_count || 0),
+  viewCount: parseInt(row.view_count || 0)
 });
 
 // GET /api/public/offers
 // Returns only APPROVED and non-expired offers
 export const getOffers = async (req, res) => {
   try {
-    const { category, state, city, pincode, sort } = req.query;
+    const { category, country, state, city, pincode, sort } = req.query;
 
     let selectFields = [
       'o.id',
@@ -50,7 +52,9 @@ export const getOffers = async (req, res) => {
       'v.city',
       'v.address',
       'v.pincode',
-      'o.discount_value_numeric'
+      'v.country',
+      'o.discount_value_numeric',
+      'o.view_count'
     ].join(', ');
 
     let query = `
@@ -68,6 +72,10 @@ export const getOffers = async (req, res) => {
     if (category && category !== 'All') {
       params.push(category);
       query += ` AND o.category = $${params.length}`;
+    }
+    if (country) {
+      params.push(country);
+      query += ` AND v.country = $${params.length}`;
     }
     if (state) {
       params.push(state);
@@ -123,7 +131,9 @@ export const getOfferById = async (req, res) => {
       'v.city',
       'v.address',
       'v.pincode',
-      'o.discount_value_numeric'
+      'v.country',
+      'o.discount_value_numeric',
+      'o.view_count'
     ].join(', ');
 
     const result = await pool.query(`
@@ -172,6 +182,30 @@ export const toggleLike = async (req, res) => {
   } catch (error) {
     console.error("Error toggling like:", error.message);
     res.status(500).json({ error: "Failed to update like count" });
+  }
+};
+
+// PUT /api/public/offers/:id/view
+export const incrementView = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const offerId = parseInt(id);
+
+    if (isNaN(offerId)) {
+      return res.status(400).json({ error: "Invalid offer ID" });
+    }
+
+    const query = "UPDATE offers SET view_count = COALESCE(view_count, 0) + 1 WHERE id = $1 RETURNING view_count";
+    const result = await pool.query(query, [offerId]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ error: "Offer not found" });
+    }
+
+    res.json({ id: offerId, viewCount: result.rows[0].view_count });
+  } catch (error) {
+    console.error("Error incrementing view:", error.message);
+    res.status(500).json({ error: "Failed to update view count" });
   }
 };
 

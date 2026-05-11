@@ -177,6 +177,9 @@
 
 .action-row-buttons {
     margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .like-pill-btn {
@@ -202,6 +205,18 @@
     background: #FFF9F0;
     border-color: var(--c-gold);
     color: var(--c-gold-dim);
+}
+
+.view-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--c-text-gray);
+    border-radius: 50px;
+    user-select: none;
 }
 
 .discount-hero-box {
