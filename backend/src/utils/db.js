@@ -94,6 +94,26 @@ export const initializeDatabase = async () => {
       );
     `);
 
+    // 3. Ensure offer_views table exists (for server-side IP deduplication)
+    // Drop old table if it has the old 'viewed_at' column to migration to the primary-key day schema
+    await pool.query(`
+      DO $$
+      BEGIN
+        IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name='offer_views' AND column_name='viewed_at') THEN
+          DROP TABLE IF EXISTS offer_views CASCADE;
+        END IF;
+      END $$;
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS offer_views (
+        offer_id INTEGER REFERENCES offers(id) ON DELETE CASCADE,
+        ip_address VARCHAR(100) NOT NULL,
+        view_date DATE DEFAULT CURRENT_DATE,
+        PRIMARY KEY (offer_id, ip_address, view_date)
+      );
+    `);
+
     // 3. Add any missing columns to existing tables (Safety check for migration)
     const tableColumns = {
       offers: [

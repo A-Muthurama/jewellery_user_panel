@@ -1,20 +1,20 @@
 {
-  "timestamp": 1778499582991,
+  "timestamp": 1778992921050,
   "data": {
     "gold": {
-      "price22k": 15085,
-      "price24k": 16468,
+      "price22k": 14745,
+      "price24k": 16097,
       "trend": "stable"
     },
     "silver": {
-      "price": 273.3,
+      "price": 262.36,
       "trend": "stable"
     },
     "platinum": {
-      "price": 7003,
+      "price": 6849,
       "trend": "stable"
     },
-    "updatedAt": "2026-05-11T11:39:42.991Z",
+    "updatedAt": "2026-05-17T04:42:01.050Z",
     "isFallback": false
   }
 }

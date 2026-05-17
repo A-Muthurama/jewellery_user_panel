@@ -30,14 +30,14 @@ const OfferDetails = () => {
             setLiked(true);
           }
           
-          if (!localStorage.getItem(`viewed_${id}`)) {
-            viewOffer(id).then(res => {
-              if (res && res.viewCount !== undefined) {
-                setViewCount(res.viewCount);
-                localStorage.setItem(`viewed_${id}`, 'true');
-              }
-            });
-          }
+          // Fire view event on every page load — server handles IP-based deduplication
+          viewOffer(id).then(res => {
+            if (res && res.viewCount !== undefined) {
+              setViewCount(res.viewCount);
+            }
+          }).catch(() => {
+            // Silently fail — displayed count from fetch remains
+          });
         }
       } catch (err) {
         setError('Error fetching offer details');

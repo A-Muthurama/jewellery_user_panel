@@ -186,6 +186,8 @@ export const toggleLike = async (req, res) => {
 };
 
 // PUT /api/public/offers/:id/view
+// Server-side IP deduplication: only 1 view per IP per offer per calendar day (UTC)
+// Guaranteed race-condition proof by using database-level UNIQUE PRIMARY KEY constraint
 export const incrementView = async (req, res) => {
   try {
     const { id } = req.params;
@@ -195,14 +197,53 @@ export const incrementView = async (req, res) => {
       return res.status(400).json({ error: "Invalid offer ID" });
     }
 
-    const query = "UPDATE offers SET view_count = COALESCE(view_count, 0) + 1 WHERE id = $1 RETURNING view_count";
-    const result = await pool.query(query, [offerId]);
+    // Extract real client IP
+    const clientIp =
+      req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+      req.ip ||
+      req.connection?.remoteAddress ||
+      "unknown";
+
+    // Attempt to insert view. If already exists for (offer_id, ip_address, view_date), DO NOTHING.
+    const insertResult = await pool.query(
+      `INSERT INTO offer_views (offer_id, ip_address)
+       VALUES ($1, $2)
+       ON CONFLICT (offer_id, ip_address, view_date) DO NOTHING
+       RETURNING 1`,
+      [offerId, clientIp]
+    );
+
+    // If no row was inserted, it was already viewed today
+    if (insertResult.rows.length === 0) {
+      const current = await pool.query(
+        "SELECT view_count FROM offers WHERE id = $1",
+        [offerId]
+      );
+      if (current.rows.length === 0) {
+        return res.status(404).json({ error: "Offer not found" });
+      }
+      return res.json({
+        id: offerId,
+        viewCount: current.rows[0].view_count,
+        counted: false
+      });
+    }
+
+    // Successfully inserted -> Increment unique view count
+    const result = await pool.query(
+      "UPDATE offers SET view_count = COALESCE(view_count, 0) + 1 WHERE id = $1 RETURNING view_count",
+      [offerId]
+    );
 
     if (result.rowCount === 0) {
       return res.status(404).json({ error: "Offer not found" });
     }
 
-    res.json({ id: offerId, viewCount: result.rows[0].view_count });
+    res.json({
+      id: offerId,
+      viewCount: result.rows[0].view_count,
+      counted: true
+    });
   } catch (error) {
     console.error("Error incrementing view:", error.message);
     res.status(500).json({ error: "Failed to update view count" });

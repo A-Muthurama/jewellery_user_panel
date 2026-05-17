@@ -26,6 +26,7 @@ const OfferCard = ({ offer }) => {
     }
   };
 
+  // Just navigate — view counting happens on the detail page
   const handleCardClick = () => {
     navigate(`/offer/${id}`);
   };
