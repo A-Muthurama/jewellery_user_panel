@@ -132,7 +132,7 @@ const OfferDetails = () => {
         </div>
 
         {/* ROW 2: MEDIA GRID (Image Left | Video Right) */}
-        <div className="media-grid-row">
+        <div className={`media-grid-row ${!offer.videoUrl ? 'single-media' : ''}`}>
           <div className="media-card-frame">
             <img src={offer.image} alt={offer.shopName} className="main-offer-image" />
             {offer.category && <span className="cat-badge">{offer.category}</span>}
