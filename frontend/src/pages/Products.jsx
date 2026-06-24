@@ -147,7 +147,7 @@ const Products = () => {
         <div className="products-hero-content">
           <h1 className="products-hero-title">Best Deals, One Place</h1>
           <p className="products-hero-sub">
-            We bring you the finest jewellery offers from top platforms across
+            We bring you the finest product offers from top platforms across
             the web — handpicked, verified, and all in one place. Shop smarter,
             save more.
           </p>
@@ -162,36 +162,38 @@ const Products = () => {
       </section>
 
       {/* ── Grid / State ────────────────────────── */}
-      <section className="products-grid-section container">
-        {loading && (
-          <div className="products-state">
-            <Loader2 size={48} className="products-spinner" />
-            <p>Loading products…</p>
-          </div>
-        )}
+      <section className="products-grid-section">
+        <div className="container">
+          {loading && (
+            <div className="products-state">
+              <Loader2 size={48} className="products-spinner" />
+              <p>Loading products…</p>
+            </div>
+          )}
 
-        {!loading && error && (
-          <div className="products-state products-state--error">
-            <AlertCircle size={48} />
-            <p>{error}</p>
-          </div>
-        )}
+          {!loading && error && (
+            <div className="products-state products-state--error">
+              <AlertCircle size={48} />
+              <p>{error}</p>
+            </div>
+          )}
 
-        {!loading && !error && products.length === 0 && (
-          <div className="products-state">
-            <Package size={64} strokeWidth={1} />
-            <h3>No Products Yet</h3>
-            <p>The admin hasn't added any products yet. Check back soon!</p>
-          </div>
-        )}
+          {!loading && !error && products.length === 0 && (
+            <div className="products-state">
+              <Package size={64} strokeWidth={1} />
+              <h3>No Products Yet</h3>
+              <p>The admin hasn't added any products yet. Check back soon!</p>
+            </div>
+          )}
 
-        {!loading && !error && products.length > 0 && (
-          <div className="products-grid">
-            {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        )}
+          {!loading && !error && products.length > 0 && (
+            <div className="products-grid">
+              {products.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </main>
   );
