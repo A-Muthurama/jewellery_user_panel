@@ -12,6 +12,7 @@ import Terms from "./pages/Terms";
 import Regulation from "./pages/Regulation";
 import TrendingNews from "./pages/TrendingNews";
 import About from "./pages/About";
+import Products from "./pages/Products";
 import LiveRatesBar from "./components/LiveRatesBar";
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/regulation" element={<Regulation />} />
           <Route path="/trendingnews" element={<TrendingNews />} />
           <Route path="/about" element={<About />} />
+          <Route path="/products" element={<Products />} />
         </Routes>
         <Newsletter />
         <Footer />

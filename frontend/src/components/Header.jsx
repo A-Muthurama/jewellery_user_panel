@@ -13,6 +13,7 @@ const Header = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Offers", path: "/offers" },
+    { name: "Products", path: "/products" },
     //hide mode
     // { name: "Regulation", path: "/regulation" },
     // { name: "Trending news", path: "/trendingnews" },

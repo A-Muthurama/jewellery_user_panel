@@ -138,6 +138,19 @@ export const initializeDatabase = async () => {
       }
     }
 
+    // 4. Ensure products table exists
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS products (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        images TEXT[] DEFAULT '{}',
+        affiliate_url TEXT,
+        status VARCHAR(20) DEFAULT 'active',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     console.log("Database schema is synchronized and Cloud-Ready.");
   } catch (err) {
     console.error("Error during database initialization:", err.message);

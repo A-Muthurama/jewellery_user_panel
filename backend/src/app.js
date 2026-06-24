@@ -10,6 +10,7 @@ import { fileURLToPath } from "url";
 import newsRoutes from "./routes/news.routes.js";
 import metalPriceRoutes from "./routes/metalPrice.routes.js";
 import offersRoutes from "./routes/offers.routes.js";
+import productsRoutes from "./routes/products.routes.js";
 import { startPoller } from "./services/metalPoller.js";
 import { initializeDatabase } from "./utils/db.js";
 
@@ -35,6 +36,7 @@ startPoller(process.env.METAL_POLL_MS ? Number(process.env.METAL_POLL_MS) : 30 *
 app.use("/api/news", newsRoutes);
 app.use("/api/metal-prices", metalPriceRoutes);
 app.use("/api/public", offersRoutes); // Fulfills GET /api/public/offers requirement
+app.use("/api/public", productsRoutes); // Fulfills GET /api/public/products requirement
 
 // Root route for API status
 app.get("/", (req, res) => {
