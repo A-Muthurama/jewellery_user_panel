@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { fetchProducts } from "../services/products.service";
-import { ShoppingBag, ChevronLeft, ChevronRight, ExternalLink, Package, Loader2, AlertCircle } from "lucide-react";
+import { ShoppingBag, ChevronLeft, ChevronRight, ExternalLink, Package, Loader2, AlertCircle, Info } from "lucide-react";
 import "./Products.css";
 
 // ── Image Slider for a single product card ─────────────────────────────────
@@ -193,6 +193,18 @@ const Products = () => {
               ))}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* ── Affiliate Disclosure ───────────────── */}
+      <section className="products-disclosure-section">
+        <div className="container">
+          <div className="products-disclosure-box">
+            <Info size={15} className="products-disclosure-icon" />
+            <p className="products-disclosure-text">
+              This page contains affiliate links. If you purchase this product through the link provided, JewellersParadise may earn a small commission at no additional cost to you. This helps us continue bringing you the latest jewellery offers and recommendations from trusted brands across India. We only feature products from reputable jewellers and brands.
+            </p>
+          </div>
         </div>
       </section>
     </main>
