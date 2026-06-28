@@ -12,7 +12,7 @@ const mapProductRow = (row) => ({
 });
 
 // GET /api/public/products
-// Returns all products from the admin-managed "Product" table (Prisma PascalCase)
+// Returns all products from the admin-managed "Product" table
 export const getProducts = async (req, res) => {
   try {
     const result = await pool.query(
@@ -27,28 +27,6 @@ export const getProducts = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch products" });
   }
 };
-
-// GET /api/public/products/:id
-export const getProductById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const result = await pool.query(
-      `SELECT id, title, description, image1_url, image2_url, affiliate_url, created_at
-       FROM "Product" WHERE id = $1`,
-      [id]
-    );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Product not found" });
-    }
-
-    res.json(mapProductRow(result.rows[0]));
-  } catch (error) {
-    console.error("Error fetching product:", error.message);
-    res.status(500).json({ error: "Failed to fetch product" });
-  }
-};
-
 
 // GET /api/public/products/:id
 export const getProductById = async (req, res) => {

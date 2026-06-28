@@ -1,0 +1,225 @@
+/* ── Product Card ──────────────────────────────────────────────────────────── */
+.prod-card {
+  background: #ffffff;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(76, 15, 46, 0.04);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(76, 15, 46, 0.06);
+  position: relative;
+}
+
+.prod-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(224, 195, 133, 0.6); /* Ellen Accent Border */
+  box-shadow: 0 20px 40px rgba(76, 15, 46, 0.1);
+}
+
+/* ── Image Slider ──────────────────────────────────────────────────────────── */
+.prod-img-slider {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--bg-secondary);
+}
+
+.prod-img-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.prod-img-slide {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Placeholder when no image */
+.prod-img-placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  background: linear-gradient(135deg, #FAF4F7 0%, #FFFDF9 100%);
+  color: var(--color-plum);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(76, 15, 46, 0.05);
+}
+
+.prod-placeholder-icon {
+  color: var(--color-gold-primary, #D4AF37);
+  opacity: 0.85;
+}
+
+.prod-placeholder-text {
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-size: 0.82rem;
+}
+
+/* Slider Buttons */
+.prod-slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.85);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-plum);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  transition: background 0.2s ease, transform 0.2s ease;
+  z-index: 2;
+  opacity: 0;
+}
+
+.prod-img-slider:hover .prod-slider-btn {
+  opacity: 1;
+}
+
+.prod-slider-prev {
+  left: 10px;
+}
+
+.prod-slider-next {
+  right: 10px;
+}
+
+.prod-slider-btn:hover {
+  background: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+/* Dots */
+.prod-slider-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 2;
+}
+
+.prod-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  padding: 0;
+}
+
+.prod-dot.active {
+  background: #fff;
+  transform: scale(1.35);
+}
+
+/* ── Card Body ─────────────────────────────────────────────────────────────── */
+.prod-card-body {
+  padding: 1.4rem 1.4rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+
+.prod-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-plum);
+  line-height: 1.3;
+  margin: 0;
+}
+
+.prod-card-desc {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── Buy Now Button ────────────────────────────────────────────────────────── */
+.prod-buy-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, var(--color-plum), var(--color-plum-light));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(76, 15, 46, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.prod-buy-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.prod-buy-btn:hover::before {
+  opacity: 1;
+}
+
+.prod-buy-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(76, 15, 46, 0.35);
+}
+
+.prod-buy-btn:active {
+  transform: translateY(0);
+}
+
+.prod-buy-btn--disabled {
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.prod-buy-btn--disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.prod-buy-icon {
+  opacity: 0.75;
+  flex-shrink: 0;
+}

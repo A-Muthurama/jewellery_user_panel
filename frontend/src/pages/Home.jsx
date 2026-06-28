@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Frown, ChevronLeft, ChevronRight, X } from 'lucide-react';
 import OfferCard from '../components/OfferCard';
+import ProductCard from '../components/ProductCard';
 import { fetchOffers } from '../services/offerservice';
+import { fetchProducts } from '../services/products.service';
 import './Home.css';
 
 const Home = () => {
   const [featuredOffers, setFeaturedOffers] = useState([]);
+  const [featuredDeals, setFeaturedDeals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingDeals, setLoadingDeals] = useState(true);
   const [posterStartIndex, setPosterStartIndex] = useState(0);
   const [posterTransition, setPosterTransition] = useState(null);
   const [showAd, setShowAd] = useState(false);
@@ -141,6 +145,22 @@ const Home = () => {
     loadFeatured();
   }, []);
 
+  useEffect(() => {
+    const loadDeals = async () => {
+      try {
+        setLoadingDeals(true);
+        const data = await fetchProducts();
+        // Show first 3 deals
+        setFeaturedDeals(data.slice(0, 3));
+      } catch (err) {
+        console.error("Failed to load featured deals", err);
+      } finally {
+        setLoadingDeals(false);
+      }
+    };
+    loadDeals();
+  }, []);
+
   return (
     <div className="home-page">
       {showAd && (
@@ -174,6 +194,30 @@ const Home = () => {
 
       <main className="container section">
 
+        {/* Featured Deals Section */}
+        <div className="section-header">
+          <h2 className="section-title">Featured Deals</h2>
+          <Link to="/products" className="view-all-link">
+            View All <ArrowRight size={18} />
+          </Link>
+        </div>
+
+        <div className="offers-grid" style={{ marginBottom: '4rem' }}>
+          {loadingDeals ? (
+            <p>Loading featured deals...</p>
+          ) : featuredDeals.length > 0 ? (
+            featuredDeals.map(product => (
+              <ProductCard key={product.id} product={product} />
+            ))
+          ) : (
+            <div className="no-results" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '2rem' }}>
+              <Frown size={48} />
+              <p>No featured deals available right now.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Featured Offers Section */}
         <div className="section-header">
           <h2 className="section-title">Featured Offers</h2>
           <Link to="/offers" className="view-all-link">
