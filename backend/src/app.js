@@ -11,6 +11,7 @@ import newsRoutes from "./routes/news.routes.js";
 import metalPriceRoutes from "./routes/metalPrice.routes.js";
 import offersRoutes from "./routes/offers.routes.js";
 import productsRoutes from "./routes/products.routes.js";
+import storesRoutes from "./routes/stores.routes.js";
 import { startPoller } from "./services/metalPoller.js";
 import { initializeDatabase } from "./utils/db.js";
 
@@ -37,6 +38,7 @@ app.use("/api/news", newsRoutes);
 app.use("/api/metal-prices", metalPriceRoutes);
 app.use("/api/public", offersRoutes); // Fulfills GET /api/public/offers requirement
 app.use("/api/public", productsRoutes); // Fulfills GET /api/public/products requirement
+app.use("/api/public", storesRoutes); // Fulfills GET /api/public/stores requirement
 
 // Root route for API status
 app.get("/", (req, res) => {
@@ -46,7 +48,9 @@ app.get("/", (req, res) => {
     endpoints: {
       news: "/api/news",
       metalPrices: "/api/metal-prices",
-      offers: "/api/public/offers"
+      offers: "/api/public/offers",
+      products: "/api/public/products",
+      stores: "/api/public/stores"
     }
   });
 });

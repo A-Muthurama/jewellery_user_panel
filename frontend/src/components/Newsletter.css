@@ -1,169 +1,244 @@
-/* Newsletter Section */
+/* ==========================================================================
+   Newsletter.css - JewellersParadise Luxury Newsletter Styles
+   ========================================================================== */
+
 .newsletter-section {
-    background: var(--bg-secondary);
-    padding: 2rem 0;
-    border-top: 2px solid var(--color-plum);
-    border-bottom: 2px solid var(--color-plum);
+    background: linear-gradient(135deg, #f5efe8 0%, #ebe2db 100%);
+    padding: 3rem 0;
+    border-top: 2px solid rgba(76, 15, 46, 0.12);
+    border-bottom: 2px solid rgba(76, 15, 46, 0.12);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Subtle background luxury accent */
+.newsletter-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #d4af37, #4c0f2e, #d4af37, transparent);
 }
 
 .newsletter-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 2rem;
-    max-width: 1200px;
+    gap: 3rem;
+    max-width: 1240px;
     margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
+/* --- Left Column: Headings --- */
 .newsletter-content {
     flex: 1;
+    max-width: 520px;
+}
+
+.newsletter-tag {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-plum, #4c0f2e);
+    background: rgba(76, 15, 46, 0.08);
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 0.75rem;
+    border: 1px solid rgba(76, 15, 46, 0.15);
 }
 
 .newsletter-title {
-    font-size: 1.5rem;
+    font-size: 1.85rem;
     font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    font-family: var(--font-heading);
+    color: var(--color-plum, #4c0f2e);
+    margin-bottom: 0.6rem;
+    font-family: var(--font-heading, 'Playfair Display', Georgia, serif);
+    line-height: 1.25;
 }
 
 .newsletter-subtitle {
     font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
+    color: var(--text-muted, #6b5d52);
+    line-height: 1.55;
+}
+
+/* --- Right Column: Input Pill & Form --- */
+.newsletter-form-wrapper {
+    flex: 1.2;
+    max-width: 600px;
+    width: 100%;
 }
 
 .newsletter-form {
-    flex: 1.2;
-}
-
-.form-group {
     display: flex;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
+    flex-direction: column;
+    gap: 0.85rem;
+    width: 100%;
 }
 
-.input-wrapper {
-    flex: 1;
-    position: relative;
+/* Unified Luxury Input Pill */
+.newsletter-input-pill {
     display: flex;
     align-items: center;
-}
-
-.input-icon {
-    position: absolute;
-    left: 1rem;
-    color: var(--color-plum);
-    pointer-events: none;
-}
-
-.newsletter-input {
+    background: #ffffff;
+    border: 2px solid rgba(212, 196, 176, 0.7);
+    border-radius: 999px;
+    padding: 4px 4px 4px 16px;
+    box-shadow: 0 4px 18px rgba(76, 15, 46, 0.06);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
     width: 100%;
-    padding: 0.75rem 0.75rem 0.75rem 2.75rem;
-    border: 2px solid var(--border-color);
-    border-radius: 50px;
-    font-size: 0.95rem;
-    background: var(--color-white);
-    color: var(--text-primary);
-    transition: all 0.3s ease;
 }
 
-.newsletter-input:focus {
-    outline: none;
-    border-color: var(--color-plum);
-    box-shadow: 0 0 0 3px rgba(76, 15, 46, 0.1);
+.newsletter-input-pill:focus-within {
+    border-color: var(--color-plum, #4c0f2e);
+    box-shadow: 0 6px 24px rgba(76, 15, 46, 0.14),
+                0 0 0 3px rgba(212, 175, 55, 0.25);
+    background: #ffffff;
 }
 
-.newsletter-input::placeholder {
-    color: var(--text-muted);
+.newsletter-icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-plum, #4c0f2e);
+    margin-right: 12px;
+    flex-shrink: 0;
 }
 
-.newsletter-btn {
-    padding: 0.75rem 2rem;
-    background: var(--color-plum);
-    color: var(--color-white);
+.newsletter-mail-icon {
+    color: var(--color-plum, #4c0f2e);
+}
+
+.newsletter-text-input {
+    flex: 1;
+    border: none !important;
+    background: transparent !important;
+    outline: none !important;
+    font-family: var(--font-body, 'Outfit', sans-serif) !important;
+    font-size: 0.95rem !important;
+    color: var(--color-roast, #20161e) !important;
+    padding: 10px 8px 10px 0 !important;
+    min-width: 0;
+}
+
+.newsletter-text-input::placeholder {
+    color: #8c7e75 !important;
+    opacity: 0.9;
+}
+
+/* Integrated Subscribe Button */
+.newsletter-submit-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 26px;
+    background: linear-gradient(135deg, var(--color-plum, #4c0f2e), #6b1540);
+    color: #ffffff;
     border: none;
-    border-radius: 50px;
-    font-size: 0.9rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
     font-weight: 700;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.08em;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(76, 15, 46, 0.25);
+    flex-shrink: 0;
 }
 
-.newsletter-btn:hover {
-    background: var(--color-plum-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(76, 15, 46, 0.3);
+.newsletter-submit-btn:hover {
+    background: linear-gradient(135deg, #3a0b22, #550f33);
+    box-shadow: 0 6px 18px rgba(76, 15, 46, 0.35);
+    transform: translateY(-1px);
 }
 
-.checkbox-group {
-    margin-top: 1rem;
+.newsletter-submit-btn:active {
+    transform: translateY(0);
 }
 
-.checkbox-label {
+/* --- Consent Row --- */
+.newsletter-consent-row {
+    padding-left: 8px;
+}
+
+.newsletter-consent-label {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 10px;
     cursor: pointer;
     user-select: none;
 }
 
-.checkbox-input {
-    width: 18px;
-    height: 18px;
+.newsletter-checkbox {
+    width: 17px;
+    height: 17px;
     cursor: pointer;
-    accent-color: var(--color-plum);
+    accent-color: var(--color-plum, #4c0f2e);
+    border-radius: 4px;
 }
 
-.checkbox-text {
-    font-size: 0.95rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
+.newsletter-consent-text {
+    font-size: 0.82rem;
+    color: var(--text-muted, #6b5d52);
+    line-height: 1.4;
 }
 
-.message {
-    margin-top: 1rem;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
+/* --- Status Alert --- */
+.newsletter-status-alert {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.85rem;
     font-weight: 500;
+    margin-top: 4px;
+    animation: fadeInStatus 0.3s ease forwards;
 }
 
-.message.success {
-    background: #d4edda;
-    color: #902d6a;
-    border: 1px solid #c3e6cb;
+@keyframes fadeInStatus {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.message.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+.newsletter-status-alert.success {
+    background: #e8f5ed;
+    color: #128c46;
+    border: 1px solid #b7e4c7;
 }
 
-/* Responsive */
-@media (max-width: 900px) {
+.newsletter-status-alert.error {
+    background: #fdf2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 960px) {
     .newsletter-container {
         flex-direction: column;
         text-align: center;
         gap: 2rem;
     }
 
-    .newsletter-title {
-        font-size: 1.75rem;
+    .newsletter-content {
+        max-width: 100%;
     }
 
-    .form-group {
-        flex-direction: column;
-    }
-
-    .newsletter-btn {
-        width: 100%;
-    }
-
-    .checkbox-label {
+    .newsletter-consent-label {
         justify-content: center;
     }
 }
@@ -174,18 +249,29 @@
     }
 
     .newsletter-title {
-        font-size: 1.5rem;
+        font-size: 1.55rem;
     }
 
-    .newsletter-subtitle {
-        font-size: 1rem;
+    .newsletter-input-pill {
+        flex-direction: column;
+        border-radius: 16px;
+        padding: 8px 12px;
+        gap: 8px;
     }
 
-    .newsletter-input {
-        padding: 0.875rem 0.875rem 0.875rem 2.75rem;
+    .newsletter-text-input {
+        width: 100%;
+        text-align: center;
+        padding: 8px 0 !important;
     }
 
-    .newsletter-btn {
-        padding: 0.875rem 2rem;
+    .newsletter-submit-btn {
+        width: 100%;
+        padding: 12px;
+        border-radius: 12px;
+    }
+
+    .newsletter-icon-container {
+        display: none;
     }
 }

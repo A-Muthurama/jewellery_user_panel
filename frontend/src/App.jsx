@@ -13,6 +13,8 @@ import Regulation from "./pages/Regulation";
 import TrendingNews from "./pages/TrendingNews";
 import About from "./pages/About";
 import Products from "./pages/Products";
+import Stores from "./pages/Stores";
+import StoreProfile from "./pages/StoreProfile";
 import LiveRatesBar from "./components/LiveRatesBar";
 
 const App = () => {
@@ -22,6 +24,8 @@ const App = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/stores" element={<Stores />} />
+          <Route path="/stores/:slugOrId" element={<StoreProfile />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/offer/:id" element={<OfferDetails />} />
           <Route path="/privacy" element={<Privacy />} />

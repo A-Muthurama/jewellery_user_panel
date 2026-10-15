@@ -1,0 +1,272 @@
+/* ==========================================================================
+   StoreCard.css - JewellersParadise Luxury Store Card Styles
+   ========================================================================== */
+
+.store-card {
+  background: var(--color-white, #ffffff);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(212, 196, 176, 0.45);
+  box-shadow: 0 6px 24px rgba(76, 15, 46, 0.05);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
+              border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 100%;
+}
+
+.store-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(76, 15, 46, 0.12);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+/* --- Cover Photo Header --- */
+.store-card-cover-wrapper {
+  position: relative;
+  width: 100%;
+  height: 195px;
+  background: linear-gradient(135deg, #3a0b22, #4c0f2e);
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+}
+
+.store-card-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.store-card:hover .store-card-cover {
+  transform: scale(1.06);
+}
+
+.store-card-cover-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(32, 22, 30, 0.2) 0%,
+    rgba(32, 22, 30, 0.65) 100%
+  );
+  pointer-events: none;
+}
+
+/* Top Badges */
+.store-card-top-badges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.store-verified-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, rgba(27, 56, 43, 0.92), rgba(42, 82, 62, 0.92));
+  color: #79e3ab;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(121, 227, 171, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.store-verified-pill .verified-icon {
+  color: #55d691;
+  flex-shrink: 0;
+}
+
+.store-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(32, 22, 30, 0.75);
+  color: #ebe2db;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+}
+
+.store-offers-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: #1a0b12;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.35);
+  margin-left: auto;
+}
+
+/* Logo Avatar */
+.store-card-logo-container {
+  position: absolute;
+  bottom: -22px;
+  left: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 3px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+  border: 2px solid #ffffff;
+  z-index: 3;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.store-card:hover .store-card-logo-container {
+  transform: translateY(-2px);
+}
+
+.store-card-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.store-card-logo-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-plum, #4c0f2e), #6b1540);
+  color: var(--color-gold-light, #e0c385);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading, serif);
+  font-size: 1.45rem;
+  font-weight: 700;
+}
+
+/* --- Card Body --- */
+.store-card-content {
+  padding: 32px 22px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.store-card-title-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.store-card-title {
+  font-family: var(--font-heading, "Playfair Display", Georgia, serif);
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--color-plum-dark, #3a0b22);
+  line-height: 1.35;
+  margin: 0 0 10px 0;
+  transition: color 0.25s ease;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.store-card-title-link:hover .store-card-title,
+.store-card:hover .store-card-title {
+  color: var(--color-gold-dark, #b8941f);
+}
+
+/* Description */
+.store-card-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #6b5d52);
+  line-height: 1.6;
+  margin: 0 0 20px 0;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.store-card-desc.empty-desc {
+  color: #8c7e75;
+  font-style: italic;
+}
+
+/* Actions / CTA Button */
+.store-card-actions {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(212, 196, 176, 0.35);
+}
+
+.store-view-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 18px;
+  background: linear-gradient(135deg, var(--color-plum, #4c0f2e) 0%, #68153f 100%);
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 4px 14px rgba(76, 15, 46, 0.18);
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.store-view-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.18), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.store-view-btn:hover::before {
+  opacity: 1;
+}
+
+.store-view-btn:hover {
+  background: linear-gradient(135deg, #3a0b22 0%, var(--color-plum, #4c0f2e) 100%);
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(76, 15, 46, 0.28);
+  color: #ffffff;
+}
+
+.store-view-btn-arrow {
+  transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+  flex-shrink: 0;
+}
+
+.store-card:hover .store-view-btn-arrow,
+.store-view-btn:hover .store-view-btn-arrow {
+  transform: translateX(4px);
+}

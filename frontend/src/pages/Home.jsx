@@ -1,61 +1,23 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Frown, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { ArrowRight, Frown, ChevronLeft, ChevronRight } from 'lucide-react';
 import OfferCard from '../components/OfferCard';
 import ProductCard from '../components/ProductCard';
+import StoreCard from '../components/StoreCard';
 import { fetchOffers } from '../services/offerservice';
 import { fetchProducts } from '../services/products.service';
+import { fetchStores } from '../services/stores.service';
 import './Home.css';
 
 const Home = () => {
   const [featuredOffers, setFeaturedOffers] = useState([]);
   const [featuredDeals, setFeaturedDeals] = useState([]);
+  const [featuredStores, setFeaturedStores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingDeals, setLoadingDeals] = useState(true);
+  const [loadingStores, setLoadingStores] = useState(true);
   const [posterStartIndex, setPosterStartIndex] = useState(0);
   const [posterTransition, setPosterTransition] = useState(null);
-  const [showAd, setShowAd] = useState(false);
-  const [adPoster, setAdPoster] = useState('');
-  const [adIndex, setAdIndex] = useState(0);
-  const [hasShownAd, setHasShownAd] = useState(false);
-  const scrollTriggerRef = useRef(null);
-
-  const adsList = ['/custom/Poster1.png', '/custom/Poster2.png'];
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Trigger ad when value-props section is reached, only once
-        if (entries[0].isIntersecting && !hasShownAd) {
-          setAdPoster(adsList[0]);
-          setShowAd(true);
-          setHasShownAd(true);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (scrollTriggerRef.current) {
-      observer.observe(scrollTriggerRef.current);
-    }
-
-    return () => {
-      if (scrollTriggerRef.current) {
-        observer.unobserve(scrollTriggerRef.current);
-      }
-    };
-  }, [hasShownAd]);
-
-  const handleCloseAd = () => {
-    // Show one by one: switch to next poster if available
-    if (adIndex < adsList.length - 1) {
-      const nextIndex = adIndex + 1;
-      setAdIndex(nextIndex);
-      setAdPoster(adsList[nextIndex]);
-    } else {
-      setShowAd(false);
-    }
-  };
 
   const posters = [
     '/poster_images/JewellersParadise-Poster1.png',
@@ -161,34 +123,39 @@ const Home = () => {
     loadDeals();
   }, []);
 
+  useEffect(() => {
+    const loadStores = async () => {
+      try {
+        setLoadingStores(true);
+        const res = await fetchStores({ limit: 3 });
+        if (res && res.success) {
+          setFeaturedStores(res.data || []);
+        }
+      } catch (err) {
+        console.error("Failed to load featured stores", err);
+      } finally {
+        setLoadingStores(false);
+      }
+    };
+    loadStores();
+  }, []);
+
   return (
     <div className="home-page">
-      {showAd && (
-        <div className="ad-overlay" onClick={handleCloseAd}>
-          <div className="ad-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="ad-close-btn" onClick={handleCloseAd} aria-label="Close Advertisement">
-              <X size={20} />
-            </button>
-            <img src={adPoster} alt="Advertisement" className="ad-image-full" />
-          </div>
-        </div>
-      )}
 
       {/* Hero Section Merged Here - hero section*/}
       <section className="hero">
         <div className="hero-overlay"></div>
-        <div className="hero-badge">India's Jewellery Offers Hub</div>
+        <div className="hero-badge">India's Jewellery Offers & Showrooms Hub</div>
         <div className="container hero-content">
           <h1 className="hero-title">Discover Exclusive Jewellery Offers</h1>
           <p className="hero-subtitle">
             Find the best deals on Gold, Diamond, and Silver from verified shops near you.
           </p>
           <div className="hero-actions">
-            <Link to="/offers" className="btn-primary">Explore Offers</Link>
-            <Link to="/about" className="btn-outline">Learn More</Link>
+            <Link to="/stores" className="btn-primary">Find Stores</Link>
+            <Link to="/offers" className="btn-outline">Explore Offers</Link>
           </div>
-
-
         </div>
       </section>
 
@@ -217,6 +184,34 @@ const Home = () => {
           )}
         </div>
 
+        {/* Featured Jewellery Stores Section */}
+        <div className="section-header">
+          <div>
+            <h2 className="section-title">Verified Jewellery Showrooms</h2>
+            <p className="section-subtitle" style={{ fontSize: '0.9rem', color: '#6b5d52', marginTop: '4px' }}>
+              Directly managed partner showrooms with verified hallmarking & active promotions
+            </p>
+          </div>
+          <Link to="/stores" className="view-all-link">
+            Explore All Stores <ArrowRight size={18} />
+          </Link>
+        </div>
+
+        <div className="offers-grid" style={{ marginBottom: '4rem' }}>
+          {loadingStores ? (
+            <p>Loading verified stores...</p>
+          ) : featuredStores.length > 0 ? (
+            featuredStores.map(store => (
+              <StoreCard key={store.id} store={store} />
+            ))
+          ) : (
+            <div className="no-results" style={{ gridColumn: '1/-1', textAlign: 'center', padding: '2rem' }}>
+              <Frown size={48} />
+              <p>No featured stores listed currently.</p>
+            </div>
+          )}
+        </div>
+
         {/* Featured Offers Section */}
         <div className="section-header">
           <h2 className="section-title">Featured Offers</h2>
@@ -241,7 +236,7 @@ const Home = () => {
         </div>
       </main>
 
-      <section className="container section value-props" ref={scrollTriggerRef}>
+      <section className="container section value-props">
         <h2 className="section-title">Why JEWELLERS PARADISE?</h2>
         <p className="section-intro">Jewellers Paradise connects you with the finest collections across India, ensuring quality and value.</p>
 
