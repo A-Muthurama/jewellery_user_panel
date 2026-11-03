@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
   MapPin,
@@ -138,20 +138,24 @@ const StoreProfile = () => {
       `${store.storeName} ${store.address || ""} ${store.city || ""}`
     )}`;
 
-  const updatedDateStr = store.updatedAt || store.publishedAt || store.createdAt;
-  const formattedUpdatedDate = updatedDateStr
-    ? new Date(updatedDateStr).toLocaleDateString("en-IN", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-      })
-    : null;
+    const formatDateDMY = (dateInput) => {
+    if (!dateInput) return null;
+    const d = new Date(dateInput);
+    if (isNaN(d.getTime())) return null;
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const updatedDateStr = store.updatedAt || store.publishedAt || store.createdAt || store.updated_at || store.created_at;
+  const formattedUpdatedDate = formatDateDMY(updatedDateStr);
 
   const handleShare = async () => {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${store.storeName} â€” JewellersParadise`,
+          title: `${store.storeName} - JewellersParadise`,
           text: `Check out ${store.storeName} in ${store.city} on JewellersParadise!`,
           url: window.location.href
         });
@@ -239,6 +243,15 @@ const StoreProfile = () => {
       {/* Hero Cover Header */}
       <section className="profile-hero-section">
         <div className="profile-cover-wrap">
+          <div
+            className="profile-cover-ambient"
+            style={{
+              backgroundImage: `url(${
+                store.coverPhotoUrl ||
+                "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80"
+              })`
+            }}
+          />
           <img
             src={
               store.coverPhotoUrl ||
@@ -278,7 +291,7 @@ const StoreProfile = () => {
                 <span className="profile-status-badge">Active Listing</span>
                 {formattedUpdatedDate && (
                   <span className="profile-updated-text">
-                    <Calendar size={13} /> Updated on {formattedUpdatedDate}
+                    <Calendar size={13} /> Listing updated: {formattedUpdatedDate}
                   </span>
                 )}
               </div>
@@ -289,7 +302,7 @@ const StoreProfile = () => {
                 <MapPin size={16} className="loc-pin" />
                 <span>
                   {store.address ? `${store.address}, ` : ""}
-                  {store.city}, {store.state} {store.pincode ? `â€“ ${store.pincode}` : ""}
+                  {store.city}, {store.state} {store.pincode ? `- ${store.pincode}` : ""}
                 </span>
               </div>
 
@@ -401,13 +414,7 @@ const StoreProfile = () => {
                 <div className="profile-offers-grid">
                   {store.offers.map((offer) => {
                     const isExpanded = expandedOfferId === offer.id;
-                    const validTill = offer.endDate
-                      ? new Date(offer.endDate).toLocaleDateString("en-IN", {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric"
-                        })
-                      : "Limited Period";
+                    const validTill = offer.endDate ? formatDateDMY(offer.endDate) : "Limited Period";
 
                     return (
                       <div key={offer.id} className="profile-offer-card">
@@ -520,7 +527,7 @@ const StoreProfile = () => {
               <div className="schedule-list">
                 <div className="schedule-row">
                   <span className="schedule-label">Opening Hours</span>
-                  <span className="schedule-val">{store.openingHours || "10:30 AM â€“ 08:30 PM"}</span>
+                  <span className="schedule-val">{store.openingHours || "10:30 AM - 08:30 PM"}</span>
                 </div>
                 <div className="schedule-row">
                   <span className="schedule-label">Weekly Holiday</span>
@@ -622,7 +629,7 @@ const StoreProfile = () => {
               </h3>
               <p className="sidebar-address-text">{store.address}</p>
               <p className="sidebar-city-text">
-                {store.city}, {store.state} {store.pincode}
+                {store.city}, {store.state} {store.pincode ? `- ${store.pincode}` : ""}
               </p>
               <a
                 href={mapsUrl}
