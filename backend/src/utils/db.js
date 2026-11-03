@@ -138,7 +138,20 @@ export const initializeDatabase = async () => {
       }
     }
 
-    // 4. Ensure products table exists
+    // 4. Ensure country column exists on StoreListing
+    await pool.query(`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1 FROM information_schema.columns 
+          WHERE table_name = 'StoreListing' AND column_name = 'country'
+        ) THEN
+          ALTER TABLE "StoreListing" ADD COLUMN country VARCHAR(100) DEFAULT 'India';
+        END IF;
+      END $$;
+    `);
+
+    // 5. Ensure products table exists
     await pool.query(`
       CREATE TABLE IF NOT EXISTS products (
         id SERIAL PRIMARY KEY,

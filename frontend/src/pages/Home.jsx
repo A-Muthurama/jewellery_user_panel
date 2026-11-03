@@ -146,8 +146,8 @@ const Home = () => {
       {/* Hero Section Merged Here - hero section*/}
       <section className="hero">
         <div className="hero-overlay"></div>
-        <div className="hero-badge">India's Jewellery Offers & Showrooms Hub</div>
         <div className="container hero-content">
+          <div className="hero-badge">India's Jewellery Offers & Showrooms Hub</div>
           <h1 className="hero-title">Discover Exclusive Jewellery Offers</h1>
           <p className="hero-subtitle">
             Find the best deals on Gold, Diamond, and Silver from verified shops near you.

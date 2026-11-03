@@ -46,7 +46,7 @@ const Header = () => {
             window.open("https://vendor.jewellersparadise.com", "_blank")
           }
           >
-            Join as Partner
+            LIST YOUR STORE
           </button>
 
           <button className="mobile-menu-btn" onClick={toggleMenu}>
@@ -70,7 +70,7 @@ const Header = () => {
           <button className="btn-vendor" onClick={() =>
             window.open("https://vendor.jewellersparadise.com", "_blank")
           }>
-            Join as Partner
+            LIST YOUR STORE
           </button>
         </div>
       </div>

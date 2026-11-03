@@ -5,8 +5,9 @@ export const fetchStores = async (filters = {}) => {
   try {
     const params = new URLSearchParams();
     if (filters.search) params.append("search", filters.search);
-    if (filters.city && filters.city !== "ALL") params.append("city", filters.city);
+    if (filters.country && filters.country !== "ALL") params.append("country", filters.country);
     if (filters.state && filters.state !== "ALL") params.append("state", filters.state);
+    if (filters.city && filters.city !== "ALL") params.append("city", filters.city);
     if (filters.category && filters.category !== "ALL") params.append("category", filters.category);
     if (filters.isVerified) params.append("isVerified", "true");
     if (filters.page) params.append("page", filters.page);

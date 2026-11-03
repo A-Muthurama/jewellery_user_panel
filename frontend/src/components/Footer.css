@@ -21,7 +21,7 @@
     margin-top: 10px;
     width: auto;
     object-fit: contain;
-    mix-blend-mode: multiply;
+    background: transparent;
 }
 
 .pj-brand-name {

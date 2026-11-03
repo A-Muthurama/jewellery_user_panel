@@ -36,8 +36,8 @@ const Stores = () => {
 
   // Search & Filter state
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
-  const [selectedCity, setSelectedCity] = useState(searchParams.get("city") || "ALL");
   const [selectedState, setSelectedState] = useState(searchParams.get("state") || "ALL");
+  const [selectedCity, setSelectedCity] = useState(searchParams.get("city") || "ALL");
   const [selectedCategory, setSelectedCategory] = useState(
     searchParams.get("category") || "All"
   );
@@ -52,8 +52,9 @@ const Stores = () => {
 
   // Available filter options from backend
   const [availableFilters, setAvailableFilters] = useState({
-    cities: [],
     states: [],
+    cities: [],
+    stateCityMap: {},
     categories: []
   });
 
@@ -65,14 +66,37 @@ const Stores = () => {
       const meta = await fetchStoreFilters();
       if (meta && meta.success) {
         setAvailableFilters({
-          cities: meta.cities || [],
           states: meta.states || [],
+          cities: meta.cities || [],
+          stateCityMap: meta.stateCityMap || {},
           categories: meta.categories || []
         });
       }
     };
     loadFilterMeta();
   }, []);
+
+  // Filter available cities based on selected state
+  const availableCitiesForSelectedState = useMemo(() => {
+    if (selectedState && selectedState !== "ALL" && availableFilters.stateCityMap) {
+      const citiesInState = availableFilters.stateCityMap[selectedState];
+      if (citiesInState && citiesInState.length > 0) {
+        return citiesInState;
+      }
+    }
+    return availableFilters.cities || [];
+  }, [selectedState, availableFilters]);
+
+  // Handle state change: update state and auto-reset city if it doesn't belong to the new state
+  const handleStateChange = (newState) => {
+    setSelectedState(newState);
+    if (newState !== "ALL" && selectedCity !== "ALL" && availableFilters.stateCityMap) {
+      const citiesInState = availableFilters.stateCityMap[newState] || [];
+      if (!citiesInState.includes(selectedCity)) {
+        setSelectedCity("ALL");
+      }
+    }
+  };
 
   // Fetch stores whenever filters change
   useEffect(() => {
@@ -82,8 +106,8 @@ const Stores = () => {
       try {
         const res = await fetchStores({
           search: searchQuery,
-          city: selectedCity,
           state: selectedState,
+          city: selectedCity,
           category: selectedCategory === "All" ? "" : selectedCategory,
           isVerified: isVerifiedOnly,
           limit: 50
@@ -111,32 +135,32 @@ const Stores = () => {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, [searchQuery, selectedCity, selectedState, selectedCategory, isVerifiedOnly]);
+  }, [searchQuery, selectedState, selectedCity, selectedCategory, isVerifiedOnly]);
 
   // Sync to URL parameters for bookmarkable search
   useEffect(() => {
     const params = new URLSearchParams();
     if (searchQuery) params.set("search", searchQuery);
-    if (selectedCity && selectedCity !== "ALL") params.set("city", selectedCity);
     if (selectedState && selectedState !== "ALL") params.set("state", selectedState);
+    if (selectedCity && selectedCity !== "ALL") params.set("city", selectedCity);
     if (selectedCategory && selectedCategory !== "All") params.set("category", selectedCategory);
     if (isVerifiedOnly) params.set("verified", "true");
     setSearchParams(params, { replace: true });
-  }, [searchQuery, selectedCity, selectedState, selectedCategory, isVerifiedOnly, setSearchParams]);
+  }, [searchQuery, selectedState, selectedCity, selectedCategory, isVerifiedOnly, setSearchParams]);
 
   // Reset all filters
   const handleResetFilters = () => {
     setSearchQuery("");
-    setSelectedCity("ALL");
     setSelectedState("ALL");
+    setSelectedCity("ALL");
     setSelectedCategory("All");
     setIsVerifiedOnly(false);
   };
 
   const hasActiveFilters =
     searchQuery ||
-    selectedCity !== "ALL" ||
     selectedState !== "ALL" ||
+    selectedCity !== "ALL" ||
     selectedCategory !== "All" ||
     isVerifiedOnly;
 
@@ -147,8 +171,11 @@ const Stores = () => {
         <div className="container stores-hero-container">
           <div className="stores-hero-content">
             <span className="stores-hero-badge">
-              <Sparkles size={14} />
-              Admin-Verified Showrooms Directory
+              <Sparkles size={17} className="badge-sparkle-icon" />
+              <span className="badge-text-content">
+                <strong className="badge-brand-highlight">Jewellersparadise</strong>{" "}
+                <strong className="badge-verified-highlight">verified Showrooms directory</strong>
+              </span>
             </span>
             <h1 className="stores-hero-title">
               Discover Trusted Jewellery Stores & Showrooms
@@ -203,35 +230,39 @@ const Stores = () => {
         {/* Filter Toolbar */}
         <div className="stores-filter-toolbar">
           <div className="filter-controls-group">
-            {/* City Dropdown */}
+            {/* 1. State Dropdown (Primary Location Filter) */}
+            <div className="filter-select-wrapper">
+              <Building2 size={15} className="select-icon" />
+              <select
+                value={selectedState}
+                onChange={(e) => handleStateChange(e.target.value)}
+                className="filter-select"
+                aria-label="Filter by state"
+              >
+                <option value="ALL">All States</option>
+                {availableFilters.states.map((st) => (
+                  <option key={st} value={st}>
+                    {st}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* 2. City Dropdown (Follows State) */}
             <div className="filter-select-wrapper">
               <MapPin size={15} className="select-icon" />
               <select
                 value={selectedCity}
                 onChange={(e) => setSelectedCity(e.target.value)}
                 className="filter-select"
+                aria-label="Filter by city"
               >
-                <option value="ALL">All Cities</option>
-                {availableFilters.cities.map((city) => (
+                <option value="ALL">
+                  {selectedState !== "ALL" ? `All Cities in ${selectedState}` : "All Cities"}
+                </option>
+                {availableCitiesForSelectedState.map((city) => (
                   <option key={city} value={city}>
                     {city}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* State Dropdown */}
-            <div className="filter-select-wrapper">
-              <Building2 size={15} className="select-icon" />
-              <select
-                value={selectedState}
-                onChange={(e) => setSelectedState(e.target.value)}
-                className="filter-select"
-              >
-                <option value="ALL">All States</option>
-                {availableFilters.states.map((st) => (
-                  <option key={st} value={st}>
-                    {st}
                   </option>
                 ))}
               </select>
@@ -290,18 +321,18 @@ const Stores = () => {
                 </button>
               </span>
             )}
-            {selectedCity !== "ALL" && (
+            {selectedState !== "ALL" && (
               <span className="active-tag">
-                City: {selectedCity}
-                <button onClick={() => setSelectedCity("ALL")}>
+                State: {selectedState}
+                <button onClick={() => handleStateChange("ALL")} aria-label="Remove state filter">
                   <X size={12} />
                 </button>
               </span>
             )}
-            {selectedState !== "ALL" && (
+            {selectedCity !== "ALL" && (
               <span className="active-tag">
-                State: {selectedState}
-                <button onClick={() => setSelectedState("ALL")}>
+                City: {selectedCity}
+                <button onClick={() => setSelectedCity("ALL")} aria-label="Remove city filter">
                   <X size={12} />
                 </button>
               </span>

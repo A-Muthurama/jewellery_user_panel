@@ -47,7 +47,7 @@
     height: 100%;
     width: auto;
     object-fit: contain;
-    mix-blend-mode: multiply;
+    background: transparent;
 }
 
 .pj-brand-name {
@@ -147,19 +147,22 @@
 .btn-vendor {
     background: linear-gradient(135deg, var(--color-plum), var(--color-plum-light));
     color: #FFFFFF;
-    padding: 0.7rem 1.4rem;
+    padding: 0.72rem 1.45rem;
     border-radius: 30px;
-    font-weight: 600;
-    font-size: 0.9rem;
-    letter-spacing: 0.5px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.8px;
     text-transform: uppercase;
-    box-shadow: 0 4px 10px rgba(76, 15, 46, 0.25);
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(76, 15, 46, 0.3);
+    border: 1.5px solid rgba(224, 195, 133, 0.45);
     transition: all 0.3s ease;
 }
 
 .btn-vendor:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(76, 15, 46, 0.4);
+    box-shadow: 0 6px 18px rgba(76, 15, 46, 0.45), 0 0 12px rgba(212, 175, 55, 0.35);
+    border-color: rgba(224, 195, 133, 0.9);
 }
 
 .mobile-menu-btn {
@@ -238,7 +241,7 @@
     border-radius: 30px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    text-transform: uppercase;
+    white-space: nowrap;
     box-shadow: 0 4px 10px rgba(76, 15, 46, 0.25);
     transition: all 0.3s ease;
 }

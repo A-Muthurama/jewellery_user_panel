@@ -12,13 +12,23 @@ const StoreCard = ({ store }) => {
     <article className="store-card">
       {/* Cover Photo Header */}
       <Link to={storeUrl} className="store-card-cover-wrapper" aria-label={`View ${store.storeName}`}>
+        <div
+          className="store-card-cover-ambient"
+          style={{
+            backgroundImage: `url(${
+              store.coverPhotoUrl ||
+              "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80"
+            })`
+          }}
+          aria-hidden="true"
+        />
         <img
           src={
             store.coverPhotoUrl ||
             "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80"
           }
           alt={store.storeName}
-          className="store-card-cover"
+          className="store-card-cover-img store-card-cover"
           loading="lazy"
         />
         <div className="store-card-cover-overlay" />
@@ -44,17 +54,17 @@ const StoreCard = ({ store }) => {
             </span>
           )}
         </div>
+      </Link>
 
-        {/* Logo Avatar */}
-        <div className="store-card-logo-container">
-          {store.logoUrl ? (
-            <img src={store.logoUrl} alt={store.storeName} className="store-card-logo" />
-          ) : (
-            <div className="store-card-logo-placeholder">
-              {store.storeName.charAt(0)}
-            </div>
-          )}
-        </div>
+      {/* Floating Store Logo Avatar (positioned outside cover wrapper so it is never clipped) */}
+      <Link to={storeUrl} className="store-card-logo-container" aria-label={`Visit ${store.storeName}`}>
+        {store.logoUrl ? (
+          <img src={store.logoUrl} alt={store.storeName} className="store-card-logo" />
+        ) : (
+          <div className="store-card-logo-placeholder">
+            {store.storeName.charAt(0)}
+          </div>
+        )}
       </Link>
 
       {/* Card Body: Showing only Title and Description with luxury View Store CTA */}

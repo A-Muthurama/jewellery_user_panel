@@ -36,18 +36,63 @@
 .stores-hero-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(224, 195, 133, 0.18);
-  border: 1px solid rgba(224, 195, 133, 0.45);
-  color: #f1ddb6;
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 6px 14px;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.38) 0%, rgba(76, 15, 46, 0.78) 100%);
+  border: 1.5px solid #e0c385;
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  padding: 9px 24px;
   border-radius: 999px;
-  margin-bottom: 18px;
-  backdrop-filter: blur(8px);
+  margin-bottom: 22px;
+  box-shadow: 0 4px 22px rgba(212, 175, 55, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.38);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stores-hero-badge:hover {
+  transform: translateY(-2px);
+  border-color: #ffd700;
+  box-shadow: 0 6px 28px rgba(212, 175, 55, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.stores-hero-badge .badge-text-content {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.stores-hero-badge .badge-brand-highlight {
+  color: #ffd700;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.45);
+}
+
+.stores-hero-badge .badge-verified-highlight {
+  color: #ffffff;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.badge-sparkle-icon {
+  color: #ffd700;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.75));
+  animation: badgeSparklePulse 2.4s ease-in-out infinite;
+}
+
+@keyframes badgeSparklePulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 0.88;
+  }
 }
 
 .stores-hero-title {

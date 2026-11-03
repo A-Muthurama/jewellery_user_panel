@@ -15,6 +15,7 @@ const mapPublicStore = (row) => ({
     ? row.categories
     : (row.categories ? [row.categories] : []),
   address: row.address,
+  country: row.country || "India",
   city: row.city,
   state: row.state,
   pincode: row.pincode,
@@ -40,6 +41,7 @@ export const getStores = async (req, res) => {
   try {
     const {
       search,
+      country,
       city,
       state,
       category,
@@ -64,16 +66,22 @@ export const getStores = async (req, res) => {
       );
     }
 
+    // Country filter
+    if (country && country.trim() && country !== "ALL") {
+      params.push(country.trim().toLowerCase());
+      conditions.push(`LOWER(COALESCE(s.country, 'India')) = $${params.length}`);
+    }
+
     // City filter
     if (city && city.trim() && city !== "ALL") {
       params.push(city.trim());
       conditions.push(`LOWER(s.city) = LOWER($${params.length})`);
     }
 
-    // State filter
+    // State filter (supports normalized whitespace matching)
     if (state && state.trim() && state !== "ALL") {
-      params.push(state.trim());
-      conditions.push(`LOWER(s.state) = LOWER($${params.length})`);
+      params.push(state.trim().toLowerCase());
+      conditions.push(`LOWER(REGEXP_REPLACE(s.state, '\\s+', ' ', 'g')) = $${params.length}`);
     }
 
     // Category filter (array match)
@@ -109,6 +117,7 @@ export const getStores = async (req, res) => {
         s.short_description,
         s.categories,
         s.address,
+        COALESCE(s.country, 'India') AS country,
         s.city,
         s.state,
         s.pincode,
@@ -131,7 +140,7 @@ export const getStores = async (req, res) => {
            AND (o.end_date >= CURRENT_DATE OR o.end_date IS NULL)) AS offers_count
       FROM "StoreListing" s
       ${whereClause}
-      ORDER BY s.is_verified DESC, s.updated_at DESC
+      ORDER BY s.is_verified DESC, s.country ASC, s.state ASC, s.city ASC, s.updated_at DESC
       LIMIT $${params.length + 1} OFFSET $${params.length + 2}
     `;
 
@@ -152,22 +161,43 @@ export const getStores = async (req, res) => {
 };
 
 // GET /api/public/stores/meta/filters
-// Returns available cities, states, and categories from published stores
+// Returns available countries, states, cities (mapped hierarchically), and categories from published stores
 export const getStoreFilters = async (req, res) => {
   try {
-    // Distinct cities
-    const cityRes = await pool.query(`
-      SELECT DISTINCT city FROM "StoreListing" 
-      WHERE status = 'PUBLISHED' AND city IS NOT NULL AND city != ''
-      ORDER BY city ASC
+    // Distinct geo data
+    const geoRes = await pool.query(`
+      SELECT DISTINCT 
+        COALESCE(country, 'India') AS country, 
+        state, 
+        city 
+      FROM "StoreListing" 
+      WHERE status = 'PUBLISHED' 
+        AND state IS NOT NULL AND state != '' 
+        AND city IS NOT NULL AND city != ''
+      ORDER BY country ASC, state ASC, city ASC
     `);
 
-    // Distinct states
-    const stateRes = await pool.query(`
-      SELECT DISTINCT state FROM "StoreListing" 
-      WHERE status = 'PUBLISHED' AND state IS NOT NULL AND state != ''
-      ORDER BY state ASC
-    `);
+    const countries = [];
+    const countryStateMap = {};
+    const stateCityMap = {};
+    const states = [];
+    const cities = [];
+
+    geoRes.rows.forEach((r) => {
+      const cleanCountry = (r.country || "India").trim();
+      const cleanState = r.state.replace(/\s+/g, " ").trim();
+      const cleanCity = r.city.trim();
+
+      if (!countries.includes(cleanCountry)) countries.push(cleanCountry);
+      if (!states.includes(cleanState)) states.push(cleanState);
+      if (!cities.includes(cleanCity)) cities.push(cleanCity);
+
+      if (!countryStateMap[cleanCountry]) countryStateMap[cleanCountry] = [];
+      if (!countryStateMap[cleanCountry].includes(cleanState)) countryStateMap[cleanCountry].push(cleanState);
+
+      if (!stateCityMap[cleanState]) stateCityMap[cleanState] = [];
+      if (!stateCityMap[cleanState].includes(cleanCity)) stateCityMap[cleanState].push(cleanCity);
+    });
 
     // Distinct categories (unnest array)
     const catRes = await pool.query(`
@@ -179,8 +209,11 @@ export const getStoreFilters = async (req, res) => {
 
     res.json({
       success: true,
-      cities: cityRes.rows.map((r) => r.city),
-      states: stateRes.rows.map((r) => r.state),
+      countries,
+      states,
+      cities,
+      countryStateMap,
+      stateCityMap,
       categories: catRes.rows.map((r) => r.category).filter(Boolean),
     });
   } catch (error) {
@@ -206,6 +239,7 @@ export const getStoreBySlugOrId = async (req, res) => {
         s.short_description,
         s.categories,
         s.address,
+        COALESCE(s.country, 'India') AS country,
         s.city,
         s.state,
         s.pincode,

@@ -3,9 +3,10 @@
    ========================================================================== */
 
 .store-card {
+  --card-cover-height: clamp(225px, 25vw, 255px);
   background: var(--color-white, #ffffff);
   border-radius: 20px;
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid rgba(212, 196, 176, 0.45);
   box-shadow: 0 6px 24px rgba(76, 15, 46, 0.05);
   transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1),
@@ -27,22 +28,51 @@
 .store-card-cover-wrapper {
   position: relative;
   width: 100%;
-  height: 195px;
-  background: linear-gradient(135deg, #3a0b22, #4c0f2e);
+  height: var(--card-cover-height);
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background: linear-gradient(135deg, #2b0819, #4c0f2e);
   overflow: hidden;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px 24px 14px;
+  box-sizing: border-box;
   text-decoration: none;
 }
 
-.store-card-cover {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.store-card-cover-ambient {
+  position: absolute;
+  inset: -16px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(18px) brightness(0.55) saturate(1.2);
+  transform: scale(1.15);
+  z-index: 1;
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+.store-card:hover .store-card-cover-ambient {
+  transform: scale(1.22);
+}
+
+.store-card-cover,
+.store-card-cover-img {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.35));
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.store-card:hover .store-card-cover-img,
 .store-card:hover .store-card-cover {
-  transform: scale(1.06);
+  transform: scale(1.04);
 }
 
 .store-card-cover-overlay {
@@ -50,9 +80,11 @@
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(32, 22, 30, 0.2) 0%,
-    rgba(32, 22, 30, 0.65) 100%
+    rgba(32, 22, 30, 0.25) 0%,
+    rgba(32, 22, 30, 0.05) 50%,
+    rgba(32, 22, 30, 0.45) 100%
   );
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -122,37 +154,45 @@
 /* Logo Avatar */
 .store-card-logo-container {
   position: absolute;
-  bottom: -22px;
+  top: calc(var(--card-cover-height) - 30px);
   left: 20px;
-  width: 60px;
-  height: 60px;
+  width: 62px;
+  height: 62px;
   border-radius: 16px;
   background: #ffffff;
-  padding: 3px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
-  border: 2px solid #ffffff;
-  z-index: 3;
+  padding: 5px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+  border: 2.5px solid #ffffff;
+  z-index: 5;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .store-card:hover .store-card-logo-container {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 24px rgba(76, 15, 46, 0.22);
 }
 
 .store-card-logo {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 11px;
   object-fit: contain;
   object-position: center;
   background: #ffffff;
+  display: block;
 }
 
 .store-card-logo-placeholder {
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 11px;
   background: linear-gradient(135deg, var(--color-plum, #4c0f2e), #6b1540);
   color: var(--color-gold-light, #e0c385);
   display: flex;
