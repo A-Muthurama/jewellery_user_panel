@@ -1222,3 +1222,96 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Email Profile Action Button */
+.profile-action-btn.btn-email {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: #ffffff;
+}
+
+.profile-action-btn.btn-email:hover {
+  background: linear-gradient(135deg, #172554 0%, #2563eb 100%);
+  transform: translateY(-2px);
+}
+
+/* Extended Social Buttons */
+.social-btn.youtube {
+  background: #fef2f2;
+  color: #dc2626;
+}
+.social-btn.youtube:hover {
+  background: #fee2e2;
+}
+
+.social-btn.twitter {
+  background: #f8fafc;
+  color: #0f172a;
+}
+.social-btn.twitter:hover {
+  background: #f1f5f9;
+}
+
+.social-btn.telegram {
+  background: #f0f9ff;
+  color: #0284c7;
+}
+.social-btn.telegram:hover {
+  background: #e0f2fe;
+}
+
+.social-btn.other {
+  background: #faf5ff;
+  color: #7e22ce;
+}
+.social-btn.other:hover {
+  background: #f3e8ff;
+}
+
+/* Daywise Schedule Breakdown in StoreProfile */
+.profile-daywise-wrap {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(212, 196, 176, 0.45);
+}
+
+.profile-daywise-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted, #6b5d52);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.profile-daywise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 4px;
+}
+
+.profile-day-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.profile-day-item.open {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.profile-day-item.closed {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.profile-day-name {
+  font-weight: 700;
+}
+
+.profile-day-time {
+  font-weight: 500;
+}

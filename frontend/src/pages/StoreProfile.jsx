@@ -19,6 +19,9 @@ import {
   Building2,
   Instagram,
   Facebook,
+  Youtube,
+  Twitter,
+  Mail,
   ExternalLink,
   CheckCircle2,
   Info,
@@ -302,7 +305,7 @@ const StoreProfile = () => {
                 <MapPin size={16} className="loc-pin" />
                 <span>
                   {store.address ? `${store.address}, ` : ""}
-                  {store.city}, {store.state} {store.pincode ? `- ${store.pincode}` : ""}
+                  {store.city}, {store.state}, {store.country || "India"} {store.pincode ? `- ${store.pincode}` : ""}
                 </span>
               </div>
 
@@ -346,6 +349,17 @@ const StoreProfile = () => {
                   >
                     <MessageCircle size={16} />
                     <span>WhatsApp</span>
+                  </a>
+                )}
+
+                {(store.email || (store.emails && store.emails.length > 0)) && (
+                  <a
+                    href={`mailto:${store.email || store.emails[0]}`}
+                    className="profile-action-btn btn-email"
+                    title="Email Store"
+                  >
+                    <Mail size={16} />
+                    <span>Email</span>
                   </a>
                 )}
 
@@ -527,14 +541,37 @@ const StoreProfile = () => {
               <div className="schedule-list">
                 <div className="schedule-row">
                   <span className="schedule-label">Opening Hours</span>
-                  <span className="schedule-val">{store.openingHours || "10:30 AM - 08:30 PM"}</span>
+                  <span className="schedule-val">{store.openingHours || "10:00 AM - 08:30 PM"}</span>
                 </div>
                 <div className="schedule-row">
                   <span className="schedule-label">Weekly Holiday</span>
                   <span className="schedule-val holiday-val">
-                    {store.weeklyHoliday || "None (Open 7 Days)"}
+                    {(store.weeklyHolidays && store.weeklyHolidays.length > 0)
+                      ? store.weeklyHolidays.join(", ")
+                      : (store.weeklyHoliday || "None (Open 7 Days)")}
                   </span>
                 </div>
+
+                {/* Daywise Operating Hours Breakdown */}
+                {store.daywiseHours && typeof store.daywiseHours === "object" && (
+                  <div className="profile-daywise-wrap">
+                    <span className="profile-daywise-heading">Day-by-Day Working Hours</span>
+                    <div className="profile-daywise-grid">
+                      {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((d) => {
+                        const sched = store.daywiseHours[d];
+                        if (!sched) return null;
+                        return (
+                          <div key={d} className={`profile-day-item ${sched.is_closed ? "closed" : "open"}`}>
+                            <span className="profile-day-name">{d.slice(0, 3)}</span>
+                            <span className="profile-day-time">
+                              {sched.is_closed ? "Closed" : `${sched.open} - ${sched.close}`}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -544,15 +581,41 @@ const StoreProfile = () => {
                 <Building2 size={18} /> Store Contact Details
               </h3>
               <div className="sidebar-contact-list">
+                {/* Phone & Multiple Phones */}
                 <div className="contact-item">
                   <Phone size={16} />
                   <div>
-                    <span className="item-label">Telephone</span>
-                    <a href={`tel:${cleanPhone}`} className="item-val">
-                      {store.phone}
-                    </a>
+                    <span className="item-label">
+                      {(store.phones && store.phones.length > 1) ? "Phone Numbers" : "Telephone"}
+                    </span>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                      {(store.phones && store.phones.length > 0 ? store.phones : [store.phone]).map((ph, idx) => (
+                        <a key={idx} href={`tel:${ph ? ph.replace(/[^\d+]/g, "") : ""}`} className="item-val">
+                          {ph}
+                        </a>
+                      ))}
+                    </div>
                   </div>
                 </div>
+
+                {/* Email & Multiple Emails */}
+                {(store.email || (store.emails && store.emails.length > 0)) && (
+                  <div className="contact-item">
+                    <Mail size={16} />
+                    <div>
+                      <span className="item-label">
+                        {(store.emails && store.emails.length > 1) ? "Email Addresses" : "Email"}
+                      </span>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                        {(store.emails && store.emails.length > 0 ? store.emails : [store.email]).map((em, idx) => (
+                          <a key={idx} href={`mailto:${em}`} className="item-val">
+                            {em}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {store.whatsapp && (
                   <div className="contact-item">
@@ -593,30 +656,32 @@ const StoreProfile = () => {
                   </div>
                 )}
 
-                {store.socialLinks && (
-                  <div className="social-links-row">
-                    {store.socialLinks.instagram && (
-                      <a
-                        href={store.socialLinks.instagram}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-btn instagram"
-                        title="Instagram"
-                      >
-                        <Instagram size={18} />
-                      </a>
-                    )}
-                    {store.socialLinks.facebook && (
-                      <a
-                        href={store.socialLinks.facebook}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-btn facebook"
-                        title="Facebook"
-                      >
-                        <Facebook size={18} />
-                      </a>
-                    )}
+                {/* Multiple Social Network Profiles */}
+                {store.socialLinks && Object.keys(store.socialLinks).length > 0 && (
+                  <div className="social-links-row" style={{ flexWrap: "wrap", gap: "8px" }}>
+                    {Object.entries(store.socialLinks).map(([platform, url]) => {
+                      if (!url) return null;
+                      const p = platform.toLowerCase();
+                      let icon = <Globe size={18} />;
+                      let cls = "social-btn other";
+                      if (p.includes("instagram")) { icon = <Instagram size={18} />; cls = "social-btn instagram"; }
+                      else if (p.includes("facebook")) { icon = <Facebook size={18} />; cls = "social-btn facebook"; }
+                      else if (p.includes("youtube")) { icon = <Youtube size={18} />; cls = "social-btn youtube"; }
+                      else if (p.includes("twitter") || p === "x") { icon = <Twitter size={18} />; cls = "social-btn twitter"; }
+                      else if (p.includes("telegram")) { icon = <Send size={18} />; cls = "social-btn telegram"; }
+                      return (
+                        <a
+                          key={platform}
+                          href={url.startsWith("http") ? url : `https://${url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cls}
+                          title={platform.replace(/_/g, ' ')}
+                        >
+                          {icon}
+                        </a>
+                      );
+                    })}
                   </div>
                 )}
               </div>
