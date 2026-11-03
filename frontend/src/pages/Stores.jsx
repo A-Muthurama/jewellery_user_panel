@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import {
   Search,
+  Globe,
   MapPin,
   Sparkles,
   ShieldCheck,
@@ -36,6 +37,7 @@ const Stores = () => {
 
   // Search & Filter state
   const [searchQuery, setSearchQuery] = useState(searchParams.get("search") || "");
+  const [selectedCountry, setSelectedCountry] = useState(searchParams.get("country") || "ALL");
   const [selectedState, setSelectedState] = useState(searchParams.get("state") || "ALL");
   const [selectedCity, setSelectedCity] = useState(searchParams.get("city") || "ALL");
   const [selectedCategory, setSelectedCategory] = useState(
@@ -50,8 +52,10 @@ const Stores = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
 
-  // Available filter options from backend
+  // Available filter options from backend (dynamically populated from admin store listings in DB)
   const [availableFilters, setAvailableFilters] = useState({
+    countries: [],
+    countryStateMap: {},
     states: [],
     cities: [],
     stateCityMap: {},
@@ -66,6 +70,8 @@ const Stores = () => {
       const meta = await fetchStoreFilters();
       if (meta && meta.success) {
         setAvailableFilters({
+          countries: meta.countries || [],
+          countryStateMap: meta.countryStateMap || {},
           states: meta.states || [],
           cities: meta.cities || [],
           stateCityMap: meta.stateCityMap || {},
@@ -76,7 +82,18 @@ const Stores = () => {
     loadFilterMeta();
   }, []);
 
-  // Filter available cities based on selected state
+  // Filter available states based on selected country (dynamically cascading from DB)
+  const availableStatesForSelectedCountry = useMemo(() => {
+    if (selectedCountry && selectedCountry !== "ALL" && availableFilters.countryStateMap) {
+      const statesInCountry = availableFilters.countryStateMap[selectedCountry];
+      if (statesInCountry && statesInCountry.length > 0) {
+        return statesInCountry;
+      }
+    }
+    return availableFilters.states || [];
+  }, [selectedCountry, availableFilters]);
+
+  // Filter available cities based on selected state and country
   const availableCitiesForSelectedState = useMemo(() => {
     if (selectedState && selectedState !== "ALL" && availableFilters.stateCityMap) {
       const citiesInState = availableFilters.stateCityMap[selectedState];
@@ -84,8 +101,30 @@ const Stores = () => {
         return citiesInState;
       }
     }
+    if (selectedCountry && selectedCountry !== "ALL" && availableFilters.countryStateMap && availableFilters.stateCityMap) {
+      const statesInCountry = availableFilters.countryStateMap[selectedCountry] || [];
+      const citiesInCountry = [];
+      statesInCountry.forEach((st) => {
+        (availableFilters.stateCityMap[st] || []).forEach((c) => {
+          if (!citiesInCountry.includes(c)) citiesInCountry.push(c);
+        });
+      });
+      if (citiesInCountry.length > 0) return citiesInCountry;
+    }
     return availableFilters.cities || [];
-  }, [selectedState, availableFilters]);
+  }, [selectedCountry, selectedState, availableFilters]);
+
+  // Handle country change: update country and auto-reset state/city if they don't belong to the new country
+  const handleCountryChange = (newCountry) => {
+    setSelectedCountry(newCountry);
+    if (newCountry !== "ALL" && selectedState !== "ALL" && availableFilters.countryStateMap) {
+      const statesInCountry = availableFilters.countryStateMap[newCountry] || [];
+      if (!statesInCountry.includes(selectedState)) {
+        setSelectedState("ALL");
+        setSelectedCity("ALL");
+      }
+    }
+  };
 
   // Handle state change: update state and auto-reset city if it doesn't belong to the new state
   const handleStateChange = (newState) => {
@@ -106,6 +145,7 @@ const Stores = () => {
       try {
         const res = await fetchStores({
           search: searchQuery,
+          country: selectedCountry,
           state: selectedState,
           city: selectedCity,
           category: selectedCategory === "All" ? "" : selectedCategory,
@@ -135,22 +175,24 @@ const Stores = () => {
       isMounted = false;
       clearTimeout(timeoutId);
     };
-  }, [searchQuery, selectedState, selectedCity, selectedCategory, isVerifiedOnly]);
+  }, [searchQuery, selectedCountry, selectedState, selectedCity, selectedCategory, isVerifiedOnly]);
 
   // Sync to URL parameters for bookmarkable search
   useEffect(() => {
     const params = new URLSearchParams();
     if (searchQuery) params.set("search", searchQuery);
+    if (selectedCountry && selectedCountry !== "ALL") params.set("country", selectedCountry);
     if (selectedState && selectedState !== "ALL") params.set("state", selectedState);
     if (selectedCity && selectedCity !== "ALL") params.set("city", selectedCity);
     if (selectedCategory && selectedCategory !== "All") params.set("category", selectedCategory);
     if (isVerifiedOnly) params.set("verified", "true");
     setSearchParams(params, { replace: true });
-  }, [searchQuery, selectedState, selectedCity, selectedCategory, isVerifiedOnly, setSearchParams]);
+  }, [searchQuery, selectedCountry, selectedState, selectedCity, selectedCategory, isVerifiedOnly, setSearchParams]);
 
   // Reset all filters
   const handleResetFilters = () => {
     setSearchQuery("");
+    setSelectedCountry("ALL");
     setSelectedState("ALL");
     setSelectedCity("ALL");
     setSelectedCategory("All");
@@ -159,6 +201,7 @@ const Stores = () => {
 
   const hasActiveFilters =
     searchQuery ||
+    selectedCountry !== "ALL" ||
     selectedState !== "ALL" ||
     selectedCity !== "ALL" ||
     selectedCategory !== "All" ||
@@ -230,7 +273,25 @@ const Stores = () => {
         {/* Filter Toolbar */}
         <div className="stores-filter-toolbar">
           <div className="filter-controls-group">
-            {/* 1. State Dropdown (Primary Location Filter) */}
+            {/* 1. Country Dropdown (Dynamically loaded from DB) */}
+            <div className="filter-select-wrapper">
+              <Globe size={15} className="select-icon" />
+              <select
+                value={selectedCountry}
+                onChange={(e) => handleCountryChange(e.target.value)}
+                className="filter-select"
+                aria-label="Filter by country"
+              >
+                <option value="ALL">All Countries</option>
+                {availableFilters.countries.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* 2. State Dropdown (Follows Country) */}
             <div className="filter-select-wrapper">
               <Building2 size={15} className="select-icon" />
               <select
@@ -239,8 +300,10 @@ const Stores = () => {
                 className="filter-select"
                 aria-label="Filter by state"
               >
-                <option value="ALL">All States</option>
-                {availableFilters.states.map((st) => (
+                <option value="ALL">
+                  {selectedCountry !== "ALL" ? `All States in ${selectedCountry}` : "All States"}
+                </option>
+                {availableStatesForSelectedCountry.map((st) => (
                   <option key={st} value={st}>
                     {st}
                   </option>
@@ -317,6 +380,14 @@ const Stores = () => {
               <span className="active-tag">
                 Category: {selectedCategory}
                 <button onClick={() => setSelectedCategory("All")}>
+                  <X size={12} />
+                </button>
+              </span>
+            )}
+            {selectedCountry !== "ALL" && (
+              <span className="active-tag">
+                Country: {selectedCountry}
+                <button onClick={() => handleCountryChange("ALL")} aria-label="Remove country filter">
                   <X size={12} />
                 </button>
               </span>

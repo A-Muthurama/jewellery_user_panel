@@ -76,7 +76,7 @@ export const getStores = async (req, res) => {
     // Country filter
     if (country && country.trim() && country !== "ALL") {
       params.push(country.trim().toLowerCase());
-      conditions.push(`LOWER(COALESCE(s.country, 'India')) = $${params.length}`);
+      conditions.push(`LOWER(COALESCE(NULLIF(TRIM(s.country), ''), 'India')) = $${params.length}`);
     }
 
     // City filter
@@ -176,10 +176,18 @@ export const getStores = async (req, res) => {
 // Returns available countries, states, cities (mapped hierarchically), and categories from published stores
 export const getStoreFilters = async (req, res) => {
   try {
-    // Distinct geo data
+    // 1. Fetch all distinct countries that actually exist in published store listings in DB
+    const countryRes = await pool.query(`
+      SELECT DISTINCT COALESCE(NULLIF(TRIM(country), ''), 'India') AS country
+      FROM "StoreListing"
+      WHERE status = 'PUBLISHED'
+      ORDER BY country ASC
+    `);
+
+    // 2. Fetch distinct geo data (country, state, city)
     const geoRes = await pool.query(`
       SELECT DISTINCT 
-        COALESCE(country, 'India') AS country, 
+        COALESCE(NULLIF(TRIM(country), ''), 'India') AS country, 
         state, 
         city 
       FROM "StoreListing" 
@@ -194,6 +202,18 @@ export const getStoreFilters = async (req, res) => {
     const stateCityMap = {};
     const states = [];
     const cities = [];
+
+    // Ensure all distinct countries from DB are registered
+    countryRes.rows.forEach((r) => {
+      const c = (r.country || "India").trim();
+      if (!countries.includes(c)) countries.push(c);
+      if (!countryStateMap[c]) countryStateMap[c] = [];
+    });
+
+    if (countries.length === 0) {
+      countries.push("India");
+      countryStateMap["India"] = [];
+    }
 
     geoRes.rows.forEach((r) => {
       const cleanCountry = (r.country || "India").trim();
