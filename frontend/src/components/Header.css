@@ -86,15 +86,15 @@
     transform: scale(1.02);
 }
 
-/* Centered Desktop Navigation */
+/* Centered Desktop Navigation - In Flex Flow to prevent any overlapping */
 .nav-desktop {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     display: flex;
-    gap: 2.5rem;
+    gap: 2.2rem;
     align-items: center;
     justify-content: center;
+    flex: 1;
+    margin: 0 1.5rem;
+    min-width: 0;
     z-index: 1;
 }
 
@@ -251,31 +251,52 @@
     box-shadow: 0 2px 8px rgba(76, 15, 46, 0.3);
 }
 
-/* Large Screens */
-@media (max-width: 1200px) {
+/* Large & Medium Desktop Screens (Fluid typography and gaps to prevent overlap) */
+@media (max-width: 1280px) {
     .pj-brand-name {
-        font-size: 26px;
-        letter-spacing: 0.07em;
+        font-size: 24px;
+        letter-spacing: 0.06em;
     }
-
     .pj-logo-wrapper {
-        height: 48px;
+        height: 46px;
     }
-
     .nav-desktop {
-        gap: 1.8rem;
+        gap: 1.6rem;
+        margin: 0 1rem;
     }
-
     .nav-link {
-        font-size: 0.9rem;
+        font-size: 0.92rem;
+    }
+    .btn-vendor {
+        padding: 0.65rem 1.25rem;
+        font-size: 0.84rem;
     }
 }
 
+@media (max-width: 1140px) {
+    .pj-brand-name {
+        font-size: 22px;
+        letter-spacing: 0.05em;
+    }
+    .pj-logo-wrapper {
+        height: 44px;
+    }
+    .nav-desktop {
+        gap: 1.1rem;
+        margin: 0 0.8rem;
+    }
+    .nav-link {
+        font-size: 0.86rem;
+        padding: 6px 3px;
+    }
+    .btn-vendor {
+        padding: 0.6rem 1.1rem;
+        font-size: 0.8rem;
+    }
+}
 
-
-/* Tablets and Mobile Landscape */
-/* Tablets and Mobile Landscape - Switch to Hamburger Menu Earlier to avoid overlap */
-@media (max-width: 1050px) {
+/* Tablets and Mobile Landscape - Switch to Hamburger Menu cleanly before compression */
+@media (max-width: 1024px) {
     .nav-desktop {
         display: none;
     }

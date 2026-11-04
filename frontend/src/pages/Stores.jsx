@@ -361,8 +361,14 @@ const Stores = () => {
           {/* Results Summary */}
           <div className="stores-results-summary">
             <span>
-              Showing <strong>{totalCount}</strong> jewellery{" "}
-              {totalCount === 1 ? "store" : "stores"}
+              {isLoading ? (
+                "Loading stores..."
+              ) : (
+                <>
+                  Showing <strong>{totalCount}</strong> jewellery{" "}
+                  {totalCount === 1 ? "store" : "stores"}
+                </>
+              )}
             </span>
           </div>
         </div>
