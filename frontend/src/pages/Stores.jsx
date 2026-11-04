@@ -213,13 +213,16 @@ const Stores = () => {
       <section className="stores-hero">
         <div className="container stores-hero-container">
           <div className="stores-hero-content">
-            <span className="stores-hero-badge">
-              <Sparkles size={17} className="badge-sparkle-icon" />
-              <span className="badge-text-content">
-                <strong className="badge-brand-highlight">Jewellersparadise</strong>{" "}
+            <div className="stores-hero-badge">
+              <span className="badge-brand-part">
+                <Sparkles size={16} className="badge-sparkle-icon" />
+                <strong className="badge-brand-highlight">Jewellersparadise</strong>
+              </span>
+              <span className="badge-separator" aria-hidden="true">•</span>
+              <span className="badge-verified-part">
                 <strong className="badge-verified-highlight">verified Showrooms directory</strong>
               </span>
-            </span>
+            </div>
             <h1 className="stores-hero-title">
               Discover Trusted Jewellery Stores & Showrooms
             </h1>
