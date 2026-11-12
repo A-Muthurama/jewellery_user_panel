@@ -418,3 +418,53 @@
     }
 }
 
+/* Centered Luxury Loading State */
+.home-section-loader {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 180px;
+    padding: 3rem 1.5rem;
+    background: radial-gradient(circle at 50% 30%, #ffffff 0%, #faf8f5 55%, #f4eee6 100%);
+    border: 1px solid rgba(212, 196, 176, 0.45);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(76, 15, 46, 0.03);
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.home-loader-spinner-wrap {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(76, 15, 46, 0.08);
+    border: 1.5px solid rgba(224, 195, 133, 0.6);
+}
+
+.home-loader-spin {
+    color: var(--color-gold-dark, #b8941f);
+    animation: homeSpinLoader 0.9s linear infinite;
+}
+
+@keyframes homeSpinLoader {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.home-loader-text {
+    font-family: var(--font-body, "Outfit", sans-serif);
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--color-plum, #4c0f2e);
+    letter-spacing: 0.02em;
+}

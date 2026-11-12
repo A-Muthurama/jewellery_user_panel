@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Frown, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Frown, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import OfferCard from '../components/OfferCard';
 import ProductCard from '../components/ProductCard';
 import StoreCard from '../components/StoreCard';
@@ -8,6 +8,15 @@ import { fetchOffers } from '../services/offerservice';
 import { fetchProducts } from '../services/products.service';
 import { fetchStores } from '../services/stores.service';
 import './Home.css';
+
+const SectionLoader = ({ text }) => (
+  <div className="home-section-loader">
+    <div className="home-loader-spinner-wrap">
+      <Loader2 size={28} className="home-loader-spin" />
+    </div>
+    <span className="home-loader-text">{text}</span>
+  </div>
+);
 
 const Home = () => {
   const [featuredOffers, setFeaturedOffers] = useState([]);
@@ -171,7 +180,7 @@ const Home = () => {
 
         <div className="offers-grid" style={{ marginBottom: '4rem' }}>
           {loadingDeals ? (
-            <p>Loading featured deals...</p>
+            <SectionLoader text="Loading featured deals..." />
           ) : featuredDeals.length > 0 ? (
             featuredDeals.map(product => (
               <ProductCard key={product.id} product={product} />
@@ -199,7 +208,7 @@ const Home = () => {
 
         <div className="offers-grid" style={{ marginBottom: '4rem' }}>
           {loadingStores ? (
-            <p>Loading verified stores...</p>
+            <SectionLoader text="Loading verified stores..." />
           ) : featuredStores.length > 0 ? (
             featuredStores.map(store => (
               <StoreCard key={store.id} store={store} />
@@ -222,7 +231,7 @@ const Home = () => {
 
         <div className="offers-grid">
           {loading ? (
-            <p>Loading featured offers...</p>
+            <SectionLoader text="Loading featured offers..." />
           ) : featuredOffers.length > 0 ? (
             featuredOffers.map(offer => (
               <OfferCard key={offer.id} offer={offer} />
