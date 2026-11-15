@@ -35,16 +35,23 @@ const StoreCard = ({ store }) => {
 
         {/* Top Badges */}
         <div className="store-card-top-badges">
+          {store.storeType === "ONLINE" && (
+            <span className="store-status-pill" style={{ backgroundColor: "rgba(30, 64, 175, 0.9)", color: "#ffffff", borderColor: "#3b82f6" }}>
+              🌐 Online Store
+            </span>
+          )}
           {store.isVerified ? (
             <span className="store-verified-pill" title="Verified by JewellersParadise">
               <ShieldCheck size={13} className="verified-icon" />
               Verified Jeweller
             </span>
           ) : (
-            <span className="store-status-pill">
-              <Sparkles size={12} />
-              Featured Showroom
-            </span>
+            store.storeType !== "ONLINE" && (
+              <span className="store-status-pill">
+                <Sparkles size={12} />
+                Featured Showroom
+              </span>
+            )
           )}
 
           {store.offersCount > 0 && (

@@ -302,11 +302,23 @@ const StoreProfile = () => {
               <h1 className="profile-store-title">{store.storeName}</h1>
 
               <div className="profile-locality-row">
-                <MapPin size={16} className="loc-pin" />
-                <span>
-                  {store.address ? `${store.address}, ` : ""}
-                  {store.city}, {store.state}, {store.country || "India"} {store.pincode ? `- ${store.pincode}` : ""}
-                </span>
+                {store.storeType === "ONLINE" ? (
+                  <>
+                    <Globe size={16} className="loc-pin" style={{ color: "#2563eb" }} />
+                    <span style={{ fontWeight: 600, color: "#1e3a8a" }}>
+                      Online Store
+                      {store.city && store.city !== "Online" ? ` • Based in ${store.city}, ${store.state || ""}` : ` • Pan-${store.country || "India"}`}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <MapPin size={16} className="loc-pin" />
+                    <span>
+                      {store.address ? `${store.address}, ` : ""}
+                      {store.city}, {store.state}, {store.country || "India"} {store.pincode ? `- ${store.pincode}` : ""}
+                    </span>
+                  </>
+                )}
               </div>
 
               {store.shortDescription && (
@@ -363,16 +375,18 @@ const StoreProfile = () => {
                   </a>
                 )}
 
-                <a
-                  href={mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="profile-action-btn btn-directions"
-                  title="Get Directions"
-                >
-                  <Navigation size={16} />
-                  <span>Get Directions</span>
-                </a>
+                {store.storeType !== "ONLINE" && (
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="profile-action-btn btn-directions"
+                    title="Get Directions"
+                  >
+                    <Navigation size={16} />
+                    <span>Get Directions</span>
+                  </a>
+                )}
 
                 {store.website && (
                   <a
@@ -690,21 +704,54 @@ const StoreProfile = () => {
             {/* Address & Navigation Card */}
             <div className="info-sidebar-card">
               <h3 className="sidebar-card-title">
-                <MapPin size={18} /> Location & Address
+                {store.storeType === "ONLINE" ? (
+                  <>
+                    <Globe size={18} style={{ color: "#2563eb" }} /> Store Presence
+                  </>
+                ) : (
+                  <>
+                    <MapPin size={18} /> Location & Address
+                  </>
+                )}
               </h3>
-              <p className="sidebar-address-text">{store.address}</p>
-              <p className="sidebar-city-text">
-                {store.city}, {store.state} {store.pincode ? `- ${store.pincode}` : ""}
-              </p>
-              <a
-                href={mapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="maps-direction-button"
-              >
-                <Navigation size={15} />
-                Open in Google Maps
-              </a>
+              {store.storeType === "ONLINE" ? (
+                <>
+                  <p className="sidebar-address-text" style={{ fontWeight: 700, color: "#1e3a8a", fontSize: "14px" }}>
+                    🌐 Online Store
+                  </p>
+                  <p className="sidebar-city-text">
+                    {store.city && store.city !== "Online" ? `${store.city}, ` : ""}{store.state && store.state !== "Online" ? `${store.state}, ` : ""}{store.country || "India"}
+                  </p>
+                  {store.website && (
+                    <a
+                      href={store.website.startsWith("http") ? store.website : `https://${store.website}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="maps-direction-button"
+                      style={{ backgroundColor: "#2563eb", color: "#ffffff" }}
+                    >
+                      <Globe size={15} />
+                      Visit Online Store
+                    </a>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p className="sidebar-address-text">{store.address}</p>
+                  <p className="sidebar-city-text">
+                    {store.city}, {store.state} {store.pincode ? `- ${store.pincode}` : ""}
+                  </p>
+                  <a
+                    href={mapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="maps-direction-button"
+                  >
+                    <Navigation size={15} />
+                    Open in Google Maps
+                  </a>
+                </>
+              )}
             </div>
 
             {/* Claim Listing & Report Detail Links (Required Features) */}
